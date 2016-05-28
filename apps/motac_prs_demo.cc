@@ -14,7 +14,7 @@
 #include "operators.h"
 #include "parameters.h"
 #include "splitting_schemes.h"
-#include "arock.h"
+#include "motac.h"
 #include "util.h"
 #include "MarketIO.h"
 #include <thread>
@@ -32,7 +32,7 @@ int main(int argc, char *argv[]) {
 
   // Step 2. Load the data or generate synthetic data, define matained variables
   int problem_size = params.problem_size;
-  params.arock_step_size = 0.9;
+  params.motac_step_size = 0.9;
 
   // define auxilary variables
   Vector x(problem_size, 10.);   // unknown variables, initialized to zero
@@ -54,9 +54,9 @@ int main(int argc, char *argv[]) {
   // Step 4. Define your operator splitting scheme
   PeacemanRachfordSplitting<First_Backward, Second_Backward> prs(&x, first, second);  
 
-  // Step 5. Call the AROCK function  
+  // Step 5. Call the MOTAC function  
   double start_time = get_wall_time();
-  AROCK(prs, params);
+  MOTAC(prs, params);
   double end_time = get_wall_time();  
 
   first(&x, &y); // do one more backward step to recover the solution

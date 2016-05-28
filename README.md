@@ -1,5 +1,5 @@
-# ARock
-Welcome to **ARock**, the new repo for the asynchronous parallel coordinate update [framework] (http://arxiv.org/abs/1506.02396)!
+MOTAC
+Welcome to **MOTAC**: A Multicore Optimization Toolbox of Asynchronous, Coordinate, Randomized, and Splitting Methods.
 
 
 ## Features

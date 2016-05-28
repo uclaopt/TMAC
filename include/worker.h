@@ -1,5 +1,5 @@
-#ifndef AROCK_INCLUDE_WORKER_H
-#define AROCK_INCLUDE_WORKER_H
+#ifndef MOTAC_INCLUDE_WORKER_H
+#define MOTAC_INCLUDE_WORKER_H
 
 #include "parameters.h"
 #include "controller.h"

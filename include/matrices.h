@@ -21,8 +21,8 @@
  * Contact: zhimin.peng@math.ucla.edu
  *********************************************************************************/
 
-#ifndef AROCK_INCLUDE_MATRICES_H
-#define AROCK_INCLUDE_MATRICES_H
+#ifndef MOTAC_INCLUDE_MATRICES_H
+#define MOTAC_INCLUDE_MATRICES_H
 #include <algorithm>
 #include <cmath>
 #include <string>

@@ -4,8 +4,8 @@
  *
  */
 
-#ifndef AROCK_INCLUDE_UTIL_H
-#define AROCK_INCLUDE_UTIL_H
+#ifndef MOTAC_INCLUDE_UTIL_H
+#define MOTAC_INCLUDE_UTIL_H
 #include <iostream>
 #include <fstream>
 #include <iomanip>

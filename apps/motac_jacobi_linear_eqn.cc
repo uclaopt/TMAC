@@ -12,7 +12,7 @@
 #include "operators.h"
 #include "parameters.h"
 #include "splitting_schemes.h"
-#include "arock.h"
+#include "motac.h"
 #include "util.h"
 #include "MarketIO.h"
 #include <thread>
@@ -40,7 +40,7 @@ int main(int argc, char *argv[]) {
   loadMarket(b, label_file_name);
   int problem_size = A.rows();
   params.problem_size = problem_size;
-  params.arock_step_size = 1.;
+  params.motac_step_size = 1.;
   Vector x(problem_size, 0.);   // unknown variables, initialized to zero
 
   
@@ -51,9 +51,9 @@ int main(int argc, char *argv[]) {
   // Step 4. Define your operator splitting scheme
   GradientDescentAlgorithm<linear_eqn_jacobi_operator<Matrix> > Jacobi(&x, J);
 
-  // Step 6. Call the AROCK function
+  // Step 6. Call the MOTAC function
   double start_time = get_wall_time();
-  AROCK(Jacobi, params);
+  MOTAC(Jacobi, params);
   double end_time = get_wall_time();    
   
    // Step 7. Print results

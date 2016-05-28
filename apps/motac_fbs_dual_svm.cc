@@ -12,7 +12,7 @@
 #include "operators.h"
 #include "parameters.h"
 #include "splitting_schemes.h"
-#include "arock.h"
+#include "motac.h"
 #include "util.h"
 #include "MarketIO.h"
 #include <thread>
@@ -55,7 +55,7 @@ int main(int argc, char *argv[]) {
   double operator_step_size = 0.01;
   params.step_size = operator_step_size;
   params.problem_size = num_samples;
-  params.arock_step_size = 1.;
+  params.motac_step_size = 1.;
   
   // forward operator
   forward_grad_for_dual_svm<SpMat> forward(&At, &Ax, operator_step_size);
@@ -74,9 +74,9 @@ int main(int argc, char *argv[]) {
   // Step 4. Define your operator splitting scheme
   ForwardBackwardSplitting<forward_grad_for_dual_svm<SpMat>, proj_box> fbs(&x, forward, backward);
 
-  // Step 5. Call the AROCK function  
+  // Step 5. Call the MOTAC function  
   double start_time = get_wall_time();
-  AROCK(fbs, params);
+  MOTAC(fbs, params);
   double end_time = get_wall_time();
 
   // Step 7. Print results

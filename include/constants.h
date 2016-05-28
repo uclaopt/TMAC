@@ -5,8 +5,8 @@
  */
 
 
-#ifndef AROCK_INCLUDE_CONSTANTS_H
-#define AROCK_INCLUDE_CONSTANTS_H
+#ifndef MOTAC_INCLUDE_CONSTANTS_H
+#define MOTAC_INCLUDE_CONSTANTS_H
 
 // default solver parameters settings
 

@@ -4,7 +4,7 @@
 #include "operators.h"
 #include "parameters.h"
 #include "splitting_schemes.h"
-#include "arock.h"
+#include "motac.h"
 #include "util.h"
 #include "MarketIO.h"
 #include <thread>
@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
   
   // set para
   double operator_step_size = 0.0018;
-  params.arock_step_size = 0.5;
+  params.motac_step_size = 0.5;
   params.step_size = operator_step_size;
   
   int problem_size = Q.cols();
@@ -45,7 +45,7 @@ int main(int argc, char *argv[]) {
   
 
   double start_time = get_wall_time();  
-  AROCK(three_s, params);  
+  MOTAC(three_s, params);  
   double end_time = get_wall_time();
   print_parameters(params);  
   cout << "Computing time is: " << end_time - start_time << endl;

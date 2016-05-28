@@ -65,7 +65,7 @@ void print_parameters(Params& para) {
   cout.width(28);
   cout << left << "Problem size: " << right << setw(3) << para.problem_size << endl;
   cout.width(28);  
-  cout << left << "ARock step size: " << right << para.arock_step_size << endl;
+  cout << left << "MOTAC step size: " << right << para.motac_step_size << endl;
   cout.width(28);  
   cout << left << "Operator step size: " << right << para.step_size << endl;
   cout.width(28);  

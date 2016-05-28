@@ -17,7 +17,7 @@
 #include "operators.h"
 #include "parameters.h"
 #include "splitting_schemes.h"
-#include "arock.h"
+#include "motac.h"
 #include "util.h"
 #include <thread>
 using namespace std;
@@ -44,7 +44,7 @@ int main(int argc, char *argv[]) {
   int problem_size = A.rows();
   params.problem_size = problem_size;
   params.worker_type="gs";
-  params.arock_step_size = 0.5;
+  params.motac_step_size = 0.5;
   int sample_size = A.cols();
   Vector x(problem_size, 0.);   // unknown variables, initialized to zero
   Vector Atx(sample_size, 0.);  // maintained variables, initialized to zero
@@ -60,9 +60,9 @@ int main(int argc, char *argv[]) {
   // Step 4. Define your operator splitting scheme
   GradientDescentAlgorithm<forward_grad_for_huber_loss<Matrix> > gd(&x, forward);
 
-  // Step 6. Call the AROCK function
+  // Step 6. Call the MOTAC function
   double start_time = get_wall_time();
-  AROCK(gd, params);  
+  MOTAC(gd, params);  
   double end_time = get_wall_time();
   print_parameters(params);
   

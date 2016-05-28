@@ -13,7 +13,7 @@
 #include "operators.h"
 #include "parameters.h"
 #include "splitting_schemes.h"
-#include "arock.h"
+#include "motac.h"
 #include "util.h"
 #include "MarketIO.h"
 #include <thread>
@@ -43,7 +43,7 @@ int main(int argc, char *argv[]) {
   double d = 0.5 * dot(c, c);
   // set para
 
-  params.arock_step_size = 0.5;
+  params.motac_step_size = 0.5;
   int problem_size = params.problem_size;
   // define auxilary variables
   Vector x(problem_size, 0.);   // unknown variables, initialized to zero
@@ -64,9 +64,9 @@ int main(int argc, char *argv[]) {
   // Step 4. Define your operator splitting scheme
   BackwardForwardSplitting<Backward,Forward> bfs(&x, backward, forward);  
 
-  // Step 6. Call the AROCK function  
+  // Step 6. Call the MOTAC function  
   double start_time = get_wall_time();
-  AROCK(bfs, params);  
+  MOTAC(bfs, params);  
   double end_time = get_wall_time();
 
   backward(&x, &y); // do one more backward step to recover the solution

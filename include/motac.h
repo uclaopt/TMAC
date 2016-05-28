@@ -1,5 +1,5 @@
-#ifndef AROCK_INCLUDE_AROCK_H
-#define AROCK_INCLUDE_AROCK_H
+#ifndef MOTAC_INCLUDE_MOTAC_H
+#define MOTAC_INCLUDE_MOTAC_H
 
 
 #include "matrices.h"
@@ -11,7 +11,7 @@
 
 
 template<typename Splitting>
-void AROCK (Splitting op, Params parameters, Controller<Splitting> controller = Controller<Splitting>()) {
+void MOTAC (Splitting op, Params parameters, Controller<Splitting> controller = Controller<Splitting>()) {
   
   int total_num_threads = parameters.total_num_threads;
   bool use_controller = parameters.use_controller;

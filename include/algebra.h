@@ -4,8 +4,8 @@
  *                                                                       
  ***********************************************************************/
 
-#ifndef AROCK_INCLUDE_ALGEBRA_H
-#define AROCK_INCLUDE_ALGEBRA_H
+#ifndef MOTAC_INCLUDE_ALGEBRA_H
+#define MOTAC_INCLUDE_ALGEBRA_H
 #include <string>
 #include <iomanip>
 #include "matrices.h"

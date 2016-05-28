@@ -1,5 +1,5 @@
 /**************************************************************
- * Single operator functors used by the AROCK framework. It 
+ * Single operator functors used by the MOTAC framework. It 
  * includes the following three types of operators:
  *   1) proximal operator;
  *   2) projection to a simple set;
@@ -48,8 +48,8 @@
  *
  *************************************************************/
 
-#ifndef AROCK_INCLUDE_OPERATORS_H
-#define AROCK_INCLUDE_OPERATORS_H
+#ifndef MOTAC_INCLUDE_OPERATORS_H
+#define MOTAC_INCLUDE_OPERATORS_H
 #include "constants.h"
 #include "matrices.h"  // matrices library
 #include "algebra.h"   // linear algebra library
