@@ -1,28 +1,24 @@
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+*~
+*.pyc
+arock-new/include/*~
 
-# Precompiled Headers
-*.gch
-*.pch
+# Ignore any executables
+bin/*
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
+# Ignore Mac specific files
+.DS_Store
 
-# Fortran module files
-*.mod
 
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
+matlab/*.pdf
+matlab/*_t*.m
 
-# Executables
-*.exe
-*.out
-*.app
+# Ignore the executables in the test folder
+test/*.exe
+
+# Ignore build files for docs
+doc/build/*
+doc/build/*/*
+doc/build/*/*/*
+doc/build/*/*/*/*
+
+data/*

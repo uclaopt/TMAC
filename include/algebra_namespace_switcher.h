@@ -1,0 +1,8 @@
+#ifndef AROCK_INCLUDE_ALGEBRA_NAMESPACE_SWITCHER_H
+#define AROCK_INCLUDE_ALGEBRA_NAMESPACE_SWITCHER_H
+
+using namespace BLASAlgebra;
+
+
+
+#endif

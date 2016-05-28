@@ -1,0 +1,5 @@
+#ifndef AROCK_INCLUDE_NIST_SPBLAS_H
+#define AROCK_INCLUDE_NIST_SPBLAS_H
+
+
+#endif
