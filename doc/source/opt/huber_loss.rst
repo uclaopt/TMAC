@@ -1,6 +1,6 @@
 Huber loss
 ======================
-We apply ARock to minimize the following Huber loss
+We apply MOTAC to minimize the following Huber loss
 
 .. math::
    \min_x f_\delta(Ax-b),
@@ -17,7 +17,7 @@ where :math:`A` is an :math:`m` by :math:`n` matrix and :math:`f_\delta(y)=\sum_
    \end{array}\right.
    \end{equation}
    
-We solve the problem with ARock by using gradient descent.
+We solve the problem with MOTAC by using gradient descent.
 
 
 Data preparation
@@ -54,7 +54,7 @@ You can expect to get output similar to the following::
   Parameter settings:
   ---------------------------------
   Problem size:               1000
-  ARock step size:            0.5
+  MOTAC step size:            0.5
   Operator step size:         0.5
   Use controller:             false
   ---------------------------------

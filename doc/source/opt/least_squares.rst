@@ -1,11 +1,11 @@
 Least squares
 ======================
-We apply ARock to solve the following least squares problem
+We apply MOTAC to solve the following least squares problem
 
 .. math::
    \min_x \frac{1}{2}\|Ax-b\|^2,
 
-where :math:`A` is an :math:`m` by :math:`n` matrix. We solve the problem with ARock by using gradient descent.
+where :math:`A` is an :math:`m` by :math:`n` matrix. We solve the problem with MOTAC by using gradient descent.
 
 
 Data preparation
@@ -42,7 +42,7 @@ You can expect to get output similar to the following::
   Parameter settings:
   ---------------------------------
   Problem size:               1000
-  ARock step size:            0.5
+  MOTAC step size:            0.5
   Operator step size:         0.8
   Use controller:             false
   ---------------------------------

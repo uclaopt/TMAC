@@ -5,7 +5,7 @@ We consider the following special QCQP problem:
 .. math::
    \min_x -\frac{1}{2} x^T Q x + b^T x + d, ~\text{s.t.}~ \|x\|_2 \leq 1
 
-where $Q$ is a symmetric positive definite matrix. We solve the problem with ARock by using backward-forward splitting.
+where $Q$ is a symmetric positive definite matrix. We solve the problem with MOTAC by using backward-forward splitting.
 
 
 Usage
@@ -32,7 +32,7 @@ You can expect to get output similar to the following::
   Parameter settings:
   ---------------------------------
   Problem size:               100
-  ARock step size:            0.5
+  MOTAC step size:            0.5
   Operator step size:         0.05
   Use controller:             false
   ---------------------------------

@@ -11,7 +11,7 @@ Committers are people who have made substantial contribution to the project and 
 * [Brent Edmunds] (https://github.com/BrentEdmunds)
   - Brent is the initiator of MOTAC, and contributes to the design of the system. He is also the ninja behind controller.
 
-* [Zhimin Peng] (https://github.com/ZhiminPeng/arock-new)
+* [Zhimin Peng] (https://github.com/ZhiminPeng)
   - Zhimin is the initiator of MOTAC and provides the initial design and implementation of the engine.
 
 
