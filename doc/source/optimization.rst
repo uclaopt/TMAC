@@ -1,6 +1,6 @@
 Optimization
 **************
-ARock currently supports solving convex optimization problems with operator splitting methods. We provided a few examples, such as gradient descent for least squares, forward-backward splitting for regularized empirical risk minimization.
+MOTAC currently supports solving convex optimization problems with operator splitting methods. We provided a few examples, such as gradient descent for least squares, forward-backward splitting for regularized empirical risk minimization.
 
 
 .. toctree::

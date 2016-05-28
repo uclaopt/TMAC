@@ -1,6 +1,6 @@
-Contributors of ARock
+Contributors of MOTAC
 =======================
-ARock has been developed by a community of people who are interested in asynchronous parallel algorithms.
+MOTAC has been developed by a community of people who are interested in asynchronous parallel algorithms.
 We welcome patches. The following is a list of contributors.
 
 
@@ -9,15 +9,15 @@ Committers
 Committers are people who have made substantial contribution to the project and being active.
 
 * [Brent Edmunds] (https://github.com/BrentEdmunds)
-  - Brent is the initiator of ARock, and contributes to the design of the system. He is also the ninja behind controller.
+  - Brent is the initiator of MOTAC, and contributes to the design of the system. He is also the ninja behind controller.
 
 * [Zhimin Peng] (https://github.com/ZhiminPeng/arock-new)
-  - Zhimin is the initiator of ARock and provides the initial design and implementation of the engine.
+  - Zhimin is the initiator of MOTAC and provides the initial design and implementation of the engine.
 
 
 List of Contributors
 ---------------------
-* [Full List of Contributors](https://github.com/ZhiminPeng/arock-new/CONTRIBUTOR.md)
+* [Full List of Contributors](https://github.com/uclaopt/MOTAC/blob/master/CONTRIBUTORS.md)
   - To contributors: please add your name to the list when you submit a patch to the project:)
 
 * [Tianyu Wu] (https://github.com/TianyuWu89)

@@ -1,6 +1,6 @@
 API
 ****
-ARock provide APIs for C++, Python, Matlab, and Julia.
+MOTAC provide APIs for C++, Python, Matlab, and Julia.
 
 .. toctree::
    :maxdepth: 1

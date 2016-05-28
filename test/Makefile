@@ -1,5 +1,5 @@
 #
-# Unittests for ARock related functions
+# Unittests for MOTAC related functions
 # 
 
 # Points to the root of Google Test, relative to where this file is.
