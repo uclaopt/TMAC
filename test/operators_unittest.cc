@@ -327,7 +327,7 @@ TEST(ProximalElasticNetTest, Constructor) {
   // default constructor
   prox_elastic_net p_en;
   EXPECT_DOUBLE_EQ(p_en.step_size, 0.);
-  EXPECT_DOUBLE_EQ(p_en.weight_1, 1.);
+  EXPECT_DOUBLE_EQ(p_en.weight, 1.);
   EXPECT_DOUBLE_EQ(p_en.weight_2, 1.);
 
   // constructor initialized by step_size
@@ -337,10 +337,10 @@ TEST(ProximalElasticNetTest, Constructor) {
 
 
   // constructor initialized by step_size and weights
-  double weight_1 = 9.99, weight_2 = 9.99;
-  prox_elastic_net p3(step_size, weight_1, weight_2);
+  double weight = 9.99, weight_2 = 9.99;
+  prox_elastic_net p3(step_size, weight, weight_2);
   EXPECT_DOUBLE_EQ(p3.step_size, step_size);
-  EXPECT_DOUBLE_EQ(p3.weight_1, weight_1);
+  EXPECT_DOUBLE_EQ(p3.weight, weight);
   EXPECT_DOUBLE_EQ(p3.weight_2, weight_2);  
   
 }
