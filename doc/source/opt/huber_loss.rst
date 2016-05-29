@@ -28,11 +28,11 @@ We minimize the Huber loss with dense matrix in matrix market format, and sparse
 
 Usage
 ---------
-In the bin folder, the executable file :cpp:type:`arock_gd_huber` minimizes the Huber loss::
+In the bin folder, the executable file :cpp:type:`motac_gd_huber` minimizes the Huber loss::
 
-  The usage for arock_gd_huber is::
+  The usage for motac_gd_huber is::
 
-    ./arock_gd_huber [options] 
+    ./motac_gd_huber [options] 
                -data       < matrix market file for A >
                -label      < matrix market file for b > 
                -nthread    < total number of threads, default: 1. > 
@@ -43,7 +43,7 @@ Example
 
 You can run the following command in the test directory to minimize the Huber loss for the large dense dataset::
 
-  ./bin/arock_gd_huber -data ./data/ds_large_A.mtx -label ./data/ds_large_b.mtx -epoch 100 -nthread 2 -lambda 1.
+  ./bin/motac_gd_huber -data ./data/ds_large_A.mtx -label ./data/ds_large_b.mtx -epoch 100 -nthread 2 -lambda 1.
 
 .. note::
 

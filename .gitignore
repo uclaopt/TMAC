@@ -1,6 +1,6 @@
 *~
 *.pyc
-arock-new/include/*~
+MOTAC/include/*~
 
 # Ignore any executables
 bin/*

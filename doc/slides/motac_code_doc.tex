@@ -370,7 +370,7 @@ struct ForwardBackwardSplitting {
 \end{frame}
 
 \begin{frame}[fragile]{Worker}
-Worker takes a splitting scheme, and a range of indexes, then runs \texttt{params->max\_itrs} of epochs. Other updating orders can be achieved through modifying the \texttt{worker} and the \texttt{AROCK} kernel.
+Worker takes a splitting scheme, and a range of indexes, then runs \texttt{params->max\_itrs} of epochs. Other updating orders can be achieved through modifying the \texttt{worker} and the \texttt{MOTAC} kernel.
 \begin{lstlisting}
 template<typename Splitting>
 void worker(Splitting algorithm, 

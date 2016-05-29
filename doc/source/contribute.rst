@@ -4,14 +4,14 @@ We welcome patches. If you plan to contribute a patch, you need to write tests f
 
 Setup the repository
 =====================
-1. Fork the arock-new `repository <https://github.com/ZhiminPeng/arock-new>`_ reporsitory;
-2. Open a Terminal to clone the arock-new project to your machine::
+1. Fork the MOTAC `repository <https://github.com/ZhiminPeng/MOTAC>`_ reporsitory;
+2. Open a Terminal to clone the MOTAC project to your machine::
 
-     git clone https://github.com/YOUR-USERNAME/arock-new
+     git clone https://github.com/YOUR-USERNAME/MOTAC
 
 3. Config the remote repository::
 
-     git remote add upstream https://github.com/ZhiminPeng/arock-new
+     git remote add upstream https://github.com/ZhiminPeng/MOTAC
 
 4. Sync with the up-to-date code::
 
@@ -33,7 +33,7 @@ Create pull request
      
      git push upstream YOUR-BRANCH-NAME
 
-4. Go to the remote `repo <https://github.com/ZhiminPeng/arock-new>`_ page, you will see a message that ask you to create a repo.
+4. Go to the remote `repo <https://github.com/ZhiminPeng/MOTAC>`_ page, you will see a message that ask you to create a repo.
 
 5. Create the pull request, and add sufficient information to describe your modifications.
      
@@ -56,7 +56,7 @@ If you add new features to the codebase, you are also required to update the doc
 
 Applications
 =============
-Applications and demonstration examples are in the `apps <https://github.com/ZhiminPeng/arock-new/tree/master/apps>`_ folder. Source code for new applications should be added here.
+Applications and demonstration examples are in the `apps <https://github.com/ZhiminPeng/MOTAC/tree/master/apps>`_ folder. Source code for new applications should be added here.
 
 
 Code style

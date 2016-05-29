@@ -10,11 +10,11 @@ where $Q$ is a symmetric positive definite matrix. We solve the problem with MOT
 
 Usage
 ---------
-In the bin folder, the executable file :cpp:type:`arock_bfs_l2_ball_qp` solves the above problem.
+In the bin folder, the executable file :cpp:type:`motac_bfs_l2_ball_qp` solves the above problem.
 
-  The usage for arock_prs_demo is::
+  The usage for motac_prs_demo is::
 
-    ./arock_bfs_l2_ball [options] 
+    ./motac_bfs_l2_ball [options] 
                -nthread       < total number of threads, default: 1. > 
                -epoch         < total number of epochs, default: 10. > 
 	       -problem_size  < the dimension of the problem, default: 0 >
@@ -24,7 +24,7 @@ Example
 
 You can run the following command in the test directory to solve the l1 regularized least square problem for the large dense dataset::
 
-  ./bin/arock_bfs_l2_ball_qp -nthread 1 -problem_size 100 -epoch 200
+  ./bin/motac_bfs_l2_ball_qp -nthread 1 -problem_size 100 -epoch 200
 
   
 You can expect to get output similar to the following::

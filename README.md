@@ -13,7 +13,7 @@ Welcome to **MOTAC**: A Multicore Optimization Toolbox of Asynchronous, Coordina
 
 
 ## Platforms
-Arock has been used on several platforms:
+MOTAC has been used on several platforms:
 
    * Linux
    * Mac OS X
@@ -22,7 +22,7 @@ Arock has been used on several platforms:
 
 ## Requirements
 MOTAC is designed to have fairly minimal requirements to build. Currently, we support Linux and Mac OS X. We will also make effort to
-support Windows. If you notice any problems on your platform, please create an [issue](https://github.com/ZhiminPeng/arock-new/issues/new).
+support Windows. If you notice any problems on your platform, please create an [issue](https://github.com/uclaopt/MOTAC/issues).
 
 ### Linux and Mac OS X Requirements
    * GNU-compatible Make

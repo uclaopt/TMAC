@@ -64,19 +64,19 @@ Download MOTAC
 ----------------
 The MOTAC package can be downloaded from the following link::
 
-  https://github.com/ZhiminPeng/arock-new
+  https://github.com/ZhiminPeng/MOTAC
   
   
 Build MOTAC
 ----------------
 On Linux or Unix machines with g++ and GNU make installed in standard locations, building MOTAC can be as simple as::
 
-  cd arock-new
+  cd MOTAC
   make
 
 The executable files are in the bin folder. The following is a sample of the executable files::
 
-  arock_fbs_l1_log [solver for regularized logistic regression with forward backward splitting]
+  motac_fbs_l1_log [solver for regularized logistic regression with forward backward splitting]
 
 
 
@@ -84,5 +84,5 @@ Test MOTAC
 -------------------------
 Once MOTAC has been successfully compiled, it is a good idea to verify that the executable files are functioning properly. To test MOTAC for l1 regularized logistic regression problem, run the following commands::
 
-  ./bin/arock_fbs_l1_log -data ./data/rcv1_train.svm -epoch 10 -nthread 2 -lambda 1.
+  ./bin/motac_fbs_l1_log -data ./data/rcv1_train.svm -epoch 10 -nthread 2 -lambda 1.
 

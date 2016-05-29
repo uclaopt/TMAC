@@ -15,11 +15,11 @@ We implement the MOTAC linear equation solver  with dense matrix in matrix marke
 
 Usage
 ---------
-In the bin folder, the executable file :cpp:type:`arock_jacobi` solves the linear equationm:
+In the bin folder, the executable file :cpp:type:`motac_jacobi` solves the linear equationm:
 
-  The usage for arock_jacobi is::
+  The usage for motac_jacobi is::
 
-    ./arock_jacobi [options] 
+    ./motac_jacobi [options] 
                -data       < matrix market file for A >
                -label      < matrix market file for b > 
                -nthread    < total number of threads, default: 1. > 
@@ -30,7 +30,7 @@ Example
 
 You can run the following command in the test directory to solve the linear equation for the dense dataset::
 
-  ./bin/arock_jacobi -data ./data/ds_A.mtx -label ./data/ds_b.mtx -epoch 10 -nthread 2.
+  ./bin/motac_jacobi -data ./data/ds_A.mtx -label ./data/ds_b.mtx -epoch 10 -nthread 2.
 
 .. note::
 
