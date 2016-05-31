@@ -1,50 +1,11 @@
 /**************************************************************
  * Single operator functors used by the MOTAC framework. It 
  * includes the following three types of operators:
+ *
  *   1) proximal operator;
  *   2) projection to a simple set;
  *   3) forward operator for common loss functions.
  *
- * A prototype of the operator is the following. You can use
- * this to add more operators to the file
- *
- *   struct functor_name {
- *     // the step_size that associated with the operator  
- *     double step_size;
- *     // weight on the original function, e.g., f(x) = weight ||x||_1
- *     double weight;      
- *
- *   // returns the operator evaluated on v at the given index
- *   double operator() (Vector* v, int index) {
- *
- *   }
- *   // returns the operator evaluated on v at the given index
- *   double operator() (double val, int index) {
- *
- *   }
- *   // 
- *   void operator() (Vector* v_in, Vector* v_out) {
- *
- *   }
- *
- *   // (Optional) update the cached variables, it 
- *   // takes the old x_i and new x_i, updated at index.
- *   void update_cache_vars (double old_x_i, double new_x_i, int index) {
- *
- *   }
- *   // update the step size. The step size might be
- *   // changed during the iterative process
- *   void update_step_size (double step_size_) {
- *     step_size = step_size_;
- *   }
- *
- *   functor_name (double step_size_, double weight_ = 1.) :
- *       step_size(step_size_), weight(weight_) {}
- *
- *   // default constructor
- *   functor_name () : step_size(0.), weight(1.) {}
- *
- * };
  *
  *************************************************************/
 
@@ -56,7 +17,6 @@
 #include "util.h"      // utility functions
 #include <math.h>      // for fabs
 #include "algebra_namespace_switcher.h"
-
 
 class Operator {
   
@@ -74,6 +34,11 @@ public:
   }
 
   void update_cache_vars(double old_x_i, double new_x_i, int index) {
+    
+  }
+
+  //update block of cache variables based upon rank of calling thread
+  void update_cache_vars(Vector* x, int rank, int num_threads){
     
   }
 
@@ -115,7 +80,7 @@ public:
     }
   }
   
-  double operator() (double val) {
+  double operator() (double val, int index = 0) {
     double threshold = step_size * weight;
     if (val > threshold) {
       return val - threshold;
@@ -852,6 +817,17 @@ public:
     add(Atx, A, index, -old_x_i + new_x_i);
   }
 
+  void update_cache_vars(Vector* x, int rank, int num_threads){
+    int m = At->rows(); //y=A'*x
+    int block_size = m/num_threads;
+    int start_idx = rank*(block_size);
+    int end_idx = (rank == num_threads-1)? m : start_idx+block_size;
+    for(int iter=start_idx; iter != end_idx; ++iter){
+      (*Atx)[iter]=dot(At, x, iter);
+    }
+  }
+  
+
   forward_grad_for_square_loss () : Operator() {}
   forward_grad_for_square_loss (double l,double w=1.) : Operator(l, w) {}
   forward_grad_for_square_loss (Mat* A_, Vector* b_, Vector* Atx_, double step_size_ = 1., double weight_=1.) : Operator(step_size_, weight_) {
@@ -940,6 +916,16 @@ public:
     add(Ax, At, index, -old_x_i + new_x_i);
   }
 
+  void update_cache_vars(Vector* x, int rank, int num_threads) {
+    int m = At->rows(); //y=A'*x
+    int block_size = m / num_threads;
+    int start_idx = rank * block_size;
+    int end_idx = (rank == num_threads - 1) ? m : start_idx + block_size;
+    for (int iter = start_idx; iter != end_idx; ++iter){
+      (*Atx)[iter] = dot(At, x, iter);
+    }
+  }
+  
   forward_grad_for_dual_svm () : Operator() {}
   forward_grad_for_dual_svm (double l,double w=1.) : Operator() {}
   
@@ -1016,6 +1002,16 @@ public:
   
   void update_cache_vars(double old_x_i, double new_x_i, int index) {
     add(Atx, A, index, -old_x_i + new_x_i);
+  }
+
+  void update_cache_vars(Vector* x, int rank, int num_threads) {
+    int m = At->rows(); //y=A'*x
+    int block_size = m / num_threads;
+    int start_idx = rank * block_size;
+    int end_idx = (rank == num_threads - 1) ? m : start_idx + block_size;
+    for (int iter = start_idx; iter != end_idx; ++iter){
+      (*Atx)[iter] = dot(At, x, iter);
+    }
   }
 
   forward_grad_for_log_loss () : Operator() {}
@@ -1193,7 +1189,6 @@ public:
   Vector a1, a2, a3, a4, tild_a1, tild_a2;
   double w1, w2, w3, w4;
 
-  
   double operator() (Vector* x, int index) {
 
     w1 = dot(a1, *x) - b1;
