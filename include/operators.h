@@ -18,6 +18,10 @@
 #include <math.h>      // for fabs
 #include "algebra_namespace_switcher.h"
 
+/***************************
+ * base class for operators
+ ***************************/
+
 class Operator {
   
 public:
@@ -29,7 +33,7 @@ public:
   double operator() (double val, int index = 0) {}
   void operator() (Vector* v_in, Vector* v_out) {}    
 
-  void update_step_size (double step_size_) {
+  void update_step_size(double step_size_) {
     step_size = step_size_;
   }
 
@@ -37,13 +41,14 @@ public:
     
   }
 
-  //update block of cache variables based upon rank of calling thread
-  void update_cache_vars(Vector* x, int rank, int num_threads){
+  // update block of cache variables based upon rank of calling thread
+  // this is called in sync-parallel driver
+  void update_cache_vars(Vector* x, int rank, int num_threads) {
     
   }
 
-  Operator (double step_size_, double weight_ = 1.) : step_size(step_size_), weight(weight_) {}
-  Operator () : step_size(0.), weight(1.) {}
+  Operator(double step_size_, double weight_ = 1.) : step_size(step_size_), weight(weight_) {}
+  Operator() : step_size(0.), weight(1.) {}
   
 };
 
@@ -585,7 +590,9 @@ public:
  *********************************************/
 // TODO: add a maintain ||x|| version
 class proj_l2_ball : public Operator {
+
 public:
+
   double radius;
   
   // operator that takes a vector and an index
@@ -681,7 +688,9 @@ public:
  */
 //TODO:  add a maintain ||x|| version
 class proj_prob_simplex : public Operator {
+
 public:  
+
   // operator that takes a vector and an index
   // running time O(n\log n)
   // Laurent Condat, “Fast projection onto the simplex and the L1 ball,” Mathematical Programming, pp. 1–11, 2015.
@@ -785,7 +794,8 @@ public:
   
   Mat* A;
   Vector *b, *Atx;  
-
+  Mat* At; // this is for the sync-parallel stuff
+  
   double operator() (Vector* x, int index) {
     // calculate the forward step
     double A_iAtx = dot(A, Atx, index);
@@ -827,13 +837,15 @@ public:
     }
   }
   
-
   forward_grad_for_square_loss () : Operator() {}
   forward_grad_for_square_loss (double l,double w=1.) : Operator(l, w) {}
-  forward_grad_for_square_loss (Mat* A_, Vector* b_, Vector* Atx_, double step_size_ = 1., double weight_=1.) : Operator(step_size_, weight_) {
+  forward_grad_for_square_loss (Mat* A_, Vector* b_, Vector* Atx_,
+                                double step_size_ = 1., double weight_ = 1.,
+                                Mat* At_ = nullptr) : Operator(step_size_, weight_) {
     A = A_;
     b = b_;
     Atx = Atx_;
+    At = At_;
   }
   
 };
@@ -892,7 +904,8 @@ public:
   
   Mat* At;
   Vector* Ax;
-
+  Mat* A; // this is for sync-parallel
+  
   double operator() (Vector* x, int index) {
     double At_i_Ax = dot(At, Ax, index);
 
@@ -929,9 +942,10 @@ public:
   forward_grad_for_dual_svm () : Operator() {}
   forward_grad_for_dual_svm (double l,double w=1.) : Operator() {}
   
-  forward_grad_for_dual_svm (Mat* At_, Vector* Ax_, double step_size_ = 1., double weight_ = 1.) : Operator(step_size_, weight_){
+  forward_grad_for_dual_svm (Mat* At_, Vector* Ax_, double step_size_ = 1., double weight_ = 1., Mat* A_ = nullptr) : Operator(step_size_, weight_){
     At = At_;
     Ax = Ax_;
+    A = A_;
   }
   
 };
@@ -992,6 +1006,8 @@ public:
   Mat* A;
   Vector *b, *Atx;  
 
+  Mat* At; // this is for sync-parallel
+  
   double operator() (Vector* x, int index) {
     // calculate the forward step
     double A_iAtx = dot(A, Atx, index);
@@ -1017,10 +1033,13 @@ public:
   forward_grad_for_log_loss () : Operator() {}
   forward_grad_for_log_loss (double step_size_, double weight_=1.) : Operator(step_size_, weight_) {}
 
-  forward_grad_for_log_loss (Mat* A_, Vector* b_, Vector* Atx_, double step_size_ = 1., double weight_=1.) : Operator(step_size_, weight_){
+  forward_grad_for_log_loss (Mat* A_, Vector* b_,
+                             Vector* Atx_, double step_size_ = 1.,
+                             double weight_=1., Mat* At_ = nullptr) : Operator(step_size_, weight_){
     A = A_;
     b = b_;
     Atx = Atx_;
+    At = At_;
   }
 
 };
@@ -1031,10 +1050,13 @@ public:
 // x + step_size * weight * sum_i b_i max(0, 1 - b_i a_i'x)) * a_i
 template <typename Mat>
 class forward_grad_for_square_hinge_loss : public Operator {
+
 public:
+
   Mat* A;
   Vector *b, *Atx;  
-
+  Mat* At;
+  
   double operator() (Vector* x, int index) {
     // calculate the forward step
     int m = Atx->size();
@@ -1075,11 +1097,13 @@ public:
 
   forward_grad_for_square_hinge_loss () : Operator() {}
   forward_grad_for_square_hinge_loss (double l,double w=1.) : Operator(l, w) {}
-
-  forward_grad_for_square_hinge_loss (Mat* A_, Vector* b_, Vector* Atx_, double step_size_ = 1., double weight_=1.) : Operator(step_size_, weight_) {
+  forward_grad_for_square_hinge_loss (Mat* A_, Vector* b_,
+                                      Vector* Atx_, double step_size_ = 1.,
+                                      double weight_ = 1., Mat* At_) : Operator(step_size_, weight_) {
     A = A_;
     b = b_;
     Atx = Atx_;
+    At = At_;
   }
   
 };
@@ -1106,6 +1130,8 @@ public:
   Mat* A;
   Vector *b, *Atx;  
   Vector temp;
+
+  Mat* At; // this is for sync-parallel
   
   double operator() (Vector* x, int index) {
     // calculate the forward step
@@ -1162,13 +1188,17 @@ public:
 
   forward_grad_for_huber_loss () : Operator() {}
 
-  forward_grad_for_huber_loss (Mat* A_, Vector* b_, Vector* Atx_, double step_size_ = 1., double weight_=1., double delta_ = 1.) : Operator(step_size_, weight_) {
+  forward_grad_for_huber_loss (Mat* A_, Vector* b_, Vector* Atx_,
+                               double step_size_ = 1., double weight_=1.,
+                               double delta_ = 1., Mat* At_ = nullptr) : Operator(step_size_, weight_) {
     A = A_;
     b = b_;
     Atx = Atx_;
     temp = Vector(A->cols(),0.);
     delta = delta_;
+    At = At_;
   }
+  
 };
 
 
@@ -1177,6 +1207,7 @@ public:
 //   http://arxiv.org/pdf/1601.00863v2.pdf
 template <typename Mat>
 class portfolio_3s : public Operator {
+
 public:
   
   Mat* Q;
