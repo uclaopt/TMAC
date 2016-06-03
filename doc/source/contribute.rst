@@ -1,17 +1,17 @@
-Contribute to MOTAC
+Contribute to TMAC
 ********************
 We welcome patches. If you plan to contribute a patch, you need to write tests for any new code. Changes should be verified to not break existing tests before they are submitted for review. We use Google test for unit testing.
 
 Setup the repository
 =====================
-1. Fork the MOTAC `repository <https://github.com/ZhiminPeng/MOTAC>`_ reporsitory;
-2. Open a Terminal to clone the MOTAC project to your machine::
+1. Fork the TMAC `repository <https://github.com/ZhiminPeng/TMAC>`_ reporsitory;
+2. Open a Terminal to clone the TMAC project to your machine::
 
-     git clone https://github.com/YOUR-USERNAME/MOTAC
+     git clone https://github.com/YOUR-USERNAME/TMAC
 
 3. Config the remote repository::
 
-     git remote add upstream https://github.com/ZhiminPeng/MOTAC
+     git remote add upstream https://github.com/ZhiminPeng/TMAC
 
 4. Sync with the up-to-date code::
 
@@ -33,7 +33,7 @@ Create pull request
      
      git push upstream YOUR-BRANCH-NAME
 
-4. Go to the remote `repo <https://github.com/ZhiminPeng/MOTAC>`_ page, you will see a message that ask you to create a repo.
+4. Go to the remote `repo <https://github.com/ZhiminPeng/TMAC>`_ page, you will see a message that ask you to create a repo.
 
 5. Create the pull request, and add sufficient information to describe your modifications.
      
@@ -56,7 +56,7 @@ If you add new features to the codebase, you are also required to update the doc
 
 Applications
 =============
-Applications and demonstration examples are in the `apps <https://github.com/ZhiminPeng/MOTAC/tree/master/apps>`_ folder. Source code for new applications should be added here.
+Applications and demonstration examples are in the `apps <https://github.com/ZhiminPeng/TMAC/tree/master/apps>`_ folder. Source code for new applications should be added here.
 
 
 Code style
@@ -66,9 +66,9 @@ We follow Google's C++ style guide on C++ code.
 
 Language independent features
 =============================
-If you want to implement MOTAC in a different programming language or add interfaces for other programming languages, the following features should be taken into consideration:
+If you want to implement TMAC in a different programming language or add interfaces for other programming languages, the following features should be taken into consideration:
 
-    1. Fast-indexing. The major data structures for MOTAC are dense vector, dense matrix, and sparse matrix. Fast-indexing means that either the rows or the cols in a matrix should be accessed quickly.
+    1. Fast-indexing. The major data structures for TMAC are dense vector, dense matrix, and sparse matrix. Fast-indexing means that either the rows or the cols in a matrix should be accessed quickly.
     2. Fast level 1 BLAS. Level 1 BLAS operations are the main computations in each iteration. Fast implementation should be used.
     3. Multi-threading. The programming language should provide a threading library that has the following features:
         * spawn a given number of threads;

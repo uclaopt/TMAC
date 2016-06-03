@@ -1,6 +1,6 @@
 API
 ****
-MOTAC provide APIs for C++, Python, Matlab, and Julia.
+TMAC provide APIs for C++, Python, Matlab, and Julia.
 
 .. toctree::
    :maxdepth: 1

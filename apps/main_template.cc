@@ -4,7 +4,7 @@
 #include "operators.h"
 #include "parameters.h"
 #include "splitting_schemes.h"
-#include "motac.h"
+#include "tmac.h"
 #include <thread>
 using namespace std;
 
@@ -27,7 +27,7 @@ int main() {
   // Step 5. (Optional) Define your controller
 
   
-  // Step 6. Call the MOTAC function
+  // Step 6. Call the TMAC function
 
 
   // Step 7. Save results to file

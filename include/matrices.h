@@ -21,8 +21,8 @@
  * Contact: zhimin.peng@math.ucla.edu
  *********************************************************************************/
 
-#ifndef MOTAC_INCLUDE_MATRICES_H
-#define MOTAC_INCLUDE_MATRICES_H
+#ifndef TMAC_INCLUDE_MATRICES_H
+#define TMAC_INCLUDE_MATRICES_H
 #include <algorithm>
 #include <cmath>
 #include <string>

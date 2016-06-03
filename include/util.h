@@ -4,8 +4,8 @@
  *
  */
 
-#ifndef MOTAC_INCLUDE_UTIL_H
-#define MOTAC_INCLUDE_UTIL_H
+#ifndef TMAC_INCLUDE_UTIL_H
+#define TMAC_INCLUDE_UTIL_H
 #include <iostream>
 #include <fstream>
 #include <iomanip>

@@ -1,5 +1,5 @@
-#ifndef MOTAC_INCLUDE_CONTROLLER_H
-#define MOTAC_INCLUDE_CONTROLLER_H
+#ifndef TMAC_INCLUDE_CONTROLLER_H
+#define TMAC_INCLUDE_CONTROLLER_H
 
 #include "parameters.h"
 #include "splitting_schemes.h"
@@ -51,17 +51,17 @@ struct Controller {
   std::atomic<int> max_delay; //maximum delay experienced
   size_t update_epoch; //how many updates to a coordinate before we determine a new stepsize
   size_t num_worker; //num of worker threads
-  double motac_max_stepsize; 
-  double motac_min_stepsize;
+  double tmac_max_stepsize; 
+  double tmac_min_stepsize;
   std::vector<size_t> coord_num_updates; //stores the last time a coordinate was updated
   unordered_map< std::thread::id ,worker_info<T> > worker_state; //map from worker threads to their state
 
   //this constructor is here for legacy reasons, deprecate soon
   Controller () { }
-  Controller (const Controller& c) : epoch_iter(c.epoch_iter.load()), total_iter(c.total_iter.load()), average_fpr(c.average_fpr), window_size(c.window_size), old_fpr_norm(c.old_fpr_norm), update_epoch(c.update_epoch), coord_num_updates(c.coord_num_updates), worker_state(c.worker_state), num_worker(c.num_worker), motac_max_stepsize(c.motac_max_stepsize), motac_min_stepsize(c.motac_min_stepsize), max_delay(c.max_delay.load()) { }
+  Controller (const Controller& c) : epoch_iter(c.epoch_iter.load()), total_iter(c.total_iter.load()), average_fpr(c.average_fpr), window_size(c.window_size), old_fpr_norm(c.old_fpr_norm), update_epoch(c.update_epoch), coord_num_updates(c.coord_num_updates), worker_state(c.worker_state), num_worker(c.num_worker), tmac_max_stepsize(c.tmac_max_stepsize), tmac_min_stepsize(c.tmac_min_stepsize), max_delay(c.max_delay.load()) { }
   
-  //note motac_max_stepsize/min_stepsize should become part of the struct PARAM in future versions along with window_size
-  Controller (Params p) : epoch_iter(0), total_iter(0), window_size(.8), old_fpr_norm(std::numeric_limits<double>::max()), update_epoch(p.problem_size / 4), num_worker(0), motac_max_stepsize(100), motac_min_stepsize(.000001), average_fpr(p.problem_size,0), coord_num_updates(p.problem_size,0), max_delay(0) {
+  //note tmac_max_stepsize/min_stepsize should become part of the struct PARAM in future versions along with window_size
+  Controller (Params p) : epoch_iter(0), total_iter(0), window_size(.8), old_fpr_norm(std::numeric_limits<double>::max()), update_epoch(p.problem_size / 4), num_worker(0), tmac_max_stepsize(100), tmac_min_stepsize(.000001), average_fpr(p.problem_size,0), coord_num_updates(p.problem_size,0), max_delay(0) {
     worker_state.reserve(p.total_num_threads+10);
   }
   
@@ -179,7 +179,7 @@ template<typename T> void Controller_loop(Controller<T>& controller) {
           
 	  auto& step = (it.second).scheme -> relaxation_step_size;
           if(!asdf) { std::cout << "step size " << step << std::endl; ++asdf;}
-          step = (1.5*step < controller.motac_max_stepsize) ? (1.5)*step : controller.motac_max_stepsize;
+          step = (1.5*step < controller.tmac_max_stepsize) ? (1.5)*step : controller.tmac_max_stepsize;
 	}
       }
       lock.unlock();
@@ -192,7 +192,7 @@ template<typename T> void Controller_loop(Controller<T>& controller) {
 	if( it.second.active.load() == true ) {
 	  auto& step = (it.second).scheme -> relaxation_step_size;
           if(!asdf) { std::cout << "step size " << step << std::endl; ++asdf;}          
-	  step = (step/2 > controller.motac_min_stepsize) ? step/2 : controller.motac_min_stepsize;
+	  step = (step/2 > controller.tmac_min_stepsize) ? step/2 : controller.tmac_min_stepsize;
 	}
       } 
       lock.unlock();

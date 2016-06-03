@@ -5,8 +5,8 @@
  */
 
 
-#ifndef MOTAC_INCLUDE_CONSTANTS_H
-#define MOTAC_INCLUDE_CONSTANTS_H
+#ifndef TMAC_INCLUDE_CONSTANTS_H
+#define TMAC_INCLUDE_CONSTANTS_H
 
 // default solver parameters settings
 

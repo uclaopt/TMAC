@@ -4,8 +4,8 @@
  *                                                                       
  ***********************************************************************/
 
-#ifndef MOTAC_INCLUDE_ALGEBRA_H
-#define MOTAC_INCLUDE_ALGEBRA_H
+#ifndef TMAC_INCLUDE_ALGEBRA_H
+#define TMAC_INCLUDE_ALGEBRA_H
 #include <string>
 #include <iomanip>
 #include "matrices.h"

@@ -1,5 +1,5 @@
-#ifndef MOTAC_INCLUDE_SPLITTING_SCHEMES_H
-#define MOTAC_INCLUDE_SPLITTING_SCHEMES_H
+#ifndef TMAC_INCLUDE_SPLITTING_SCHEMES_H
+#define TMAC_INCLUDE_SPLITTING_SCHEMES_H
 
 #include "operators.h"
 #include "parameters.h"
@@ -43,7 +43,7 @@ struct ProximalPointAlgorithm {
   
   void update_params(Params* params) {
     prox.update_step_size(params->get_step_size());
-    relaxation_step_size = params->get_motac_step_size();
+    relaxation_step_size = params->get_tmac_step_size();
   }
   
   void operator() (int index) {
@@ -81,7 +81,7 @@ struct GradientDescentAlgorithm {
 
   void update_params(Params* params) {
     forward.update_step_size(params->get_step_size());
-    relaxation_step_size = params->get_motac_step_size();
+    relaxation_step_size = params->get_tmac_step_size();
   }
 
   // update x[index] and update the maintained variables
@@ -129,7 +129,7 @@ struct ForwardBackwardSplitting {
     // TODO: forward and backward might use different step sizes
     forward.update_step_size(params->get_step_size());
     backward.update_step_size(params->get_step_size());
-    relaxation_step_size = params->get_motac_step_size();
+    relaxation_step_size = params->get_tmac_step_size();
   }
 
   double operator() (int index) {
@@ -142,7 +142,7 @@ struct ForwardBackwardSplitting {
 
     
     
-    double val = backward(forward_grad_at_idx);
+    double val = backward(forward_grad_at_idx, index);
 
         
     double S_i = old_x_at_idx - val;
@@ -183,7 +183,7 @@ struct BackwardForwardSplitting {
     // TODO: forward and backward might use different step sizes
     forward.update_step_size(params->get_step_size());
     backward.update_step_size(params->get_step_size());
-    relaxation_step_size = params->get_motac_step_size();
+    relaxation_step_size = params->get_tmac_step_size();
   }
 
 
@@ -244,7 +244,7 @@ struct PeacemanRachfordSplitting {
     // TODO: forward and backward might use different step sizes
     op1.update_step_size(params->get_step_size());
     op2.update_step_size(params->get_step_size());
-    relaxation_step_size = params->get_motac_step_size();
+    relaxation_step_size = params->get_tmac_step_size();
   }
 
   double operator() (int index) {

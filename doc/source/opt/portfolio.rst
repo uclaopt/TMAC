@@ -12,7 +12,7 @@ Assume that we have one unit of capital and :math:`n` assets to invest on. The :
    \end{array}
    \end{equation}
 
-where :math:`Q` is an :math:`n` by :math:`n` risk matrix. We solve the problem with MOTAC by using three operator splitting method. 
+where :math:`Q` is an :math:`n` by :math:`n` risk matrix. We solve the problem with TMAC by using three operator splitting method. 
 
 
 Data preparation
@@ -51,7 +51,7 @@ You can expect to get output similar to the following::
   Parameter settings:
   ---------------------------------
   Problem size:               1000
-  MOTAC step size:            0.5
+  TMAC step size:            0.5
   Operator step size:         0.0018
   Use controller:             false
   ---------------------------------

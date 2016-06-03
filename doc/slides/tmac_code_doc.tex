@@ -66,7 +66,7 @@
 
 \begin{document}
 
-\title{The Guide of the MOTAC Codebase}
+\title{The Guide of the TMAC Codebase}
 % \author{Zhimin Peng %(UCLA Math)%\\ Rice CAAM (by courtesy)
 % }
 %
@@ -111,7 +111,7 @@ $$x = Tx$$\pause
 \end{witemize}
 \end{frame}
 
-\begin{frame}{MOTAC\footnote{Peng-Xu-Yan-Y.'15}: Async-parallel coordinate update}
+\begin{frame}{TMAC\footnote{Peng-Xu-Yan-Y.'15}: Async-parallel coordinate update}
 
 \begin{itemize}
   \item $\cH = \cH_1 \times \cdots \times \cH_m$
@@ -153,7 +153,7 @@ where $S = I - T$.
 \item A customized and easy-to-use linear algebra library; 
 \item A rich set of coordinate friendly operators (\textbf{17} operators);
 \item Several interfaces for common operator splitting schemes; 
-\item A rich set of applications built on top of MOTAC;
+\item A rich set of applications built on top of TMAC;
 \item A generic interface for controller;
 \item Matlab, Python and Julia interface (coming soon);
 \item Runs on Linux, Mac OS X and Windows;
@@ -351,7 +351,7 @@ struct ForwardBackwardSplitting {
   void update_params(Params* params) {                                                                                                                                               
     forward.update_step_size(params->get_step_size());                                                                                                                               
     backward.update_step_size(params->get_step_size());                                                                                                                              
-    relaxation_step_size = params->get_motac_step_size();                                                                                                                            
+    relaxation_step_size = params->get_tmac_step_size();                                                                                                                            
   }                                                                                                                                                                                  
   // make update to x[index], and update the cached variables                                                                                                                                                                                   
   double operator() (int index);                                                                                                                                          
@@ -370,7 +370,7 @@ struct ForwardBackwardSplitting {
 \end{frame}
 
 \begin{frame}[fragile]{Worker}
-Worker takes a splitting scheme, and a range of indexes, then runs \texttt{params->max\_itrs} of epochs. Other updating orders can be achieved through modifying the \texttt{worker} and the \texttt{MOTAC} kernel.
+Worker takes a splitting scheme, and a range of indexes, then runs \texttt{params->max\_itrs} of epochs. Other updating orders can be achieved through modifying the \texttt{worker} and the \texttt{TMAC} kernel.
 \begin{lstlisting}
 template<typename Splitting>
 void worker(Splitting algorithm, 
@@ -389,7 +389,7 @@ void worker(Splitting algorithm,
 \end{itemize}
 \end{frame}
 
-\begin{frame}{MOTAC}
+\begin{frame}{TMAC}
 Spawn a set of threads to execute the worker function and the controller loop function. 
 
 \end{frame}
@@ -434,7 +434,7 @@ $$ \min_{x} \frac{\lambda}{2} \|x\|^2 + \sum_{i=1}^m \max(0, 1 - b_i \cdot a_i^T
 \begin{frame}{Speedup test - baseline tests}
 \begin{itemize}
 \item Goal: test the speedup performance of a set of basic operations;
-\item They will serve as a performance guideline for applying MOTAC to different applications;
+\item They will serve as a performance guideline for applying TMAC to different applications;
 \item We implemented the following tests:
 \begin{itemize}
 \item dot product of two dense vectors;
@@ -511,7 +511,7 @@ $$ \min_{x} \frac{\lambda}{2} \|x\|^2 + \sum_{i=1}^m \max(0, 1 - b_i \cdot a_i^T
   
   \hline
  \end{tabular} }
-  \caption{\label{tab:log_time}Running times of  MOTAC for the $\ell_1$ regularized logistic regression on rcv1.}
+  \caption{\label{tab:log_time}Running times of  TMAC for the $\ell_1$ regularized logistic regression on rcv1.}
  \end{table}
 
 
@@ -538,9 +538,9 @@ $$ \min_{x} \frac{\lambda}{2} \|x\|^2 + \sum_{i=1}^m \max(0, 1 - b_i \cdot a_i^T
 %
 %\textbf{Acknowledgements:} NSF DMS
 %
-%\textbf{Reference}: Zhimin Peng, Yangyang Xu, Ming Yan, Wotao Yin. \href{http://www.math.ucla.edu/~wotaoyin/motac}{UCLA CAM 15-37}.
+%\textbf{Reference}: Zhimin Peng, Yangyang Xu, Ming Yan, Wotao Yin. \href{http://www.math.ucla.edu/~wotaoyin/tmac}{UCLA CAM 15-37}.
 %
-%\textbf{Website:} \url{https://github.com/ZhiminPeng/motac-new}
+%\textbf{Website:} \url{https://github.com/ZhiminPeng/tmac-new}
 %\end{frame}
 
 \end{document}

@@ -21,7 +21,7 @@ We provide print functions for :cpp:type:`Matrix`, :cpp:type:`SpMat` and :cpp:ty
 
 Read
 ====
-We support a variety of data formats. If you data format is not supported, you can either convert your data files to one of the following supported format, or you can add the corresponding data file loader to MOTAC. 
+We support a variety of data formats. If you data format is not supported, you can either convert your data files to one of the following supported format, or you can add the corresponding data file loader to TMAC. 
 
 
 Matrix market format
