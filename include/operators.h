@@ -6,7 +6,6 @@
  *   2) projection to a simple set;
  *   3) forward operator for common loss functions.
  *
- *
  *************************************************************/
 
 #ifndef MOTAC_INCLUDE_OPERATORS_H
@@ -21,24 +20,34 @@
 /***************************
  * base class for operators
  ***************************/
-
 class Operator {
 public:
   double step_size;
   double weight;
   
   double operator() (Vector* v, int index = 0) {}
-  double operator() (double val, int index = 0) {}
-  void operator() (Vector* v_in, Vector* v_out) {}    
+  
+  // TODO: this is kind of hacky. We need to figure a better way.
+  double operator() (double val, int index = 0) {
+    return DOUBLE_MARKER;    
+  }
+  
+  void operator() (Vector* v_in, Vector* v_out) {}
+
+  // update operator related step sizes
   void update_step_size(double step_size_) {
     step_size = step_size_;
   }
+
+  // update cache variables
   void update_cache_vars(double old_x_i, double new_x_i, int index) {
   }
+  
   // update block of cache variables based upon rank of calling thread
   // this is called in sync-parallel driver
   void update_cache_vars(Vector* x, int rank, int num_threads) {
   }
+  
   Operator(double step_size_, double weight_ = 1.) : step_size(step_size_), weight(weight_) {}
   Operator() : step_size(0.), weight(1.) {}
 };
@@ -158,10 +167,11 @@ public:
       return 0.;
     }
   }
-  // WARNING: THIS FUNCTION SHOULD NOT BE CALLED
+
   double operator() (double val, int index = 0) {
-    return DOUBLE_MARKER;
+    return Operator::operator()(val, index);
   }
+  
   void operator() (Vector* v_in, Vector* v_out) {
     double norm_v = norm(*v_in, 2);
     int len = v_in->size();
@@ -208,6 +218,7 @@ public:
       return val / (1. + step_size * weight);
     }
   }
+  
   double operator() (double val) {
     double threshold = step_size * weight * delta;
     if (val > delta + threshold) {
@@ -218,6 +229,7 @@ public:
       return val / (1. + step_size * weight);
     }
   }
+  
   void operator() (Vector* v_in, Vector* v_out) {
     // if debug, we check index is valid
     int len = v_in->size();
@@ -234,6 +246,7 @@ public:
       }
     }
   }
+  
   prox_huber (double step_size_, double weight_ = 1.,
               double delta_ = 1.) :
   Operator(step_size_, weight_), delta(delta_) {}
@@ -253,12 +266,13 @@ public:
     double val = (*v)[index];
     return 0.5 * (val + sqrt(val * val + 4. * weight * step_size));
   }
+  
   double operator() (double val) {
     return 0.5 * (val + sqrt(val * val + 4. * weight * step_size));
   }
-  // full update operator
+  
+  
   void operator() (Vector* v_in, Vector* v_out) {
-    // if debug, we check index is valid
     int len = v_in->size();
     double val;
     for (int i = 0; i < len; i++) {
@@ -266,6 +280,7 @@ public:
       (*v_out)[i] = 0.5 * (val + sqrt(val * val + 4. * weight * step_size));
     }
   }
+  
   prox_log_barrier (double step_size_, double weight_ = 1.) : Operator(step_size_, weight_) {}
   prox_log_barrier () : Operator() {}
 };
@@ -296,6 +311,7 @@ public:
       return 0.;
     }
   }
+  
   double operator() (double val) {
     double threshold = step_size * weight;
     double scale = 1. / (1. + step_size * weight_2);
@@ -307,7 +323,7 @@ public:
       return 0.;
     }
   }
-  // full update operator
+
   void operator() (Vector* v_in, Vector* v_out) {
     // if debug, we check index is valid
     int len = v_in->size();
@@ -324,6 +340,7 @@ public:
       }
     }
   }
+  
   prox_elastic_net (double step_size_, double weight_ = 1., double weight_2_ = 1.) :
   Operator(step_size_, weight_), weight_2(weight_2_) {}
   prox_elastic_net () : Operator(), weight_2(1.) {}
@@ -345,15 +362,18 @@ public:
   double operator() (Vector* v, int index) {
     return fmax((*v)[index], 0.);
   }
+  
   double operator() (double val, int index = 0) {
     return max(val, 0.);
   }
+  
   void operator() (Vector* v_in, Vector* v_out) {
     int len = v_in->size();
     for (int i = 0; i < len; i++) {
       (*v_out)[i] = fmax((*v_in)[i], 0.);
     }
   }
+  
   proj_positive_cone () : Operator() {}
   proj_positive_cone (double step_size_, double weight_ = 1.) : Operator(step_size_, weight_) {}
 };
@@ -369,9 +389,11 @@ public:
     double val = (*v)[index];
     return fmax((*lower)[index], fmin(val, (*upper)[index]));
   }
+  
   double operator() (double val, int index = 0) {
     return fmax((*lower)[index], fmin(val, (*upper)[index]));
   }
+  
   void operator() (Vector* v_in, Vector* v_out) {
     int len = v_in->size();
     double val;
@@ -380,6 +402,7 @@ public:
       (*v_out)[i] = fmax((*lower)[i], fmin(val, (*upper)[i]));
     }
   }
+  
   proj_box () : Operator() {}
   proj_box (Vector* lower_, Vector* upper_, double step_size_ = 1., double weight_ = 1.) :
   lower(lower_), upper(upper_), Operator(step_size_, weight_) {}
@@ -438,13 +461,10 @@ public:
       double temp;
       temp = fabs( (*v_in)[index] ) - theta;
       temp = temp > 0 ? temp : 0;
-
       return ((*v_in)[index] > 0 ? temp : -temp) ;  //notice if 0==(*v_in)[index], then 0==temp
     }
   }
-  double operator() (double val, int index = 0) {
-    return DOUBLE_MARKER;
-  }
+  
   void operator() (Vector* v_in, Vector* v_out) { 
     double  nrm1_v = 0.0;
     int len = v_in->size(), i = 0;
@@ -486,9 +506,15 @@ public:
       }
     }
   }
+
+  double operator() (double val, int index = 1) {
+    return Operator::operator()(val, index);
+  }
+  
   void update_radius(double radius_) {
     radius = radius_;
   }
+  
   // struct constructors
   proj_l1_ball() : Operator(), radius(1.) {}
   proj_l1_ball(double radius_, double step_size_=1., double weight_=1.) : radius(radius_),
@@ -514,9 +540,7 @@ public:
     double val = (*v)[index];
     return (nrm_v < radius) ? val : (val * radius / nrm_v);
   }
-  double operator() (double val, int index = 0) {
-    return DOUBLE_MARKER;
-  }
+  
   void operator() (Vector* v_in, Vector* v_out) {
     int len = v_in->size();
     double nrm_v = norm(*v_in);
@@ -526,9 +550,15 @@ public:
       (*v_out)[i] = (nrm_v < radius) ? val : (val * radius / nrm_v);
     }
   }
+
+  double operator() (double val, int index = 1) {
+    return Operator::operator()(val, index);
+  }
+  
   void update_radius (double radius_) {
     radius = radius_;
   }
+  
   proj_l2_ball() : Operator(), radius(1.) {}
   proj_l2_ball (double radius_, double step_size_=1., double weight_=1.) : radius(radius_),
       Operator(step_size_, weight_) {}
@@ -555,9 +585,7 @@ public:
     double residual = b - dot(*a, *v);
     return val + (residual / ata) * (*a)[index];
   }
-  double operator() (double val, int index = 0) {
-    return DOUBLE_MARKER;
-  }
+  
   void operator() (Vector* v_in, Vector* v_out) {
     int len = v_in->size();
     double residual = b - dot(*a, *v_in);
@@ -565,11 +593,17 @@ public:
       (*v_out)[i] = (*v_in)[i] + (residual / ata) * (*a)[i];
     }
   }
+
+  double operator() (double val, int index = 1) {
+    return Operator::operator()(val, index);
+  }
+  
   proj_hyperplane() : Operator() {
     a = NULL;
     b = 0.;
     ata = 0.;
   }
+  
   proj_hyperplane(Vector* a_, double b_, double step_size_ = 1., double weight_ = 1.) : Operator(step_size_, weight_) {
     a = a_;
     b = b_;
@@ -617,9 +651,11 @@ public:
     double temp = (*v_in)[index] - tau;
     return temp > 0 ? temp : 0;
   }
-  double operator() (double val, int index = 0) {
-    return DOUBLE_MARKER;
+  
+  double operator() (double val, int index = 1) {
+    return Operator::operator()(val, index);
   }
+  
   void operator() (Vector* v_in, Vector* v_out) { 
     int i, len = v_in->size();
     Vector u(len);
@@ -650,6 +686,7 @@ public:
       (*v_out)[i] = temp > 0 ? temp : 0;
     }
   }
+  
   proj_prob_simplex() : Operator() {}
   proj_prob_simplex(double step_size_, double weight_ = 1.) : Operator(step_size_, weight_) {}
 };
@@ -681,9 +718,7 @@ public:
     double forward_grad_at_i = (*x)[index] - weight * step_size * (A_iAtx - A_ib);
     return forward_grad_at_i;
   }
-  double operator() (double val, int index = 0) {
-    return DOUBLE_MARKER;
-  }
+  
   void operator() (Vector* v_in, Vector* v_out) {
     int m = A->rows(), n = A->cols();
     Vector Atv_in(m, 0.);
@@ -697,9 +732,15 @@ public:
       (*v_out)[i] = temp[i];
     }
   }
+
+  double operator() (double val, int index = 1) {
+    return Operator::operator()(val, index);
+  }
+
   void update_cache_vars(double old_x_i, double new_x_i, int index) {
     add(Atx, A, index, -old_x_i + new_x_i);
   }
+  
   void update_cache_vars(Vector* x, int rank, int num_threads){
     int m = At->rows(); //y=A'*x
     int block_size = m/num_threads;
@@ -709,6 +750,7 @@ public:
       (*Atx)[iter]=dot(At, x, iter);
     }
   }
+  
   forward_grad_for_square_loss () : Operator() {}
   forward_grad_for_square_loss (double l,double w=1.) : Operator(l, w) {}
   forward_grad_for_square_loss (Mat* A_, Vector* b_, Vector* Atx_,
@@ -738,9 +780,7 @@ public:
     double forward_grad_at_i = (*x)[index] - weight * step_size * (Q_ix + (*c)[index]);
     return forward_grad_at_i;
   }
-  double operator() (double val, int index = 0) {
-    return DOUBLE_MARKER;
-  }
+  
   void operator() (Vector* v_in, Vector* v_out) {
     int len = v_in->size();
     multiply(*Q, *v_in, *v_out);
@@ -748,6 +788,11 @@ public:
     scale(*v_out, -weight * step_size);
     add(*v_out, *v_in);
   }
+  
+  double operator() (double val, int index = 1) {
+    return Operator::operator()(val, index);
+  }
+  
   forward_grad_for_qp () : Operator() {}
   forward_grad_for_qp (double l,double w=1.) : Operator(l, w) {}
   forward_grad_for_qp (Mat* Q_, Vector* c_, double step_size_ = 1., double weight_=1.) : Operator(step_size_, weight_) {
@@ -774,9 +819,11 @@ public:
     double forward_grad_at_i = (*x)[index] - step_size * (At_i_Ax - 1.);
     return forward_grad_at_i;
   }
-  double operator() (double val, int index = 0) {
-    return DOUBLE_MARKER;
+
+  double operator() (double val, int index = 1) {
+    return Operator::operator()(val, index);
   }
+  
   void operator() (Vector* v_in, Vector* v_out) {
     int len = v_in->size();
     multiply(*At, *Ax, *v_out);
@@ -784,9 +831,11 @@ public:
     scale(*v_out, -step_size);
     add(*v_out, *v_in);
   }
+  
   void update_cache_vars(double old_x_i, double new_x_i, int index) {
     add(Ax, At, index, -old_x_i + new_x_i);
   }
+  
   void update_cache_vars(Vector* x, int rank, int num_threads) {
     int m = A->rows();
     int block_size = m / num_threads;
@@ -796,6 +845,7 @@ public:
       (*Ax)[iter] = dot(A, x, iter);
     }
   }
+  
   forward_grad_for_dual_svm () : Operator() {}
   forward_grad_for_dual_svm (double step_size_, double weight_ = 1.) : Operator(step_size_, weight_) {}
   forward_grad_for_dual_svm (Mat* At_, Vector* Ax_, double step_size_ = 1., double weight_ = 1., Mat* A_ = nullptr) : Operator(step_size_, weight_){
@@ -823,15 +873,18 @@ public:
     val = (*x)[index] + ((*b)[index] - A_ix) / (*A)(index, index);
     return val;
   }
-  double operator() (double val, int index = 0) {
-    return DOUBLE_MARKER;
-  }
+  
   void operator() (Vector* v_in, Vector* v_out) {
     int m = A->rows();
     for (int i=0; i<m; i++){
       (*v_out)[i] = (*v_in)[i] + ((*b)[i] - dot(A,v_in,i)) / (*A)(i, i);
     }
   }
+
+  double operator() (double val, int index = 1) {
+    return Operator::operator()(val, index);
+  }
+  
   linear_eqn_jacobi_operator () : Operator() {}
   linear_eqn_jacobi_operator (double l,double w=1.) : Operator(l, w) {}
   linear_eqn_jacobi_operator (Mat* A_, Vector* b_, double step_size_ = 1., double weight_=1.) : Operator(step_size_, weight_){
@@ -856,9 +909,20 @@ public:
     double forward_grad_at_i = (*x)[index] - weight * step_size * log_loss_gradient_at_idx(*A, *b, *Atx, index);
     return forward_grad_at_i;
   }
+
+  // TODO: need to implement this
+  double operator()(Vector* v_in, Vector* v_out) {
+
+  }
+   
+  double operator() (double val, int index = 1) {
+    return Operator::operator()(val, index);
+  }
+  
   void update_cache_vars(double old_x_i, double new_x_i, int index) {
     add(Atx, A, index, -old_x_i + new_x_i);
   }
+  
   void update_cache_vars(Vector* x, int rank, int num_threads) {
     int m = At->rows(); //y=A'*x
     int block_size = m / num_threads;
@@ -868,6 +932,7 @@ public:
       (*Atx)[iter] = dot(At, x, iter);
     }
   }
+  
   forward_grad_for_log_loss () : Operator() {}
   forward_grad_for_log_loss (double step_size_, double weight_=1.) : Operator(step_size_, weight_) {}
   forward_grad_for_log_loss (Mat* A_, Vector* b_,
@@ -901,9 +966,7 @@ public:
     double forward_grad_at_i = (*x)[index] + weight * step_size * A_itemp;
     return forward_grad_at_i;
   }
-  double operator() (double val, int index = 0) {
-    return DOUBLE_MARKER;
-  }
+
   void operator() (Vector* v_in, Vector* v_out) {
     int num_samples = A->cols(), num_features = A->rows();
     Vector temp(num_samples, 0);
@@ -918,6 +981,11 @@ public:
       (*v_out)[i] = A_temp[i];
     }
   }
+  
+  double operator() (double val, int index = 1) {
+    return Operator::operator()(val, index);
+  }
+   
   void update_cache_vars(double old_x_i, double new_x_i, int index) {
     add(Atx, A, index, -old_x_i + new_x_i);
   }
@@ -975,9 +1043,7 @@ public:
     double forward_grad_at_i = (*x)[index] - weight * step_size * Ai_temp;
     return forward_grad_at_i;
   }
-  double operator() (double val, int index = 0) {
-    return DOUBLE_MARKER;
-  }
+  
   void operator() (Vector* v_in, Vector* v_out) {
     int num_samples = A->cols(), num_features = A->rows();
     //Vector temp(num_samples, 0);
@@ -1000,6 +1066,11 @@ public:
       (*v_out)[i] = A_temp[i];
     }
   }
+
+ double operator() (double val, int index = 1) {
+    return Operator::operator()(val, index);
+  }
+   
   void update_cache_vars(double old_x_i, double new_x_i, int index) {
     add(Atx, A, index, -old_x_i + new_x_i);
   }
@@ -1055,12 +1126,15 @@ public:
     }
     return x_i;
   }
-  double operator() (double val, int index = 0) {
-    return DOUBLE_MARKER;
-  }
+
   // TODO: implement the full update operator
   void operator() (Vector* v_in, Vector* v_out) {
   }
+
+ double operator() (double val, int index = 1) {
+    return Operator::operator()(val, index);
+  }
+  
   void project_D2 (Vector* v_in, Vector* v_out) {
     w1 = dot(a1, *v_in) - b1;
     w2 = dot(a2, *v_in) - b2;
@@ -1108,11 +1182,13 @@ public:
     w3 = -b3;
     w4 = -b4;
   }
+  
   portfolio_3s (double step_size_, double weight_=1.) : Operator(step_size_, weight_) {
     int m = 1;    
     Vector epsilon_(m, 1.);
     double sm = 1.;
     double nrm_epsilon = norm(epsilon_);
+    double c_ = 1.;
     a1 = Vector(m, 1./sm);
     a2 = Vector(m, 0.);
     a3 = Vector(m, 1.);
@@ -1122,7 +1198,6 @@ public:
     tild_a2 = Vector(m, 1.);    
     Q = nullptr;
     epsilon = nullptr;
-    double c_ = 1.;    
     b1 = 1./sm;
     b2 =  c_ / nrm_epsilon;
     b3 = b2 - b1 / a1a2;
@@ -1132,17 +1207,18 @@ public:
     w3 = -b3;
     w4 = -b4;
   }
+  
   portfolio_3s (Mat* Q_,
                 Vector* epsilon_,
                 double c_,
                 double step_size_ = 1.,
                 double weight_=1.) : Operator(step_size_, weight_) {
-    int m = Q->rows();
-    double sm = sqrt((double)(m));
-    double nrm_epsilon = norm(*epsilon_);
     epsilon = epsilon_;
     c = c_;
     Q = Q_;
+    int m = Q->rows();
+    double sm = sqrt((double)(m));
+    double nrm_epsilon = norm(*epsilon_);
     // initializing a1, a2, a3, a4
     a1 = Vector(m, 1./sm);
     a2 = Vector(m, 0.);
