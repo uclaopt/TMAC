@@ -142,7 +142,7 @@ struct ForwardBackwardSplitting {
 
     
     
-    double val = backward(forward_grad_at_idx);
+    double val = backward(forward_grad_at_idx, index);
 
         
     double S_i = old_x_at_idx - val;
