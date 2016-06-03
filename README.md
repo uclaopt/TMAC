@@ -1,5 +1,5 @@
-MOTAC
-Welcome to **MOTAC**: A Multicore Optimization Toolbox of Asynchronous, Coordinate, Randomized, and Splitting Methods.
+TMAC
+Welcome to **TMAC**: A Multicore Optimization Toolbox of Asynchronous, Coordinate, Randomized, and Splitting Methods.
 
 
 ## Features
@@ -8,12 +8,12 @@ Welcome to **MOTAC**: A Multicore Optimization Toolbox of Asynchronous, Coordina
    * A few predefined operator splitting schemes.
    * An asynchronous coordinate update framework.
    * Options to load datasets in various format.
-   * A rich set of applications build on top of MOTAC.
+   * A rich set of applications build on top of TMAC.
    * Support for Matlab, Python and Julia (coming soon)
 
 
 ## Platforms
-MOTAC has been used on several platforms:
+TMAC has been used on several platforms:
 
    * Linux
    * Mac OS X
@@ -21,8 +21,8 @@ MOTAC has been used on several platforms:
 
 
 ## Requirements
-MOTAC is designed to have fairly minimal requirements to build. Currently, we support Linux and Mac OS X. We will also make effort to
-support Windows. If you notice any problems on your platform, please create an [issue](https://github.com/uclaopt/MOTAC/issues).
+TMAC is designed to have fairly minimal requirements to build. Currently, we support Linux and Mac OS X. We will also make effort to
+support Windows. If you notice any problems on your platform, please create an [issue](https://github.com/uclaopt/TMAC/issues).
 
 ### Linux and Mac OS X Requirements
    * GNU-compatible Make
@@ -35,7 +35,7 @@ to install BLAS on Ubuntu.
 
 ## Build
 
-Building MOTAC can be as simple as:
+Building TMAC can be as simple as:
 
 ```
 make
@@ -44,7 +44,7 @@ make
 
 ## Use the Applications
 
-We build a user-friendly interface to run MOTAC for different applications through shell. You can run it through the following command:
+We build a user-friendly interface to run TMAC for different applications through shell. You can run it through the following command:
 
 ```
 ./run_me.sh
@@ -65,7 +65,7 @@ make
 
 ## Getting the Data
 
-So far, MOTAC support the following data format:
+So far, TMAC support the following data format:
    * [Matrix Market Format](http://math.nist.gov/MatrixMarket/formats.html#MMformat)
    * [LIBSVM format](https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/)
 

@@ -1,5 +1,5 @@
-#ifndef MOTAC_INCLUDE_RANGE_H
-#define MOTAC_INCLUDE_RANGE_H
+#ifndef TMAC_INCLUDE_RANGE_H
+#define TMAC_INCLUDE_RANGE_H
 
 struct Range {
   int start;  // starting index

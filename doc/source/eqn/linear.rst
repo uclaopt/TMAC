@@ -1,6 +1,6 @@
 Linear equation
 =================
-We apply MOTAC to solve the following linear equation
+We apply TMAC to solve the following linear equation
 
 .. math::
    Ax = b,
@@ -9,7 +9,7 @@ where :math:`A` is an :math:`m\times m` matrix with entries :math:`a_{ij}` satis
 
 Data preparation
 -----------------
-We implement the MOTAC linear equation solver  with dense matrix in matrix market format, and sparse logistic regression with sparse matrix in LIBSVM format. You can easily modify the code to deal with other types of matrices. 
+We implement the TMAC linear equation solver  with dense matrix in matrix market format, and sparse logistic regression with sparse matrix in LIBSVM format. You can easily modify the code to deal with other types of matrices. 
 
 
 
@@ -41,7 +41,7 @@ You can expect to get output similar to the following::
   Parameter settings:
   ---------------------------------
   Problem size:               100
-  MOTAC step size:            1
+  TMAC step size:            1
   Operator step size:         0
   Use controller:             false
   ---------------------------------

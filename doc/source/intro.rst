@@ -4,17 +4,17 @@ Introduction
 
 Overview
 ===========
-MOTAC is an asynchronous parallel C++ library for solving equations and optimization problems on shared memory systems. The package uses `Eigen <http://eigen.tuxfamily.org/index.php?title=Main_Page>`_ Library for matrix and vector classes. It use `BLAS <http://www.netlib.org/blas/>`_ and `Sparse BLAS <http://math.nist.gov/spblas/>`_ for linear algebra operations.  Pthread is used for parallelization. MOTAC provides the following features:
+TMAC is an asynchronous parallel C++ library for solving equations and optimization problems on shared memory systems. The package uses `Eigen <http://eigen.tuxfamily.org/index.php?title=Main_Page>`_ Library for matrix and vector classes. It use `BLAS <http://www.netlib.org/blas/>`_ and `Sparse BLAS <http://math.nist.gov/spblas/>`_ for linear algebra operations.  Pthread is used for parallelization. TMAC provides the following features:
 
   * A rich set of predefined operators.
   * A few predefined operator splitting schemes.
   * An asynchronous coordinate update framework.
   * Options to load datasets in various format.
-  * A rich set of applications build on top of MOTAC.
+  * A rich set of applications build on top of TMAC.
   * Support for Matlab, Python and Julia (coming soon)
 
   
-MOTAC is written in C++. Python, Julia and Matlab interfaces are under development. The following graph is an overview of the design.
+TMAC is written in C++. Python, Julia and Matlab interfaces are under development. The following graph is an overview of the design.
 
 .. image:: architecture.png
     :width: 400px
@@ -33,15 +33,15 @@ Dependencies
 
 References
 ============
-.. [MOTAC2015] Zhimin Peng, Yangyang Xu, Ming Yan, Wotao Yin, *MOTAC: an Algorithmic Framework for Asynchronous Parallel Coordinate Updates*,  arXiv preprint arXiv:1506.02396 (2015)
+.. [TMAC2015] Zhimin Peng, Yangyang Xu, Ming Yan, Wotao Yin, *TMAC: an Algorithmic Framework for Asynchronous Parallel Coordinate Updates*,  arXiv preprint arXiv:1506.02396 (2015)
   
 
 License and copyright
 =====================
-Except for the Eigen library header files, all files distributed with MOTAC are made available under the `New BSD license <http://www.opensource.org/licenses/bsd-license.php>`_,
+Except for the Eigen library header files, all files distributed with TMAC are made available under the `New BSD license <http://www.opensource.org/licenses/bsd-license.php>`_,
 which states::
 
-    MOTAC is C++ framework for async-parallel coordinate update.
+    TMAC is C++ framework for async-parallel coordinate update.
     Copyright (C) 2016 Brent Edmunds, Zhimin Peng, Wotao Yin 
 
     Redistribution and use in source and binary forms, with or without

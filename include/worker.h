@@ -1,5 +1,5 @@
-#ifndef MOTAC_INCLUDE_WORKER_H
-#define MOTAC_INCLUDE_WORKER_H
+#ifndef TMAC_INCLUDE_WORKER_H
+#define TMAC_INCLUDE_WORKER_H
 
 #include "parameters.h"
 #include "controller.h"

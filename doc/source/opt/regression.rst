@@ -1,6 +1,6 @@
 Regularized regression
 ======================
-We apply MOTAC to solve the following regularized empirical risk minimization problem
+We apply TMAC to solve the following regularized empirical risk minimization problem
 
 .. math::
    \min_x \lambda \, r(x) + \sum_{i=1}^N \ell(a_i^T x, b_i),
@@ -8,7 +8,7 @@ We apply MOTAC to solve the following regularized empirical risk minimization pr
 where :math:`\{(a_1, b_1), ..., (a_N, b_N)\}` is the set of data-label pairs, and :math:`\lambda>0` is the regularization parameter. We call
 :math:`r(x)` and :math:`\ell(a_i^T x, b_i)` as the regularization function and loss function respectively.
 
-We have implemented MOTAC for :math:`r(x) = \|x\|_1`, :math:`\ell_i(x) = (a_i^T x - b_i)^2` (correspond to LASSO), :math:`\ell_i(x) = log(1+exp(-b_i \cdot a_i^T x))` (correspond to sparse logistic regression).
+We have implemented TMAC for :math:`r(x) = \|x\|_1`, :math:`\ell_i(x) = (a_i^T x - b_i)^2` (correspond to LASSO), :math:`\ell_i(x) = log(1+exp(-b_i \cdot a_i^T x))` (correspond to sparse logistic regression).
 
 
 Data preparation
@@ -47,7 +47,7 @@ You can expect to get output similar to the following::
   Parameter settings:
   ---------------------------------
   Problem size:               1000
-  MOTAC step size:            0.5
+  TMAC step size:            0.5
   Operator step size:         0.9
   Use controller:             false
   ---------------------------------

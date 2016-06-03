@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# MOTAC documentation build configuration file, created by
+# TMAC documentation build configuration file, created by
 # sphinx-quickstart on Sun Apr 26 14:49:05 2015.
 #
 # This file is execfile()d with the current directory set to its
@@ -45,7 +45,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'MOTAC'
+project = u'TMAC'
 # copyright = u'2015, Zhimin Peng, Yangyang Xu, Ming Yan, Wotao Yin'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -185,7 +185,7 @@ html_static_path = ['_static']
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'MOTACdoc'
+htmlhelp_basename = 'TMACdoc'
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -205,7 +205,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  ('index', 'MOTAC.tex', u'MOTAC Documentation',
+  ('index', 'TMAC.tex', u'TMAC Documentation',
    u'Zhimin Peng, Yangyang Xu, Ming Yan, Wotao Yin', 'manual'),
 ]
 
@@ -235,8 +235,8 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'motac', u'MOTAC Documentation',
-     [u'MOTAC Team'], 1)
+    ('index', 'motac', u'TMAC Documentation',
+     [u'TMAC Team'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -249,8 +249,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'MOTAC', u'MOTAC Documentation',
-   u'MOTAC Team', 'MOTAC', 'One line description of project.',
+  ('index', 'TMAC', u'TMAC Documentation',
+   u'TMAC Team', 'TMAC', 'One line description of project.',
    'Miscellaneous'),
 ]
 

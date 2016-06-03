@@ -1,6 +1,6 @@
 Download, build and run
 ==========================
-MOTAC's build system relies on `GNU make <https://www.gnu.org/software/make/>`_. It can be easily build on Linux and Unix environments, and various versions of Microsoft Windows. A relative up-to-date C++ compiler (e.g., gcc >= 4.7) is required in all cases.
+TMAC's build system relies on `GNU make <https://www.gnu.org/software/make/>`_. It can be easily build on Linux and Unix environments, and various versions of Microsoft Windows. A relative up-to-date C++ compiler (e.g., gcc >= 4.7) is required in all cases.
 
 Requirements for Linux
 -----------------------
@@ -49,7 +49,7 @@ To install GNU gcc, you can follow the following steps.
 
 Requirements for Windows
 -------------------------
-You can either use MinGW or Cygwin to setup a coding environment to run MOTAC. Here we include the installation instructions.
+You can either use MinGW or Cygwin to setup a coding environment to run TMAC. Here we include the installation instructions.
 
 Cygwin
 ^^^^^^^
@@ -60,29 +60,29 @@ MinGW
 You can find the instructions for installing MinGW `here <http://www.math.ucla.edu/~wotaoyin/windows_coding.html>`_;
 
 
-Download MOTAC
+Download TMAC
 ----------------
-The MOTAC package can be downloaded from the following link::
+The TMAC package can be downloaded from the following link::
 
-  https://github.com/ZhiminPeng/MOTAC
+  https://github.com/ZhiminPeng/TMAC
   
   
-Build MOTAC
+Build TMAC
 ----------------
-On Linux or Unix machines with g++ and GNU make installed in standard locations, building MOTAC can be as simple as::
+On Linux or Unix machines with g++ and GNU make installed in standard locations, building TMAC can be as simple as::
 
-  cd MOTAC
+  cd TMAC
   make
 
 The executable files are in the bin folder. The following is a sample of the executable files::
 
-  motac_fbs_l1_log [solver for regularized logistic regression with forward backward splitting]
+  tmac_fbs_l1_log [solver for regularized logistic regression with forward backward splitting]
 
 
 
-Test MOTAC
+Test TMAC
 -------------------------
-Once MOTAC has been successfully compiled, it is a good idea to verify that the executable files are functioning properly. To test MOTAC for l1 regularized logistic regression problem, run the following commands::
+Once TMAC has been successfully compiled, it is a good idea to verify that the executable files are functioning properly. To test TMAC for l1 regularized logistic regression problem, run the following commands::
 
-  ./bin/motac_fbs_l1_log -data ./data/rcv1_train.svm -epoch 10 -nthread 2 -lambda 1.
+  ./bin/tmac_fbs_l1_log -data ./data/rcv1_train.svm -epoch 10 -nthread 2 -lambda 1.
 

@@ -1,9 +1,9 @@
-.. MOTAC documentation master file, created by
+.. TMAC documentation master file, created by
    sphinx-quickstart on Sun Apr 26 14:49:05 2015.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to MOTAC's documentation!
+Welcome to TMAC's documentation!
 #####################################
 
 .. toctree::

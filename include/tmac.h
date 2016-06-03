@@ -1,5 +1,5 @@
-#ifndef MOTAC_INCLUDE_MOTAC_H
-#define MOTAC_INCLUDE_MOTAC_H
+#ifndef TMAC_INCLUDE_TMAC_H
+#define TMAC_INCLUDE_TMAC_H
 
 
 #include "matrices.h"
@@ -11,7 +11,7 @@
 
 
 template<typename Splitting>
-void MOTAC (Splitting op, Params parameters, Controller<Splitting> controller = Controller<Splitting>()) {
+void TMAC (Splitting op, Params parameters, Controller<Splitting> controller = Controller<Splitting>()) {
   
   int total_num_threads = parameters.total_num_threads;
   bool use_controller = parameters.use_controller;

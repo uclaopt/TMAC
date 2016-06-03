@@ -5,7 +5,7 @@ We apply relaxed PRS to find the intersection of two convex sets. The problem ca
 .. math::
    \min_x \iota_{\|x\|_2 \leq 1}(x) + \iota_{\|x\|_\infty \leq 0.1} (x)
 
-where :math:`\iota_S (x)` is the indicator function of the set S. We apply the MOTAC with the Peaceman-Rachford splitting operator. To ensure coordinate friendly, We first apply the projection operator to the :math:`\ell_2` ball, then we apply the projection to the :math:`\ell_{\infty}` ball.
+where :math:`\iota_S (x)` is the indicator function of the set S. We apply the TMAC with the Peaceman-Rachford splitting operator. To ensure coordinate friendly, We first apply the projection operator to the :math:`\ell_2` ball, then we apply the projection to the :math:`\ell_{\infty}` ball.
 
 
 Usage
@@ -33,7 +33,7 @@ You can expect to get output similar to the following::
   Parameter settings:
   ---------------------------------
   Problem size:               100
-  MOTAC step size:            0.9
+  TMAC step size:            0.9
   Operator step size:         0
   Use controller:             false
   ---------------------------------

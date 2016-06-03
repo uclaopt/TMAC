@@ -1,5 +1,5 @@
 /**************************************************************
- * Single operator functors used by the MOTAC framework. It 
+ * Single operator functors used by the TMAC framework. It 
  * includes the following three types of operators:
  *
  *   1) proximal operator;
@@ -8,8 +8,8 @@
  *
  *************************************************************/
 
-#ifndef MOTAC_INCLUDE_OPERATORS_H
-#define MOTAC_INCLUDE_OPERATORS_H
+#ifndef TMAC_INCLUDE_OPERATORS_H
+#define TMAC_INCLUDE_OPERATORS_H
 #include "constants.h"
 #include "matrices.h"  // matrices library
 #include "algebra.h"   // linear algebra library
