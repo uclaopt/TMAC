@@ -24,7 +24,7 @@ List of Contributors
   - Tianyu contributed the apps for solving linear equations and minimizing Hinge loss
 
 * [Yezheng Li](https://github.com/yezhengli-Mr9)
-  - Yezheng contributed to the unit tests of operators. He also implements the objective function calculators.
+  - Yezheng contributed to the unit tests of operators. He also implemented the objective function calculators.
 
 * [Yerong Li](https://github.com/YerongLeopard)
   - Yerong contributed to the unit tests of splitting schemes, and linear algebra functions.
