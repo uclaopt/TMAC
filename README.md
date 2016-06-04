@@ -1,38 +1,40 @@
 # TMAC
 
-Welcome to **TMAC**: A Multicore Optimization Toolbox of Asynchronous, Coordinate, Randomized, and Splitting Methods.
+Welcome to **TMAC**: A Toolbox of Modern Async-Parallel, Coordinate, Splitting, and Stochastic Methods
 
 
 ## Features
 
    * A rich set of predefined operators.
-   * A few predefined operator splitting schemes.
+   * A set of predefined operator splitting schemes.
    * An asynchronous coordinate update framework.
+   * A synchronous parallel update driver.
    * Options to load datasets in various format.
    * A rich set of applications build on top of TMAC.
+   ..* portfolio optimization
+   ..* quadratic programming
+   ..* support vector machine
+   ..* linear system of equations      
+   ..* empirical risk minimization
+   ..* nonnegative matrix factorization
    * Support for Matlab, Python and Julia (coming soon)
 
 
 ## Platforms
-TMAC has been used on several platforms:
+TMAC can been used on several platforms:
 
    * Linux
+   * Windows
    * Mac OS X
-   * Windows (coming soon)
-
 
 ## Requirements
-TMAC is designed to have fairly minimal requirements to build. Currently, we support Linux and Mac OS X. We will also make effort to
-support Windows. If you notice any problems on your platform, please create an [issue](https://github.com/uclaopt/TMAC/issues).
+TMAC is designed to have fairly minimal requirements to build. Currently, we support Linux, Windows, and Mac OS X.
+If you notice any problems on your platform, please create an [issue](https://github.com/uclaopt/TMAC/issues).
 
 ### Linux and Mac OS X Requirements
    * GNU-compatible Make
    * gcc>=4.7
    * BLAS
-
-For Mac OS X, BLAS is installed once you install XCODE or the Developer package. You can follow the instruction [here](http://ubuntuforums.org/showthread.php?t=1505249)
-to install BLAS on Ubuntu.
-
 
 ## Build
 
@@ -70,12 +72,14 @@ So far, TMAC support the following data format:
    * [Matrix Market Format](http://math.nist.gov/MatrixMarket/formats.html#MMformat)
    * [LIBSVM format](https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/)
 
-We will also support the Matlab matrix format soon. You can click [here](https://www.dropbox.com/sh/neqh6ege48hut2x/AACv02EH19XN-N7DXADV2NrIa?dl=0) to obtain a few datasets. You can also obtain the
-regression and classification datasets from the LIBSVM [website](https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/).
+You can download some example datasets from [here](https://github.com/uclaopt/datasets)
+You can also obtain the regression and classification datasets from the LIBSVM [website](https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/).
 
 
 
 ## Troubleshooting
+
+* You can report bugs through the [issue tab](https://github.com/uclaopt/TMAC/issues/new)
 
 * fatal error: ```<omp.h>``` file not found
   * First make sure you are using the correct compiler, i.e., GCC >= 4.7 from the GNU Project. For OSX,
@@ -86,25 +90,31 @@ regression and classification datasets from the LIBSVM [website](https://www.csi
 
 ## Acknowledgement
 
-We would like to acknowledge the [Eigen](http://eigen.tuxfamily.org/index.php?title=Main_Page) library and the [sparse BLAS](http://math.nist.gov/spblas/) library.
+We would like to acknowledge the [Eigen](http://eigen.tuxfamily.org/index.php?title=Main_Page) library, the [sparse BLAS](http://math.nist.gov/spblas/) library, and
+[Google Test](https://github.com/google/googletest).
 
 
-## References
+## Related Papers
 
 ```
+
 @article{peng2015arock,
-  title={ARock: an Algorithmic Framework for Asynchronous Parallel Coordinate Updates},
-  author={Peng, Zhimin and Xu, Yangyang and Yan, Ming and Yin, Wotao},
-  journal={arXiv:1506.02396},
-  year={2015},
-  publisher={http://arxiv.org/abs/1506.02396}
+  title = {ARock: an Algorithmic Framework for Asynchronous Parallel Coordinate Updates},
+  author = {Peng, Zhimin and Xu, Yangyang and Yan, Ming and Yin, Wotao},
+  journal = {arXiv:1506.02396},
+  year = {2015},
+  publisher = {http://arxiv.org/abs/1506.02396}
 }
 
-@article{peng2016coordinate,
-  title={Coordinate Friendly Structures, Algorithms and Applications},
-  author={Peng, Zhimin and Wu, Tianyu and Xu, Yangyang and Yan, Ming and Yin, Wotao},
-  journal={arXiv preprint arXiv:1601.00863},
-  year={2016}
+@article{PengWuXuYanYin2016_coordinate,
+  title = {Coordinate friendly structures, algorithms and applications},
+  volume = {1},
+  number = {1},
+  journal = {Annals of Mathematical Sciences and Applications},
+  author = {Peng, Zhimin and Wu, Tianyu and Xu, Yangyang and Yan, Ming and Yin, Wotao},
+  month = jan,
+  year = {2016},
+  pages = {59--119}
 }
 
 ```
