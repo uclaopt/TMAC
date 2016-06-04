@@ -19,7 +19,7 @@ INC := -I ../include
 CPPFLAGS += -isystem $(GTEST_DIR)/include
 
 # Flags passed to the C++ compiler.
-CXXFLAGS += -g -Wextra -pthread -fopenmp -lm -lblas -std=c++0x -w
+CXXFLAGS += -g -Wextra -pthread -lm -lblas -std=c++0x -w
 
 BLASFLAGS += -lm -lblas
 
@@ -84,7 +84,7 @@ util.o: $(SRC_DIR)/util.cc
 
 operators_unittest.o : $(USER_DIR)/operators_unittest.cc
 	$(CC) $(CPPFLAGS) $(CXXFLAGS) $(INC) -c $(USER_DIR)/operators_unittest.cc
-operators_unittest.exe : operators_unittest.o algebra.o nist_spblas.o gtest_main.a
+operators_unittest.exe : operators_unittest.o algebra.o nist_spblas.o gtest_main.a util.o
 	$(CC) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@ $(BLASFLAGS)
 
 
