@@ -11,12 +11,6 @@ Welcome to **TMAC**: A Toolbox of Modern Async-Parallel, Coordinate, Splitting, 
    * A synchronous parallel update driver.
    * Options to load datasets in various format.
    * A rich set of applications build on top of TMAC.
-   ..* portfolio optimization
-   ..* quadratic programming
-   ..* support vector machine
-   ..* linear system of equations      
-   ..* empirical risk minimization
-   ..* nonnegative matrix factorization
    * Support for Matlab, Python and Julia (coming soon)
 
 
