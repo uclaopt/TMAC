@@ -5,6 +5,7 @@
 #include "parameters.h"
 #include <typeinfo>
 #include "stdlib.h"
+#include <iostream>
 /****************************************************************
  * Header file for defining the splitting schemes. Each splitting
  * scheme is a functor. The functor contains the pointers to the
