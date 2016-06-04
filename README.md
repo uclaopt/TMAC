@@ -34,7 +34,7 @@ If you notice any problems on your platform, please create an [issue](https://gi
 
 Building TMAC can be as simple as:
 
-```
+```bash
 make
 ```
 
@@ -47,17 +47,27 @@ We build a user-friendly interface to run TMAC for different applications throug
 ./run_me.sh
 ```
 
+## Documentation
+
+We use [sphinx](http://www.sphinx-doc.org/en/stable/) for documentation. To use it, you need to install [sphinx](http://www.sphinx-doc.org/en/stable/install.html)
+ and [sphinx_rtd_theme](https://github.com/snide/sphinx_rtd_theme). To compile the source code for the documentation, you can run the following commands::
+
+```bash
+cd doc
+make html
+```
+
+Then the html files are in the ```build/html``` folder.
+
 
 ## Contributing Code
 We welcome patches. If you plan to contribute a patch, you need to write tests for any new code. Changes should be verified to not
-break existing tests before they are submitted for review. We use Google test for unit testing. Our unit tests are in the test folder.
+break existing tests before they are submitted for review. We use Google Test for unit testing. Our unit tests are in the test folder.
 If you are adding tests to a new file, you will need to modify the Makefile to compile the source code, otherwise, nothing needs to be
 changed in the Makefile. The following commands should build and run the unit tests.
 
-```
-make
-./your_unittest
-```
+The details for contributing to TMAC is [here](https://github.com/uclaopt/TMAC/blob/master/doc/source/contribute.rst)
+
 
 
 ## Getting the Data
