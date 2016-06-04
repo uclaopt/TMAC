@@ -7,7 +7,7 @@ Mentor
 ------
 This repo is maintained by the UCLA Optimization Group led by Prof. [Wotao Yin](http://www.math.ucla.edu/~wotaoyin/).
 
-Committers (alphabetic orders)
+Committers
 ----------
 Committers are people who have made substantial contribution to the project and are currently active.
 
