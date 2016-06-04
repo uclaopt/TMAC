@@ -1,4 +1,5 @@
-TMAC
+# TMAC
+
 Welcome to **TMAC**: A Multicore Optimization Toolbox of Asynchronous, Coordinate, Randomized, and Splitting Methods.
 
 
