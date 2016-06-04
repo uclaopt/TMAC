@@ -11,7 +11,14 @@
 template<typename Splitting>
 void TMAC (Splitting op, Params parameters, Controller<Splitting> controller = Controller<Splitting>()) {
   if (parameters.async == true) {
+    //construct a controller based on params if use failed to specify one
+    if(parameters.use_controller == true && controller.def == true){
+      Controller<Splitting> param_cont(parameters);
+      AROCK (op, parameters, param_cont);
+    }
+    else{
     AROCK (op, parameters,controller);
+    }
   } else {
     SYNC(op, parameters);
   }

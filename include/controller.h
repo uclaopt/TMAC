@@ -42,6 +42,7 @@ struct worker_info{
 
 template<typename T>
 struct Controller {
+  bool def;
   Vector average_fpr; //stores an approximate fixed point residual: currently a moving window average
   double window_size; //constant for sliding window (1-window_size)*FPR[i]+window_size*new_residual
   double old_fpr_norm; //stores old fpr norm for purposes of comparison
@@ -57,11 +58,11 @@ struct Controller {
   unordered_map< std::thread::id ,worker_info<T> > worker_state; //map from worker threads to their state
 
   //this constructor is here for legacy reasons, deprecate soon
-  Controller () { }
-  Controller (const Controller& c) : epoch_iter(c.epoch_iter.load()), total_iter(c.total_iter.load()), average_fpr(c.average_fpr), window_size(c.window_size), old_fpr_norm(c.old_fpr_norm), update_epoch(c.update_epoch), coord_num_updates(c.coord_num_updates), worker_state(c.worker_state), num_worker(c.num_worker), tmac_max_stepsize(c.tmac_max_stepsize), tmac_min_stepsize(c.tmac_min_stepsize), max_delay(c.max_delay.load()) { }
+  Controller ():def(true) { }
+  Controller (const Controller& c) : epoch_iter(c.epoch_iter.load()), total_iter(c.total_iter.load()), average_fpr(c.average_fpr), window_size(c.window_size), old_fpr_norm(c.old_fpr_norm), update_epoch(c.update_epoch), coord_num_updates(c.coord_num_updates), worker_state(c.worker_state), num_worker(c.num_worker), tmac_max_stepsize(c.tmac_max_stepsize), tmac_min_stepsize(c.tmac_min_stepsize), max_delay(c.max_delay.load()),def(false) { }
   
   //note tmac_max_stepsize/min_stepsize should become part of the struct PARAM in future versions along with window_size
-  Controller (Params p) : epoch_iter(0), total_iter(0), window_size(.8), old_fpr_norm(std::numeric_limits<double>::max()), update_epoch(p.problem_size / 4), num_worker(0), tmac_max_stepsize(100), tmac_min_stepsize(.000001), average_fpr(p.problem_size,0), coord_num_updates(p.problem_size,0), max_delay(0) {
+  Controller (Params p) : epoch_iter(0), total_iter(0), window_size(.8), old_fpr_norm(std::numeric_limits<double>::max()), update_epoch(p.problem_size/2), num_worker(0), tmac_max_stepsize(100), tmac_min_stepsize(.000001), average_fpr(p.problem_size,0), coord_num_updates(p.problem_size,0), max_delay(0),def(false) {
     worker_state.reserve(p.total_num_threads+10);
   }
   
@@ -167,19 +168,17 @@ template<typename T> void Controller_loop(Controller<T>& controller) {
     auto newnorm = norm(controller.average_fpr, 2);
     //if newnorm is less than old norm, increase stepsize, else decrease stepsize
     //note we back off harder than we increase, to prevent endless oscillations
-    std::cout << newnorm << std::endl;
-    if ( newnorm < 0.9 * controller.old_fpr_norm ) {
+    //std::cout << newnorm << std::endl;
+    if ( newnorm <  controller.old_fpr_norm ) {
       
       //when reading from set, no one insert/delete
       std::unique_lock<std::mutex> lock(g_set_schemes_mutex);
       //update each schemes stepsize
-      int asdf = 0;
       for ( auto& it : controller.worker_state ) {
 	if( it.second.active.load() == true ) {
           
 	  auto& step = (it.second).scheme -> relaxation_step_size;
-          if(!asdf) { std::cout << "step size " << step << std::endl; ++asdf;}
-          step = (1.5*step < controller.tmac_max_stepsize) ? (1.5)*step : controller.tmac_max_stepsize;
+	  step = (1.5*step < controller.tmac_max_stepsize) ? (1.5)*step : controller.tmac_max_stepsize;
 	}
       }
       lock.unlock();
@@ -187,12 +186,10 @@ template<typename T> void Controller_loop(Controller<T>& controller) {
     else {
       //when reading from set, no one insert/delete
       std::unique_lock<std::mutex> lock(g_set_schemes_mutex);
-      int asdf = 0;
       for ( auto& it : controller.worker_state ) {
 	if( it.second.active.load() == true ) {
 	  auto& step = (it.second).scheme -> relaxation_step_size;
-          if(!asdf) { std::cout << "step size " << step << std::endl; ++asdf;}          
-	  step = (step/2 > controller.tmac_min_stepsize) ? step/2 : controller.tmac_min_stepsize;
+      	  step = (step/2 > controller.tmac_min_stepsize) ? step/2 : controller.tmac_min_stepsize;
 	}
       } 
       lock.unlock();
@@ -202,11 +199,13 @@ template<typename T> void Controller_loop(Controller<T>& controller) {
     //unlock and wait again
     condition_lock.unlock();    
   }
-  std::cout << "ending approx residual is " << controller.old_fpr_norm << std::endl;
+  /*
+   std::cout << "ending approx residual is " << controller.old_fpr_norm << std::endl;
   std::cout << "Max delay per thread: \n";
   for(auto& it : controller.worker_state) {
     std::cout << "Thread id: " << it.first << " max_delay: " << it.second.max_delay <<std::endl;
   }
+  */
 }
 
 
