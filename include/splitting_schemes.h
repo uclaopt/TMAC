@@ -293,7 +293,7 @@ public:
   
   // TODO: for sync-parallel
   void update_cache_vars ( int rank, int index ) {
-    std::cerr << "functionality not provided." << std::cerr;
+    std::cerr << "functionality not provided." << std::endl;
     exit(EXIT_FAILURE);
   }
 
