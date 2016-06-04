@@ -29,7 +29,7 @@ public:
   
   // TODO: this is kind of hacky. We need to figure a better way.
   double operator() (double val, int index = 0) {
-    return DOUBLE_MARKER;    
+    return DOUBLE_MARKER;
   }
   
   void operator() (Vector* v_in, Vector* v_out) {}
@@ -989,6 +989,17 @@ public:
   void update_cache_vars(double old_x_i, double new_x_i, int index) {
     add(Atx, A, index, -old_x_i + new_x_i);
   }
+  
+  void update_cache_vars(Vector* x, int rank, int num_threads) {
+    int m = At->rows(); //y=A'*x
+    int block_size = m / num_threads;
+    int start_idx = rank * block_size;
+    int end_idx = (rank == num_threads - 1) ? m : start_idx + block_size;
+    for (int iter = start_idx; iter != end_idx; ++iter){
+      (*Atx)[iter] = dot(At, x, iter);
+    }
+  }
+  
   forward_grad_for_square_hinge_loss () : Operator() {}
   forward_grad_for_square_hinge_loss (double l,double w=1.) : Operator(l, w) {}
   forward_grad_for_square_hinge_loss (Mat* A_, Vector* b_,
@@ -1074,6 +1085,18 @@ public:
   void update_cache_vars(double old_x_i, double new_x_i, int index) {
     add(Atx, A, index, -old_x_i + new_x_i);
   }
+
+  void update_cache_vars(Vector* x, int rank, int num_threads) {
+    int m = At->rows(); //y=A'*x
+    int block_size = m / num_threads;
+    int start_idx = rank * block_size;
+    int end_idx = (rank == num_threads - 1) ? m : start_idx + block_size;
+    for (int iter = start_idx; iter != end_idx; ++iter){
+      (*Atx)[iter] = dot(At, x, iter);
+    }
+  }
+
+  
   forward_grad_for_huber_loss () : Operator() {}
   forward_grad_for_huber_loss (Mat* A_, Vector* b_, Vector* Atx_,
                                double step_size_ = 1., double weight_=1.,

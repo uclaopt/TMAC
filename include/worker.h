@@ -4,6 +4,8 @@
 #include "parameters.h"
 #include "controller.h"
 #include "range.h"
+#include "barrier.h"
+#include<thread>
 
 // asynchronous cyclic worker
 template<typename Operator>
@@ -114,5 +116,32 @@ void async_rnd_worker(Operator algorithm, Controller<Operator>& cont, Params* pa
   return;
 }
 
+template<typename Operator>
+void sync_par_worker(Operator algorithm, Range range, Params* params,
+                     Barrier& Computation_Barrier, Barrier& Update_Barrier,
+                     Barrier& Cache_Update_Barrier) {
+  int max_itrs = params->max_itrs;
+  int num_cords = range.end - range.start;
+  // divsor is not equal to num_cords for last rank block  
+  int rank=range.start / (params->problem_size/params->total_num_threads); 
+  Vector updates(num_cords,0);
+  int idx = 0;
+  for (int i = 0; i < max_itrs; i++) {
+    for (int j = 0; j < num_cords; j++) {
+      // TODO: make decisions of pulling data from global parameters
+      algorithm.update_params(params);
+      // idx = index_generator(range, params);
+      idx = j + range.start;
+      algorithm(idx, updates[j]);
+    }
+    
+    Computation_Barrier.wait();
+    algorithm.update(updates, range.start,num_cords);
+    Update_Barrier.wait();
+    algorithm.update_cache_vars(rank,params->total_num_threads);
+    Cache_Update_Barrier.wait();
+  }
+  return;
+}
 
 #endif

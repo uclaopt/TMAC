@@ -12,7 +12,7 @@ struct Params {
   int problem_size;
   string worker_type;
   string step_size_rule;
-  
+  bool async;
   double get_step_size() {
     return step_size;
   }
@@ -25,8 +25,8 @@ struct Params {
     return problem_size;
   }
   
- Params() : tmac_step_size (0.618), problem_size(0), block_size(1), max_itrs(10), worker_type("cyclic") {}
+ Params() : tmac_step_size (0.618), problem_size(0), block_size(1), use_controller(false),
+    max_itrs(10), worker_type("cyclic"), async(true) {}
   
 };
-
 #endif

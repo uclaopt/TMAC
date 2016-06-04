@@ -4,7 +4,7 @@
 #include "operators.h"
 #include "parameters.h"
 #include <typeinfo>
-
+#include "stdlib.h"
 /****************************************************************
  * Header file for defining the splitting schemes. Each splitting
  * scheme is a functor. The functor contains the pointers to the
@@ -28,10 +28,22 @@
  *   }
  ***************************************************************/
 
+class SchemeInterface {
+public:
+  virtual void update_params(Params* params) = 0;
+  virtual double operator() (int index) {}
+  virtual void operator() (int index, double& S_i) {}
+  virtual void update(Vector& update, int range_start, int num_cords) = 0;
+  virtual void update(double update, int idx ) = 0;
+  //update rank worth of cache_vars based on num_threads
+  virtual void update_cache_vars(int rank, int num_threads) = 0;
+};
+
 
 // PPA:
 template <typename Backward>
-struct ProximalPointAlgorithm {
+class ProximalPointAlgorithm : public SchemeInterface {
+public: 
   Backward prox;
   Vector* x;
   double relaxation_step_size;
@@ -46,29 +58,45 @@ struct ProximalPointAlgorithm {
     relaxation_step_size = params->get_tmac_step_size();
   }
   
-  void operator() (int index) {
+  double operator() (int index) {
     // Step 1: read the old x[index]
     double old_x_at_idx = (*x)[index];
-
     // Step 2: local calculation
     double S_i = old_x_at_idx - prox(x, index);
-
     // Step 3: get the most recent x[index] before updating it
     old_x_at_idx = (*x)[index];
-
     // Step 4: update x[index]
     (*x)[index] -= relaxation_step_size * S_i;
-
     // Step 5: update the maintained variable
     prox.update_cache_vars(old_x_at_idx, (*x)[index], index);
-    
+    return S_i;
   }
+  
+  // TODO: implement this
+  void operator() (int index, double& S_i) {
+  }
+
+  void update(Vector& update, int range_start, int num_cords) {
+    for (size_t i = 0; i < num_cords; ++i ) {
+      (*x)[i+range_start] += update[i];
+    }
+  }
+  
+  void update (double update, int idx ) {
+    (*x)[idx] += update;
+  }
+
+  void update_cache_vars(int rank, int num_threads) {
+    prox.update_cache_vars(x, rank, num_threads);
+  }
+  
 };
 
 
 // gradient descent algorithm
 template <typename Forward>
-struct GradientDescentAlgorithm {
+class GradientDescentAlgorithm : public SchemeInterface {
+public:  
   Forward forward;
   Vector *x;
   double relaxation_step_size;
@@ -107,12 +135,36 @@ struct GradientDescentAlgorithm {
     return S_i;
   }
 
+  void operator() (int index, double& S_i) {
+    // Step 1: read the old x[index]
+    double old_x_at_idx = (*x)[index];
+    // Step 2: local calculation
+    double forward_grad_at_idx = forward(x, index);
+    S_i = old_x_at_idx - forward_grad_at_idx;
+  }
+
+  void update(Vector& update, int range_start, int num_cords) {
+    for (size_t i = 0; i < num_cords; ++i ) {
+      (*x)[i+range_start] += update[i];
+    }
+  }
+  
+  void update (double update, int idx ) {
+    (*x)[idx] += update;
+  }
+
+  //update rank worth of cache_vars based on num_threads
+  void update_cache_vars(int rank, int num_threads) {
+    forward.update_cache_vars(x, rank, num_threads);
+  }
+  
 };
 
 
 // forward backward splitting scheme
 template <typename Forward, typename Backward>
-struct ForwardBackwardSplitting {
+class ForwardBackwardSplitting : public SchemeInterface {
+public:  
   Forward forward;
   Backward backward;
   Vector* x;
@@ -135,27 +187,41 @@ struct ForwardBackwardSplitting {
   double operator() (int index) {
     // Step 1: read the old x[index]
     double old_x_at_idx = (*x)[index];    
-
     // Step 2: local calculation
     double forward_grad_at_idx = forward(x, index);
-
-
-    
-    
     double val = backward(forward_grad_at_idx, index);
-
-        
     double S_i = old_x_at_idx - val;
-    
     // Step 3: get the most recent x[index] before updating it
     old_x_at_idx = (*x)[index];
-
     // Step 4: update x at index 
     (*x)[index] -= relaxation_step_size * S_i;
-    
     // Step 5: update the maintained variable Atx
     forward.update_cache_vars(old_x_at_idx, (*x)[index], index);
     return S_i;
+  }
+
+  void operator() (int index, double &S_i) {
+    // Step 1: read the old x[index]
+    double old_x_at_idx = (*x)[index];    
+    // Step 2: local calculation
+    double forward_grad_at_idx = forward(x, index);
+    double val = backward(forward_grad_at_idx);
+    S_i = old_x_at_idx - val;
+  }
+
+  void update(Vector& update, int range_start, int num_cords) {
+    for (size_t i = 0 ; i < num_cords; ++i ) {
+      (*x)[i+range_start] += update[i];
+    }
+  }
+  
+  void update(double update, int idx) {
+    (*x)[idx] += update;
+  }
+
+  //update rank worth of cache_vars based on num_threads
+  void update_cache_vars(int rank, int num_threads) {
+    forward.update_cache_vars(x, rank, num_threads);
   }
 
 };
@@ -164,7 +230,8 @@ struct ForwardBackwardSplitting {
 // backward forward splitting scheme
 // WARNING: this won't work, if the forward step has maintained variables.
 template <typename Backward, typename Forward>
-struct BackwardForwardSplitting {
+class BackwardForwardSplitting : public SchemeInterface {
+public:  
   Forward forward;
   Backward backward;
   Vector *x;
@@ -186,31 +253,42 @@ struct BackwardForwardSplitting {
     relaxation_step_size = params->get_tmac_step_size();
   }
 
-
-
   double operator() (int index) {
-
     // Step 1: get the old x[index]
     double old_x_at_idx = (*x)[index];
-
     // Step 2: local computation
     // first apply the backward operator
     backward(x, &y);
     // then apply the forward operator on y
     double forward_grad_at_idx = forward(&y, index);
-
     double S_i = old_x_at_idx - forward_grad_at_idx;
-
-    
     // Step 3: get the most recent x[index]
     old_x_at_idx = (*x)[index];
-    
     // Step 4: update x[index]
     (*x)[index] -= relaxation_step_size * S_i;
-
     // Step 5: update the maintained variables
     // TODO: update cached_variable of the backward operator
     return S_i;
+  }
+
+  // TODO: implement this for sync-operator
+  void operator()(int index, double &S_i) {
+  }
+
+  void update(Vector& update, int range_start, int num_cords) {
+    for (size_t i = 0 ; i < num_cords; ++i ) {
+      (*x)[i+range_start] += update[i];
+    }
+  }
+  
+  void update(double update, int idx) {
+    (*x)[idx] += update;
+  }
+  
+  // TODO: for sync-parallel
+  void update_cache_vars ( int rank, int index ) {
+    std::cerr << "functionality not provided." << std::cerr;
+    exit(EXIT_FAILURE);
   }
 
 };
@@ -223,7 +301,8 @@ struct BackwardForwardSplitting {
 // z^k = Second(2 y^k - x^k)
 // x^{k+1} = x^k + 2 eta_k (z^k - y^k)
 template <typename First, typename Second>
-struct PeacemanRachfordSplitting {
+class PeacemanRachfordSplitting : public SchemeInterface {
+public:  
   First op1;
   Second op2; 
   Vector *x;
@@ -248,10 +327,8 @@ struct PeacemanRachfordSplitting {
   }
 
   double operator() (int index) {
-
     // Step 1: get the old x[index]
     double old_x_at_idx = (*x)[index];
-
     // Step 2: local computation
     op2(x, &y);
     // z = 2y - x
@@ -260,17 +337,31 @@ struct PeacemanRachfordSplitting {
     add(z, *x, -1.);
     // prox(z, i), it doesn't have to be type I
     double temp = op1(&z, index);
-
     // Step 3: get the most recent x[index]
     old_x_at_idx = (*x)[index];
-    
     // Step 4: update x at index 
     (*x)[index] += 2 * relaxation_step_size * (temp - y[index]);
-
     // Step 5: update the maintained variables
     return temp-y[index];
   }
 
+  // TODO: implement this for sync-operator
+  void operator()(int index, double &S_i) {
+  }
+
+  void update(Vector& update, int range_start, int num_cords) {
+    for (size_t i = 0 ; i < num_cords; ++i ) {
+      (*x)[i+range_start] += update[i];
+    }
+  }
+  
+  void update(double update, int idx) {
+    (*x)[idx] += update;
+  }
+
+  void update_cache_vars (int rank, int index ) {
+  }
+  
 };
 
 
