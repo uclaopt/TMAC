@@ -15,7 +15,7 @@ Committers are people who have made substantial contribution to the project and 
   - Brent is the initiator of TMAC, code designer, co-programmer of the initial prototypes, and head debugger. He is responsible for all things thread related.
 
 * [Zhimin Peng] (https://github.com/ZhiminPeng)
-  - Zhimin is the initiator of TMAC, co-programmer of the initial prototypes, provider of [seed functionality)(https://github.com/ZhiminPeng/ARock/), and implementer of >15 operators.
+  - Zhimin is the initiator of TMAC, co-programmer of the initial prototypes, provider of [seed functionality](https://github.com/ZhiminPeng/ARock/), and implementer of >15 operators.
 
 
 List of Contributors
