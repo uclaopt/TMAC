@@ -1,36 +1,31 @@
 Contributors of TMAC
 =======================
-TMAC has been developed by a community of people who are interested in asynchronous parallel algorithms.
-We welcome patches. The following is a list of contributors.
+TMAC has been developed by an open. Your contributions are welcome.
 
-Mentor
-------
-This is github repo is maintained by UCLA optimization group, lead by Prof. [Wotao Yin](http://www.math.ucla.edu/~wotaoyin/).
+
+List of Contributors (in alphabetic order)
+---------------------
+To contributors: please add your name and comtributions to the list.
+
+* [Yezheng Li](https://github.com/yezhengli-Mr9), unit tests of operators, objective function calculators.
+
+* [Yerong Li](https://github.com/YerongLeopard), unit tests of splitting schemes, linear algebra functions.
+
+* [Tianyu Wu] (https://github.com/TianyuWu89), apps for solving linear equations and minimizing the Hinge loss.
 
 Committers
 ----------
-Committers are people who have made substantial contribution to the project and are currently active.
+They made substantial contributions to the project and are currently active.
 
-* [Brent Edmunds] (https://github.com/BrentEdmunds)
-  - Brent is the initiator of TMAC, code designer, co-programmer of the initial prototypes, and head debugger. He is responsible for all things thread related.
+* [Brent Edmunds] (https://github.com/BrentEdmunds), project initiator, code designer, co-programmer of the initial prototypes, head debugger, responsible for multi-threading.
 
-* [Zhimin Peng] (https://github.com/ZhiminPeng)
-  - Zhimin is the initiator of TMAC, co-programmer of the initial prototypes, provider of [seed functionality](https://github.com/ZhiminPeng/ARock/), and implementer of >15 operators.
+* [Zhimin Peng] (https://github.com/ZhiminPeng), project initiator, co-programmer of the initial prototypes, provider of [seed functionality](https://github.com/ZhiminPeng/ARock/), implementer of >15 operators.
+
+Mentor
+------
+Professor [Wotao Yin](http://www.math.ucla.edu/~wotaoyin/) in the UCLA Math Department.
 
 
-List of Contributors
----------------------
-To contributors: please add your name to the list when you submit a patch to the project.
-
-* [Tianyu Wu] (https://github.com/TianyuWu89)
-  - Tianyu contributed the apps for solving linear equations and minimizing Hinge loss
-
-* [Yezheng Li](https://github.com/yezhengli-Mr9)
-  - Yezheng contributed to the unit tests of operators. He also implemented the objective function calculators.
-
-* [Yerong Li](https://github.com/YerongLeopard)
-  - Yerong contributed to the unit tests of splitting schemes, and linear algebra functions.
-
-Funding
+Funding acknowledgements
 -------
-This project is funded by NSF grant. 
+This project has been funded in part by NSF grants. 
