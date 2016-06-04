@@ -25,10 +25,13 @@ TMAC can been used on several platforms:
 TMAC is designed to have fairly minimal requirements to build. Currently, we support Linux, Windows, and Mac OS X.
 If you notice any problems on your platform, please create an [issue](https://github.com/uclaopt/TMAC/issues).
 
-### Linux and Mac OS X Requirements
+### Linux and Mac OS X requirements
    * GNU-compatible Make
    * gcc>=4.7
    * BLAS
+
+### Windows
+Instructions for running TMAC on Windows can be found [here](http://www.math.ucla.edu/~wotaoyin/windows_coding.html).
 
 ## Build
 
@@ -66,7 +69,7 @@ break existing tests before they are submitted for review. We use Google Test fo
 If you are adding tests to a new file, you will need to modify the Makefile to compile the source code, otherwise, nothing needs to be
 changed in the Makefile. The following commands should build and run the unit tests.
 
-The details for contributing to TMAC is [here](https://github.com/uclaopt/TMAC/blob/master/doc/source/contribute.rst)
+The details for contributing to TMAC is [here](https://github.com/uclaopt/TMAC/blob/master/doc/source/contribute.rst).
 
 
 
