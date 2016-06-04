@@ -27,18 +27,21 @@
  *     // initialize the member variables with the input arguments
  *   }
  ***************************************************************/
-
 class SchemeInterface {
 public:
+  //update internal scheme parameters
   virtual void update_params(Params* params) = 0;
-  virtual double operator() (int index) {}
-  virtual void operator() (int index, double& S_i) {}
-  virtual void update(Vector& update, int range_start, int num_cords) = 0;
-  virtual void update(double update, int idx ) = 0;
+  //compute and apply coordinate update, return S_{index}
+  virtual double operator() (int index) =0;
+  //compute and store S_{index} in variable S_i
+  virtual void operator() (int index, double& S_i) =0;
+  //apply block of S stored in s to solution vector
+  virtual void update(Vector& s, int range_start, int num_cords) = 0;
+  //apply coordinate of S stored in s to solution vector
+  virtual void update(double s, int idx ) = 0;
   //update rank worth of cache_vars based on num_threads
   virtual void update_cache_vars(int rank, int num_threads) = 0;
 };
-
 
 // PPA:
 template <typename Backward>
