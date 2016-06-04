@@ -76,14 +76,14 @@ public:
   void operator() (int index, double& S_i) {
   }
 
-  void update(Vector& update, int range_start, int num_cords) {
+  void update(Vector& s, int range_start, int num_cords) {
     for (size_t i = 0; i < num_cords; ++i ) {
-      (*x)[i+range_start] += update[i];
+      (*x)[i+range_start] -= relaxation_step_size * s[i];
     }
   }
   
-  void update (double update, int idx ) {
-    (*x)[idx] += update;
+  void update (double s, int idx ) {
+    (*x)[idx] -= relaxation_step_size * s;
   }
 
   void update_cache_vars(int rank, int num_threads) {
@@ -143,16 +143,16 @@ public:
     S_i = old_x_at_idx - forward_grad_at_idx;
   }
 
-  void update(Vector& update, int range_start, int num_cords) {
+  void update(Vector& s, int range_start, int num_cords) {
     for (size_t i = 0; i < num_cords; ++i ) {
-      (*x)[i+range_start] += update[i];
+      (*x)[i+range_start] -= relaxation_step_size * s[i];
     }
   }
   
-  void update (double update, int idx ) {
-    (*x)[idx] += update;
+  void update (double s, int idx ) {
+    (*x)[idx] -= relaxation_step_size * s;
   }
-
+  
   //update rank worth of cache_vars based on num_threads
   void update_cache_vars(int rank, int num_threads) {
     forward.update_cache_vars(x, rank, num_threads);
@@ -209,14 +209,14 @@ public:
     S_i = old_x_at_idx - val;
   }
 
-  void update(Vector& update, int range_start, int num_cords) {
-    for (size_t i = 0 ; i < num_cords; ++i ) {
-      (*x)[i+range_start] += update[i];
+  void update(Vector& s, int range_start, int num_cords) {
+    for (size_t i = 0; i < num_cords; ++i ) {
+      (*x)[i+range_start] -= relaxation_step_size * s[i];
     }
   }
   
-  void update(double update, int idx) {
-    (*x)[idx] += update;
+  void update (double s, int idx ) {
+    (*x)[idx] -= relaxation_step_size * s;
   }
 
   //update rank worth of cache_vars based on num_threads
@@ -275,14 +275,14 @@ public:
   void operator()(int index, double &S_i) {
   }
 
-  void update(Vector& update, int range_start, int num_cords) {
-    for (size_t i = 0 ; i < num_cords; ++i ) {
-      (*x)[i+range_start] += update[i];
+  void update(Vector& s, int range_start, int num_cords) {
+    for (size_t i = 0; i < num_cords; ++i ) {
+      (*x)[i+range_start] -= relaxation_step_size * s[i];
     }
   }
   
-  void update(double update, int idx) {
-    (*x)[idx] += update;
+  void update (double s, int idx ) {
+    (*x)[idx] -= relaxation_step_size * s;
   }
   
   // TODO: for sync-parallel
@@ -349,14 +349,14 @@ public:
   void operator()(int index, double &S_i) {
   }
 
-  void update(Vector& update, int range_start, int num_cords) {
-    for (size_t i = 0 ; i < num_cords; ++i ) {
-      (*x)[i+range_start] += update[i];
+  void update(Vector& s, int range_start, int num_cords) {
+    for (size_t i = 0; i < num_cords; ++i ) {
+      (*x)[i+range_start] -= relaxation_step_size * s[i];
     }
   }
   
-  void update(double update, int idx) {
-    (*x)[idx] += update;
+  void update (double s, int idx ) {
+    (*x)[idx] -= relaxation_step_size * s;
   }
 
   void update_cache_vars (int rank, int index ) {

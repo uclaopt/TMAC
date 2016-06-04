@@ -17,8 +17,6 @@ class Barrier{
   int thread_count;
 
 };
-#include "barrier.h"
-
 
 Barrier::Barrier(int thread_count):thread_count(thread_count){
     counter[0].store(0);counter[1].store(0);
