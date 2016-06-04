@@ -71,6 +71,8 @@ changed in the Makefile. The following commands should build and run the unit te
 
 The details for contributing to TMAC is [here](https://github.com/uclaopt/TMAC/blob/master/doc/source/contribute.rst).
 
+The contributors' list is [here](https://github.com/uclaopt/TMAC/blob/master/CONTRIBUTORS.md).
+
 
 
 ## Getting the Data
