@@ -24,3 +24,5 @@ doc/build/*/*/*/*
 doc/slides/*.pdf
 
 data/*
+
+!data/*.md
