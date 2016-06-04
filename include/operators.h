@@ -20,36 +20,14 @@
 /***************************
  * base class for operators
  ***************************/
-class Operator {
+class OperatorInterface {
 public:
-  double step_size;
-  double weight;
-  
-  double operator() (Vector* v, int index = 0) {}
-  
-  // TODO: this is kind of hacky. We need to figure a better way.
-  double operator() (double val, int index = 0) {
-    return DOUBLE_MARKER;    
-  }
-  
-  void operator() (Vector* v_in, Vector* v_out) {}
-
-  // update operator related step sizes
-  void update_step_size(double step_size_) {
-    step_size = step_size_;
-  }
-
-  // update cache variables
-  void update_cache_vars(double old_x_i, double new_x_i, int index) {
-  }
-  
-  // update block of cache variables based upon rank of calling thread
-  // this is called in sync-parallel driver
-  void update_cache_vars(Vector* x, int rank, int num_threads) {
-  }
-  
-  Operator(double step_size_, double weight_ = 1.) : step_size(step_size_), weight(weight_) {}
-  Operator() : step_size(0.), weight(1.) {}
+  virtual double operator() (Vector* v, int index = 0) {}
+  virtual double operator() (double val, int index = 0) {}
+  virtual void operator() (Vector* v_in, Vector* v_out) {}
+  virtual void update_step_size(double step_size_) = 0;
+  virtual void update_cache_vars(double old_x_i, double new_x_i, int index) = 0;
+  virtual void update_cache_vars(Vector* x, int rank, int num_threads) = 0;
 };
 
 
@@ -67,8 +45,10 @@ public:
  * which is given by
  *   prox_l1 = soft_threshold(x, weight * step_size);
  ***************************************************/
-class prox_l1 : public Operator {
+class prox_l1 : public OperatorInterface {
 public:
+  double weight;
+  double step_size;
   double operator() (Vector* v, int index = 0) {
     double val;
     double threshold = step_size * weight;
@@ -107,8 +87,23 @@ public:
       }
     }
   }
-  prox_l1 (double step_size_, double weight_ = 1.) : Operator(step_size_, weight_) {}
-  prox_l1 () : Operator() {}
+  void update_cache_vars(double old_x_i, double new_x_i, int index) {
+  }
+  void update_cache_vars(Vector* x, int rank, int num_threads) {
+  }
+  
+  void update_step_size(double step_size_) {
+    step_size = step_size_;
+  }
+  
+  prox_l1 (double step_size_, double weight_ = 1.) {
+    step_size = step_size_;
+    weight = weight_;
+  }
+  prox_l1 () {
+    step_size = 0.;
+    weight = 1.;
+  }
 };
 
 
@@ -118,16 +113,21 @@ public:
  * which is given by
  *   prox_f = v / (1 + weight * step_size)
  ***************************************************/
-class prox_sum_square : public Operator {
+class prox_sum_square : public OperatorInterface {
 public:
+  double weight;
+  double step_size;
+  
   double operator() (Vector* v, int index) {
     double val;
     val = (*v)[index];
     return val / (1. + weight * step_size);
   }
+
   double operator() (double val, int index = 0) {
     return val / (1. + weight * step_size);
   }
+
   void operator() (Vector* v_in, Vector* v_out) {
     // if debug, we check index is valid
     int len = v_in->size();
@@ -136,8 +136,23 @@ public:
     }
     return;
   }
-  prox_sum_square (double step_size_, double weight_ = 1.) : Operator(step_size_, weight_) {}
-  prox_sum_square () : Operator() {}
+
+  void update_step_size(double step_size_) {
+    step_size = step_size_;
+  }
+  void update_cache_vars(double old_x_i, double new_x_i, int index) {
+  }
+  void update_cache_vars(Vector* x, int rank, int num_threads) {
+  }
+  
+  prox_sum_square (double step_size_, double weight_ = 1.) {
+    step_size = step_size_;
+    weight = weight_;
+  }
+  prox_sum_square () {
+    step_size = 0.;
+    weight = 1.;
+  }
 };
 
 
@@ -155,8 +170,11 @@ public:
  * variables, (otherwise,coordinate update for the
  * forward update will be expensive.)
  ******************************************************/
-class prox_l2 : public Operator {
+class prox_l2 : public OperatorInterface {
 public:  
+  double weight;
+  double step_size;
+  
   double operator() (Vector* v, int index) {
     double norm_v = norm(*v, 2);
     int len = v->size();
@@ -169,7 +187,7 @@ public:
   }
 
   double operator() (double val, int index = 0) {
-    return Operator::operator()(val, index);
+    return DOUBLE_MARKER;
   }
   
   void operator() (Vector* v_in, Vector* v_out) {
@@ -186,8 +204,23 @@ public:
       }
     }
   }
-  prox_l2 (double step_size_, double weight_ = 1.) : Operator(step_size_, weight_) {}
-  prox_l2 () : Operator() {}
+
+  void update_step_size(double step_size_) {
+    step_size = step_size_;
+  }
+  void update_cache_vars(double old_x_i, double new_x_i, int index) {
+  }
+  void update_cache_vars(Vector* x, int rank, int num_threads) {
+  }
+    
+  prox_l2 (double step_size_, double weight_ = 1.) {
+    step_size = step_size_;
+    weight = weight_;
+  }
+  prox_l2 () {
+    step_size = 0.;
+    weight = 1.;
+  }
 };
 
 
@@ -201,9 +234,11 @@ public:
  *              x + threshold,               if x <= -delta - threshold
  * where threshold = delta * weight * step_size.
  ******************************************************************/
-class prox_huber : public Operator {
+class prox_huber : public OperatorInterface {
 public:  
   double delta;
+  double weight;
+  double step_size;
   
   double operator() (Vector* v, int index = 0) {
     // if debug, we check index is valid
@@ -246,11 +281,27 @@ public:
       }
     }
   }
+
+  void update_step_size(double step_size_) {
+    step_size = step_size_;
+  }  
+  void update_cache_vars(double old_x_i, double new_x_i, int index) {
+  }
+  void update_cache_vars(Vector* x, int rank, int num_threads) {
+  }
   
   prox_huber (double step_size_, double weight_ = 1.,
-              double delta_ = 1.) :
-  Operator(step_size_, weight_), delta(delta_) {}
-  prox_huber () : Operator(), delta(1.) {}
+              double delta_ = 1.) {
+    step_size = step_size_;
+    weight = weight_;
+    delta = delta_;
+  }
+
+  prox_huber () {
+    step_size = 0.;
+    weight = 1.;
+    delta = 1.;
+  }
 };
 
 
@@ -260,8 +311,10 @@ public:
  * which is given by
  *  prox_log_barrier(x) = 0.5 * (x + sqrt(x*x + 4 * weight * step_size))
  *************************************************************************/
-class prox_log_barrier : public Operator {
+class prox_log_barrier : public OperatorInterface {
 public:
+  double weight;
+  double step_size;
   double operator() (Vector* v, int index = 0) {
     double val = (*v)[index];
     return 0.5 * (val + sqrt(val * val + 4. * weight * step_size));
@@ -280,9 +333,23 @@ public:
       (*v_out)[i] = 0.5 * (val + sqrt(val * val + 4. * weight * step_size));
     }
   }
+
+  void update_step_size(double step_size_) {
+    step_size = step_size_;
+  }
+  void update_cache_vars(double old_x_i, double new_x_i, int index) {
+  }
+  void update_cache_vars(Vector* x, int rank, int num_threads) {
+  }
   
-  prox_log_barrier (double step_size_, double weight_ = 1.) : Operator(step_size_, weight_) {}
-  prox_log_barrier () : Operator() {}
+  prox_log_barrier (double step_size_, double weight_ = 1.) {
+    step_size = step_size_;
+    weight = weight_;
+  }
+  prox_log_barrier () {
+    step_size = 0.;
+    weight = 1.;
+  }
 };
 
 
@@ -293,9 +360,11 @@ public:
  *  prox_elastic_net = 1/(1 + weight_2 * step_size)
  *                * shrink(x, weight_1 * step_size)
  *******************************************************/
-class prox_elastic_net : public Operator {
+class prox_elastic_net : public OperatorInterface {
 public:
   double weight_2;
+  double weight;
+  double step_size;
   
   double operator() (Vector* v, int index = 0) {
     // if debug, we check index is valid
@@ -340,10 +409,25 @@ public:
       }
     }
   }
+
+  void update_step_size(double step_size_) {
+    step_size = step_size_;
+  }  
+  void update_cache_vars(double old_x_i, double new_x_i, int index) {
+  }
+  void update_cache_vars(Vector* x, int rank, int num_threads) {
+  }
   
-  prox_elastic_net (double step_size_, double weight_ = 1., double weight_2_ = 1.) :
-  Operator(step_size_, weight_), weight_2(weight_2_) {}
-  prox_elastic_net () : Operator(), weight_2(1.) {}
+  prox_elastic_net (double step_size_, double weight_ = 1., double weight_2_ = 1.) {
+    step_size = step_size_;
+    weight = weight_;
+    weight_2 = weight_2_;
+  }
+  prox_elastic_net () {
+    step_size = 0.;
+    weight = 1.;
+    weight_2 = 1.;
+  }
 };
 
 
@@ -357,8 +441,10 @@ public:
 
 // projection to the first-orthant cone
 //   f(x) = I(x >=0)
-class proj_positive_cone : public Operator {
+class proj_positive_cone : public OperatorInterface {
 public: 
+  double weight;
+  double step_size;
   double operator() (Vector* v, int index) {
     return fmax((*v)[index], 0.);
   }
@@ -373,18 +459,33 @@ public:
       (*v_out)[i] = fmax((*v_in)[i], 0.);
     }
   }
+
+  void update_step_size(double step_size_) {
+    step_size = step_size_;
+  }
+  void update_cache_vars(double old_x_i, double new_x_i, int index) {
+  }
+  void update_cache_vars(Vector* x, int rank, int num_threads) {
+  }
   
-  proj_positive_cone () : Operator() {}
-  proj_positive_cone (double step_size_, double weight_ = 1.) : Operator(step_size_, weight_) {}
+  proj_positive_cone () {
+    step_size = 0.;
+    weight = 1.;
+  }
+  proj_positive_cone (double step_size_, double weight_ = 1.) {
+    step_size = step_size_;
+    weight = weight_;
+  }
 };
 
 
 // projection to box
 // f = I(l <= x <= u)
-class proj_box : public Operator {
+class proj_box : public OperatorInterface {
 public:
   Vector *lower, *upper;
-
+  double step_size;
+  double weight;
   double operator() (Vector* v, int index) {
     double val = (*v)[index];
     return fmax((*lower)[index], fmin(val, (*upper)[index]));
@@ -402,10 +503,23 @@ public:
       (*v_out)[i] = fmax((*lower)[i], fmin(val, (*upper)[i]));
     }
   }
+  void update_cache_vars(double old_x_i, double new_x_i, int index) {
+  }
+  void update_cache_vars(Vector* x, int rank, int num_threads) {
+  }
+
+  void update_step_size(double step_size_) {
+    step_size = step_size_;
+  }
   
-  proj_box () : Operator() {}
+  proj_box () {
+    step_size = 0.;
+    weight = 1.;
+    lower = nullptr;
+    upper = nullptr;
+  }
   proj_box (Vector* lower_, Vector* upper_, double step_size_ = 1., double weight_ = 1.) :
-  lower(lower_), upper(upper_), Operator(step_size_, weight_) {}
+      lower(lower_), upper(upper_), step_size(step_size_), weight(weight_) {}
 };
 
 /* projection to l1 ball
@@ -414,9 +528,11 @@ public:
  *   according to [matlab code](http://stanford.edu/~jduchi/projects/DuchiShSiCh08/ProjectOntoL1Ball.m)
  */
 //TODO:  add a maintain ||x|| version
-class proj_l1_ball : public Operator {
+class proj_l1_ball : public OperatorInterface {
 public:
   double radius;
+  double weight;
+  double step_size;
   
   // operator that takes a vector and an index
   // running time O(n\log n)
@@ -507,8 +623,16 @@ public:
     }
   }
 
+  void update_step_size(double step_size_) {
+    step_size = step_size_;
+  }
+  void update_cache_vars(double old_x_i, double new_x_i, int index) {
+  }
+  void update_cache_vars(Vector* x, int rank, int num_threads) {
+  }
+  
   double operator() (double val, int index = 1) {
-    return Operator::operator()(val, index);
+    return DOUBLE_MARKER;
   }
   
   void update_radius(double radius_) {
@@ -516,9 +640,16 @@ public:
   }
   
   // struct constructors
-  proj_l1_ball() : Operator(), radius(1.) {}
-  proj_l1_ball(double radius_, double step_size_=1., double weight_=1.) : radius(radius_),
-      Operator(step_size_, weight_) {}
+  proj_l1_ball() {
+    radius = 1.;
+    step_size = 0.;
+    weight = 1.;
+  }
+  proj_l1_ball(double radius_, double step_size_=1., double weight_=1.) {
+    radius = radius_;
+    step_size = step_size_;
+    weight = weight_;
+  }
 };
 
 
@@ -531,9 +662,11 @@ public:
  *
  *********************************************/
 // TODO: add a maintain ||x|| version
-class proj_l2_ball : public Operator {
+class proj_l2_ball : public OperatorInterface {
 public:
   double radius;
+  double weight;
+  double step_size;
   
   double operator() (Vector* v, int index) {
     double nrm_v = norm(*v);
@@ -552,16 +685,31 @@ public:
   }
 
   double operator() (double val, int index = 1) {
-    return Operator::operator()(val, index);
+    return DOUBLE_MARKER;
+  }
+
+  void update_step_size(double step_size_) {
+    step_size = step_size_;
+  }  
+  void update_cache_vars(double old_x_i, double new_x_i, int index) {
+  }
+  void update_cache_vars(Vector* x, int rank, int num_threads) {
   }
   
   void update_radius (double radius_) {
     radius = radius_;
   }
   
-  proj_l2_ball() : Operator(), radius(1.) {}
-  proj_l2_ball (double radius_, double step_size_=1., double weight_=1.) : radius(radius_),
-      Operator(step_size_, weight_) {}
+  proj_l2_ball() {
+    radius = 1.;
+    step_size = 0.;
+    weight = 1.;
+  }
+  proj_l2_ball (double radius_, double step_size_=1., double weight_=1.) {
+    radius = radius_;
+    step_size = step_size_;
+    weight = weight_;
+  }
 };
 
 
@@ -573,12 +721,13 @@ public:
  * proj_hyperplane = x + (b - a'x) / (a'a) * a
  *
  *******************************************/
-class proj_hyperplane : public Operator {
+class proj_hyperplane : public OperatorInterface {
 public:
   Vector *a;
   double b;
   double ata;
-
+  double weight;
+  double step_size;
   // TODO: use atv as the maintained variable, and improve the efficiency from O(n) to O(1)
   double operator() (Vector* v, int index) {
     double val = (*v)[index];
@@ -595,16 +744,28 @@ public:
   }
 
   double operator() (double val, int index = 1) {
-    return Operator::operator()(val, index);
+    return DOUBLE_MARKER;
+  }
+
+  void update_step_size(double step_size_) {
+    step_size = step_size_;
+  }
+  void update_cache_vars(double old_x_i, double new_x_i, int index) {
+  }
+  void update_cache_vars(Vector* x, int rank, int num_threads) {
   }
   
-  proj_hyperplane() : Operator() {
+  proj_hyperplane() {
+    step_size = 0.;
+    weight = 1.;
     a = NULL;
     b = 0.;
     ata = 0.;
   }
   
-  proj_hyperplane(Vector* a_, double b_, double step_size_ = 1., double weight_ = 1.) : Operator(step_size_, weight_) {
+  proj_hyperplane(Vector* a_, double b_, double step_size_ = 1., double weight_ = 1.) {
+    step_size = step_size_;
+    weight = weight_;
     a = a_;
     b = b_;
     ata = norm(*a, 2);
@@ -618,8 +779,10 @@ public:
  *   according to 
  */
 //TODO:  add a maintain ||x|| version
-class proj_prob_simplex : public Operator {
+class proj_prob_simplex : public OperatorInterface {
 public:  
+  double weight;
+  double step_size;
   // operator that takes a vector and an index
   // running time O(n\log n)
   // Laurent Condat, “Fast projection onto the simplex and the L1 ball,” Mathematical Programming, pp. 1–11, 2015.
@@ -653,7 +816,7 @@ public:
   }
   
   double operator() (double val, int index = 1) {
-    return Operator::operator()(val, index);
+    return DOUBLE_MARKER;
   }
   
   void operator() (Vector* v_in, Vector* v_out) { 
@@ -686,9 +849,24 @@ public:
       (*v_out)[i] = temp > 0 ? temp : 0;
     }
   }
+
+  void update_step_size(double step_size_) {
+    step_size = step_size_;
+  }
+  void update_cache_vars(double old_x_i, double new_x_i, int index) {
+  }
+  void update_cache_vars(Vector* x, int rank, int num_threads) {
+  }
   
-  proj_prob_simplex() : Operator() {}
-  proj_prob_simplex(double step_size_, double weight_ = 1.) : Operator(step_size_, weight_) {}
+  proj_prob_simplex() {
+    step_size = 0.;
+    weight = 1.;
+  }
+  
+  proj_prob_simplex(double step_size_, double weight_ = 1.) {
+    step_size = step_size_;
+    weight = weight_;
+  }
 };
 
 /***********************************
@@ -705,11 +883,13 @@ public:
 // where A is a row major matrix, Atx is
 // a maintained variable that stores the A'x
 template <typename Mat>
-class forward_grad_for_square_loss : public Operator {
+class forward_grad_for_square_loss : public OperatorInterface {
 public:
   Mat* A;
   Vector *b, *Atx;  
   Mat* At; // this is for the sync-parallel stuff
+  double weight;
+  double step_size;
   
   double operator() (Vector* x, int index) {
     // calculate the forward step
@@ -734,13 +914,17 @@ public:
   }
 
   double operator() (double val, int index = 1) {
-    return Operator::operator()(val, index);
+    return DOUBLE_MARKER;
   }
 
+  void update_step_size(double step_size_) {
+    step_size = step_size_;
+  }  
+  
   void update_cache_vars(double old_x_i, double new_x_i, int index) {
     add(Atx, A, index, -old_x_i + new_x_i);
   }
-  
+
   void update_cache_vars(Vector* x, int rank, int num_threads){
     int m = At->rows(); //y=A'*x
     int block_size = m/num_threads;
@@ -751,11 +935,20 @@ public:
     }
   }
   
-  forward_grad_for_square_loss () : Operator() {}
-  forward_grad_for_square_loss (double l,double w=1.) : Operator(l, w) {}
+  forward_grad_for_square_loss () {
+    step_size = 0.;
+    weight = 1.;
+  }
+  forward_grad_for_square_loss (double step_size_, double weight_ = 1.) {
+    step_size = step_size_;
+    weight = weight_;
+  }
+  
   forward_grad_for_square_loss (Mat* A_, Vector* b_, Vector* Atx_,
                                 double step_size_ = 1., double weight_ = 1.,
-                                Mat* At_ = nullptr) : Operator(step_size_, weight_) {
+                                Mat* At_ = nullptr) {
+    step_size = step_size_;
+    weight = weight_;
     A = A_;
     b = b_;
     Atx = Atx_;
@@ -770,10 +963,12 @@ public:
 // I - step_size * weight * (Q x + c), where
 // Q is a symmetric matrix.
 template <typename Mat>
-class forward_grad_for_qp : public Operator {
+class forward_grad_for_qp : public OperatorInterface {
 public:
   Mat* Q;
   Vector *c;
+  double weight;
+  double step_size;
 
   double operator() (Vector* x, int index) {
     double Q_ix = dot(Q, x, index);
@@ -790,12 +985,30 @@ public:
   }
   
   double operator() (double val, int index = 1) {
-    return Operator::operator()(val, index);
+    return DOUBLE_MARKER;
+  }
+
+  void update_step_size(double step_size_) {
+    step_size = step_size_;
+  }  
+  void update_cache_vars(double old_x_i, double new_x_i, int index) {
+  }
+  void update_cache_vars(Vector* x, int rank, int num_threads) {
   }
   
-  forward_grad_for_qp () : Operator() {}
-  forward_grad_for_qp (double l,double w=1.) : Operator(l, w) {}
-  forward_grad_for_qp (Mat* Q_, Vector* c_, double step_size_ = 1., double weight_=1.) : Operator(step_size_, weight_) {
+  forward_grad_for_qp () {
+    step_size = 0.;
+    weight = 1.;
+  }
+  
+  forward_grad_for_qp (double step_size_,double weight_ = 1.) {
+    step_size = step_size_;
+    weight = weight_;
+  }
+  
+  forward_grad_for_qp (Mat* Q_, Vector* c_, double step_size_ = 1., double weight_=1.) {
+    step_size = step_size_;
+    weight = weight_;
     Q = Q_;
     c = c_;
   }
@@ -807,21 +1020,22 @@ public:
 // I - step_size * (A' Ax - e), where
 // A is a matrix with size num_features x num_samples
 template <typename Mat>
-class forward_grad_for_dual_svm : public Operator {
+class forward_grad_for_dual_svm : public OperatorInterface {
 public:
   Mat* At;
   Vector* Ax;
   Mat* A; // this is for sync-parallel
-
+  double step_size;
+  double weight;
+  
   double operator() (Vector* x, int index) {
     double At_i_Ax = dot(At, Ax, index);
-
     double forward_grad_at_i = (*x)[index] - step_size * (At_i_Ax - 1.);
     return forward_grad_at_i;
   }
 
   double operator() (double val, int index = 1) {
-    return Operator::operator()(val, index);
+    return DOUBLE_MARKER;
   }
   
   void operator() (Vector* v_in, Vector* v_out) {
@@ -831,6 +1045,10 @@ public:
     scale(*v_out, -step_size);
     add(*v_out, *v_in);
   }
+
+  void update_step_size(double step_size_) {
+    step_size = step_size_;
+  }  
   
   void update_cache_vars(double old_x_i, double new_x_i, int index) {
     add(Ax, At, index, -old_x_i + new_x_i);
@@ -846,9 +1064,19 @@ public:
     }
   }
   
-  forward_grad_for_dual_svm () : Operator() {}
-  forward_grad_for_dual_svm (double step_size_, double weight_ = 1.) : Operator(step_size_, weight_) {}
-  forward_grad_for_dual_svm (Mat* At_, Vector* Ax_, double step_size_ = 1., double weight_ = 1., Mat* A_ = nullptr) : Operator(step_size_, weight_){
+  forward_grad_for_dual_svm () {
+    step_size = 0.;
+    weight = 1.;
+  }
+  
+  forward_grad_for_dual_svm (double step_size_, double weight_ = 1.) {
+    step_size = step_size_;
+    weight = weight_;
+  }
+  
+  forward_grad_for_dual_svm (Mat* At_, Vector* Ax_, double step_size_ = 1., double weight_ = 1., Mat* A_ = nullptr) {
+    step_size = step_size_;
+    weight = weight_;
     At = At_;
     Ax = Ax_;
     A = A_;
@@ -862,11 +1090,13 @@ public:
 // D = diag(A)
 // A is a diagnally dominant matrix.
 template <typename Mat>
-class linear_eqn_jacobi_operator : public Operator {
+class linear_eqn_jacobi_operator : public OperatorInterface {
 public:
   Mat* A;
   Vector *b;
-
+  double step_size;
+  double weight;
+  
   double operator() (Vector* x, int index) {
     double val = 0.;
     double A_ix = dot(A, x, index);
@@ -882,12 +1112,30 @@ public:
   }
 
   double operator() (double val, int index = 1) {
-    return Operator::operator()(val, index);
+    return DOUBLE_MARKER;
+  }
+
+  void update_step_size(double step_size_) {
+    step_size = step_size_;
+  }
+  void update_cache_vars(double old_x_i, double new_x_i, int index) {
+  }
+  void update_cache_vars(Vector* x, int rank, int num_threads) {
   }
   
-  linear_eqn_jacobi_operator () : Operator() {}
-  linear_eqn_jacobi_operator (double l,double w=1.) : Operator(l, w) {}
-  linear_eqn_jacobi_operator (Mat* A_, Vector* b_, double step_size_ = 1., double weight_=1.) : Operator(step_size_, weight_){
+  linear_eqn_jacobi_operator () {
+    step_size = 0.;
+    weight = 1.;
+  }
+  
+  linear_eqn_jacobi_operator (double step_size_, double weight_ = 1.) {
+    step_size = step_size_;
+    weight = weight_;
+  }
+  
+  linear_eqn_jacobi_operator (Mat* A_, Vector* b_, double step_size_ = 1., double weight_ = 1.) {
+    step_size = step_size_;
+    weight = weight_;
     A = A_;
     b = b_;
   }
@@ -896,11 +1144,13 @@ public:
 
 // forward gradient for logistic loss
 template <typename Mat>
-class forward_grad_for_log_loss : public Operator {
+class forward_grad_for_log_loss : public OperatorInterface {
 public:  
   Mat* A;
   Vector *b, *Atx;  
   Mat* At; // this is for sync-parallel
+  double weight;
+  double step_size;
   
   double operator() (Vector* x, int index) {
     // calculate the forward step
@@ -911,13 +1161,16 @@ public:
   }
 
   // TODO: need to implement this
-  double operator()(Vector* v_in, Vector* v_out) {
-
+  void operator()(Vector* v_in, Vector* v_out) {
   }
    
   double operator() (double val, int index = 1) {
-    return Operator::operator()(val, index);
+    return DOUBLE_MARKER;
   }
+
+  void update_step_size(double step_size_) {
+    step_size = step_size_;
+  }  
   
   void update_cache_vars(double old_x_i, double new_x_i, int index) {
     add(Atx, A, index, -old_x_i + new_x_i);
@@ -933,11 +1186,21 @@ public:
     }
   }
   
-  forward_grad_for_log_loss () : Operator() {}
-  forward_grad_for_log_loss (double step_size_, double weight_=1.) : Operator(step_size_, weight_) {}
+  forward_grad_for_log_loss() {
+    step_size = 0.;
+    weight = 1.;
+  }
+  
+  forward_grad_for_log_loss (double step_size_, double weight_=1.) {
+    step_size = step_size_;
+    weight = weight_;
+  }
+  
   forward_grad_for_log_loss (Mat* A_, Vector* b_,
                              Vector* Atx_, double step_size_ = 1.,
-                             double weight_=1., Mat* At_ = nullptr) : Operator(step_size_, weight_){
+                             double weight_ = 1., Mat* At_ = nullptr) {
+    step_size = step_size_;
+    weight = weight_;
     A = A_;
     b = b_;
     Atx = Atx_;
@@ -950,11 +1213,14 @@ public:
 // f(x) = weight / 2 sum_i max(0, (1 - b_i a_i'x)^2, which is given by
 // x + step_size * weight * sum_i b_i max(0, 1 - b_i a_i'x)) * a_i
 template <typename Mat>
-class forward_grad_for_square_hinge_loss : public Operator {
+class forward_grad_for_square_hinge_loss : public OperatorInterface {
 public:
   Mat* A;
   Vector *b, *Atx;  
   Mat* At;
+  double weight;
+  double step_size;
+  
   double operator() (Vector* x, int index) {
     int m = Atx->size();
     // TODO: create a vector in every iteration, need to improve the efficiency
@@ -983,17 +1249,42 @@ public:
   }
   
   double operator() (double val, int index = 1) {
-    return Operator::operator()(val, index);
+    return DOUBLE_MARKER;
   }
-   
+
+  void update_step_size(double step_size_) {
+    step_size = step_size_;
+  }
+  
   void update_cache_vars(double old_x_i, double new_x_i, int index) {
     add(Atx, A, index, -old_x_i + new_x_i);
   }
-  forward_grad_for_square_hinge_loss () : Operator() {}
-  forward_grad_for_square_hinge_loss (double l,double w=1.) : Operator(l, w) {}
+  
+  void update_cache_vars(Vector* x, int rank, int num_threads) {
+    int m = At->rows(); //y=A'*x
+    int block_size = m / num_threads;
+    int start_idx = rank * block_size;
+    int end_idx = (rank == num_threads - 1) ? m : start_idx + block_size;
+    for (int iter = start_idx; iter != end_idx; ++iter){
+      (*Atx)[iter] = dot(At, x, iter);
+    }
+  }
+  
+  forward_grad_for_square_hinge_loss () {
+    step_size = 0.;
+    weight = 1.;
+  }
+  
+  forward_grad_for_square_hinge_loss (double step_size_, double weight_ = 1.) {
+    step_size = step_size_;
+    weight = weight_;
+  }
+  
   forward_grad_for_square_hinge_loss (Mat* A_, Vector* b_,
                                       Vector* Atx_, double step_size_ = 1.,
-                                      double weight_ = 1., Mat* At_ = nullptr) : Operator(step_size_, weight_) {
+                                      double weight_ = 1., Mat* At_ = nullptr) {
+    step_size = step_size_;
+    weight = weight_;
     A = A_;
     b = b_;
     Atx = Atx_;
@@ -1015,13 +1306,15 @@ public:
              -delta     if a_i' x - b_i < -delta
  *********************************************************************/
 template <typename Mat>
-class forward_grad_for_huber_loss : public Operator {
+class forward_grad_for_huber_loss : public OperatorInterface {
 public:
   double delta;
   Mat* A;
   Vector *b, *Atx;  
   Vector temp;
   Mat* At; // this is for sync-parallel
+  double weight;
+  double step_size;
   
   double operator() (Vector* x, int index) {
     // calculate the forward step
@@ -1067,17 +1360,37 @@ public:
     }
   }
 
- double operator() (double val, int index = 1) {
-    return Operator::operator()(val, index);
+  double operator() (double val, int index = 1) {
+    return DOUBLE_MARKER;
   }
-   
+
+  void update_step_size(double step_size_) {
+    step_size = step_size_;
+  }
+  
   void update_cache_vars(double old_x_i, double new_x_i, int index) {
     add(Atx, A, index, -old_x_i + new_x_i);
   }
-  forward_grad_for_huber_loss () : Operator() {}
+
+  void update_cache_vars(Vector* x, int rank, int num_threads) {
+    int m = At->rows(); //y=A'*x
+    int block_size = m / num_threads;
+    int start_idx = rank * block_size;
+    int end_idx = (rank == num_threads - 1) ? m : start_idx + block_size;
+    for (int iter = start_idx; iter != end_idx; ++iter){
+      (*Atx)[iter] = dot(At, x, iter);
+    }
+  }
+  
+  forward_grad_for_huber_loss () {
+    step_size = 0.;
+    weight = 1.;
+  }
   forward_grad_for_huber_loss (Mat* A_, Vector* b_, Vector* Atx_,
                                double step_size_ = 1., double weight_=1.,
-                               double delta_ = 1., Mat* At_ = nullptr) : Operator(step_size_, weight_) {
+                               double delta_ = 1., Mat* At_ = nullptr) {
+    step_size = step_size_;
+    weight = weight_;
     A = A_;
     b = b_;
     Atx = Atx_;
@@ -1092,7 +1405,7 @@ public:
 // please refer to page 38 of the following paper
 //   http://arxiv.org/pdf/1601.00863v2.pdf
 template <typename Mat>
-class portfolio_3s : public Operator {
+class portfolio_3s : public OperatorInterface {
 public:
   Mat* Q;
   Vector* epsilon;
@@ -1101,6 +1414,8 @@ public:
   double a1a2;
   Vector a1, a2, a3, a4, tild_a1, tild_a2;
   double w1, w2, w3, w4;
+  double weight;
+  double step_size;
 
   double operator() (Vector* x, int index) {
     w1 = dot(a1, *x) - b1;
@@ -1131,8 +1446,16 @@ public:
   void operator() (Vector* v_in, Vector* v_out) {
   }
 
- double operator() (double val, int index = 1) {
-    return Operator::operator()(val, index);
+  double operator() (double val, int index = 1) {
+    return DOUBLE_MARKER;
+  }
+
+  void update_step_size(double step_size_) {
+    step_size = step_size_;
+  }
+  void update_cache_vars(double old_x_i, double new_x_i, int index) {
+  }
+  void update_cache_vars(Vector* x, int rank, int num_threads) {
   }
   
   void project_D2 (Vector* v_in, Vector* v_out) {
@@ -1157,7 +1480,9 @@ public:
       (*v_out)[i] = temp[i];
     }
   }
-  portfolio_3s () : Operator () {
+  portfolio_3s () {
+    step_size = 0.;
+    weight = 1.;
     int m = 1;    
     Vector epsilon_(m, 1.);
     double sm = 1.;
@@ -1183,7 +1508,9 @@ public:
     w4 = -b4;
   }
   
-  portfolio_3s (double step_size_, double weight_=1.) : Operator(step_size_, weight_) {
+  portfolio_3s (double step_size_, double weight_ = 1.) {
+    step_size = step_size_;
+    weight = weight_;
     int m = 1;    
     Vector epsilon_(m, 1.);
     double sm = 1.;
@@ -1212,7 +1539,9 @@ public:
                 Vector* epsilon_,
                 double c_,
                 double step_size_ = 1.,
-                double weight_=1.) : Operator(step_size_, weight_) {
+                double weight_ = 1.) {
+    step_size = step_size_;
+    weight = weight_;
     epsilon = epsilon_;
     c = c_;
     Q = Q_;

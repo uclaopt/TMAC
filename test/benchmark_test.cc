@@ -102,14 +102,14 @@ void logistic_speedup_test(Params params) {
 
       for (int num_threads = 1; num_threads <= max_num_thraeds; num_threads*=2) {
 
-        double start_time = omp_get_wtime();    
+        double start_time = get_wall_time();    
         for (int i = 0; i < num_threads; i++) {
           mythreads.push_back(std::thread(logistic_test, max_itrs, num_threads));
         }
         for (size_t i = 0; i < num_threads; i++) {
           mythreads[i].join();
         }
-        double end_time = omp_get_wtime();
+        double end_time = get_wall_time();
         my_time = end_time - start_time;
         mythreads.clear();        
         
@@ -138,14 +138,14 @@ void dot_prod_speedup_test(Params params) {
       Vector x(len), y(len);
       for (int num_threads = 1; num_threads <= max_num_thraeds; num_threads*=2) {
         for (int type = 0; type <= 1; type++) {
-          double start_time = omp_get_wtime();    
+          double start_time = get_wall_time();    
           for (int i = 0; i < num_threads; i++) {
             mythreads.push_back(std::thread(dot_ds_vec_ds_vec_test, &x, &y, max_itrs, num_threads, type));
           }
           for (size_t i = 0; i < num_threads; i++) {
             mythreads[i].join();
           }
-          double end_time = omp_get_wtime();
+          double end_time = get_wall_time();
           if (type == 0) {
             my_time = end_time - start_time;
           } else {
@@ -186,14 +186,14 @@ void dot_ds_mtx_ds_vec_speedup_test(Params params) {
     for (int runs = 0; runs < 10; runs++) {      
       for (int num_threads = 1; num_threads <= max_num_thraeds; num_threads*=2) {
         for (int type = 0; type <= 1; type++) {
-          double start_time = omp_get_wtime();    
+          double start_time = get_wall_time();    
           for (int i = 0; i < num_threads; i++) {
             mythreads.push_back(std::thread(dot_ds_mtx_ds_vec_test, &A, &x, max_itrs, num_threads, type));
           }
           for (size_t i = 0; i < num_threads; i++) {
             mythreads[i].join();
           }
-          double end_time = omp_get_wtime();
+          double end_time = get_wall_time();
           if (type == 0) {
             my_time = end_time - start_time;
           } else {
@@ -249,14 +249,14 @@ void dot_sp_mtx_ds_vec_speedup_test(Params params) {
     for (int runs = 0; runs < 10; runs++) {      
       for (int num_threads = 1; num_threads <= max_num_thraeds; num_threads*=2) {
         for (int type = 0; type <= 1; type++) {
-          double start_time = omp_get_wtime();    
+          double start_time = get_wall_time();    
           for (int i = 0; i < num_threads; i++) {
             mythreads.push_back(std::thread(dot_sp_mtx_ds_vec_test, &A, &x, max_itrs, num_threads, type));
           }
           for (size_t i = 0; i < num_threads; i++) {
             mythreads[i].join();
           }
-          double end_time = omp_get_wtime();
+          double end_time = get_wall_time();
           if (type == 0) {
             my_time = end_time - start_time;
           } else {
@@ -298,14 +298,14 @@ void scale_speedup_test(Params params) {
       Vector x(len);
       for (int num_threads = 1; num_threads <= max_num_thraeds; num_threads*=2) {
         for (int type = 0; type <= 1; type++) {
-          double start_time = omp_get_wtime();    
+          double start_time = get_wall_time();    
           for (int i = 0; i < num_threads; i++) {
             mythreads.push_back(std::thread(scale_test, &x, max_itrs, num_threads, type));
           }
           for (size_t i = 0; i < num_threads; i++) {
             mythreads[i].join();
           }
-          double end_time = omp_get_wtime();
+          double end_time = get_wall_time();
           if (type == 0) {
             my_time = end_time - start_time;
           } else {
