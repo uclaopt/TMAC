@@ -28,7 +28,6 @@
  *     // initialize the member variables with the input arguments
  *   }
  ***************************************************************/
-
 class SchemeInterface {
 public:
   //update internal scheme parameters
@@ -44,7 +43,6 @@ public:
   //update rank worth of cache_vars based on num_threads
   virtual void update_cache_vars(int rank, int num_threads) = 0;
 };
-
 
 // PPA:
 template <typename Backward>
