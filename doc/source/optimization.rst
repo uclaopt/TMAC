@@ -13,3 +13,4 @@ TMAC currently supports solving convex optimization problems with operator split
    opt/qcqp
    opt/tv
    opt/portfolio
+   opt/svm
