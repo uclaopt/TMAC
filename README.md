@@ -15,23 +15,17 @@ Welcome to **TMAC**: A Toolbox of Modern Async-Parallel, Coordinate, Splitting, 
 
 
 ## Platforms
-TMAC can been used on several platforms:
+TMAC can be installed to run on the following platforms:
 
    * Linux
-   * Windows
    * Mac OS X
+   * Windows [(guide)](http://www.math.ucla.edu/~wotaoyin/windows_coding.html)
 
-## Requirements
-TMAC is designed to have fairly minimal requirements to build. Currently, we support Linux, Windows, and Mac OS X.
-If you notice any problems on your platform, please create an [issue](https://github.com/uclaopt/TMAC/issues).
+Building TMAC requires  
 
-### Linux and Mac OS X requirements
    * GNU-compatible Make
-   * gcc>=4.7
-   * BLAS
-
-### Windows
-Instructions for running TMAC on Windows can be found [here](http://www.math.ucla.edu/~wotaoyin/windows_coding.html).
+   * GCC (version 4.7 or above)
+   * Any BLAS library
 
 ## Build
 
