@@ -28,7 +28,7 @@ CC := g++
 # created to the list.
 
 
-TESTS = operators_unittest.exe algebra_unittest.exe splitting_schemes_unittest.exe test_libsvm_loader.exe benchmark_test.exe objective_function_unittest.exe
+TESTS = operators_unittest.exe algebra_unittest.exe splitting_schemes_unittest.exe test_libsvm_loader.exe benchmark_test.exe objective_function_unittest.exe cmp_sync_lasso.exe
 
 
 # All Google Test headers.  Usually you shouldn't change this
@@ -40,6 +40,7 @@ GTEST_HEADERS = $(GTEST_DIR)/include/gtest/*.h \
 
 all : $(TESTS)
 
+lasso : cmp_sync_lasso.exe
 
 clean :
 	rm -f $(TESTS) gtest.a gtest_main.a *.o
@@ -114,4 +115,10 @@ benchmark_test.exe: benchmark_test.o util.o algebra.o nist_spblas.o
 objective_function_unittest.o : $(USER_DIR)/objective_function_unittest.cc
 	$(CC) $(CPPFLAGS) $(CXXFLAGS) $(INC) -c $(USER_DIR)/objective_function_unittest.cc
 objective_function_unittest.exe : objective_function_unittest.o algebra.o util.o nist_spblas.o gtest_main.a
+	$(CC) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@ $(BLASFLAGS)
+
+cmp_sync_lasso.o : $(USER_DIR)/cmp_sync_lasso.cc
+	$(CC) $(CPPFLAGS) $(CXXFLAGS) $(INC) -c $(USER_DIR)/cmp_sync_lasso.cc
+
+cmp_sync_lasso.exe: cmp_sync_lasso.o util.o algebra.o nist_spblas.o
 	$(CC) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@ $(BLASFLAGS)

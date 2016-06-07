@@ -12,17 +12,14 @@
 
 template<typename Splitting>
 void AROCK (Splitting op, Params parameters, Controller<Splitting> controller = Controller<Splitting>()) {
-  
   int total_num_threads = parameters.total_num_threads;
   bool use_controller = parameters.use_controller;
   std::vector<std::thread> mythreads;
-
   int problem_size = parameters.get_problem_dimension();
   string worker_type = parameters.worker_type;
   int num_workers = use_controller ? total_num_threads - 1 : total_num_threads;
   
   for (size_t i = 0; i < num_workers; i++) {
-
     if (worker_type == "cyclic") {
       // partition the indexes
       int block_size = problem_size / num_workers;
@@ -46,12 +43,9 @@ void AROCK (Splitting op, Params parameters, Controller<Splitting> controller = 
   if (use_controller) {
     mythreads.push_back(std::thread(Controller_loop<Splitting>, std::ref(controller)));
   }
- 
-
   for (size_t i = 0; i < total_num_threads; i++) {
     mythreads[i].join();
   }
-  
 }
 
 
@@ -60,14 +54,10 @@ void SYNC(Splitting op, Params parameters) {
   
   int total_num_threads = parameters.total_num_threads;
   std::vector<std::thread> mythreads;
-  
   int num_workers = total_num_threads;
-  
   Barrier computation_barrier(num_workers);
   Barrier update_barrier(num_workers);
   Barrier cache_update_barrier(num_workers);
-  
-  
   int problem_size = parameters.get_problem_dimension();
   int block_size = problem_size / num_workers;
   
@@ -84,11 +74,10 @@ void SYNC(Splitting op, Params parameters) {
                                     std::ref(cache_update_barrier)
                                     ));
   }
-  
+  // join the threads
   for (size_t i = 0; i < total_num_threads; i++) {
     mythreads[i].join();
   }
-  
 }
 
 
