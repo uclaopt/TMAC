@@ -1,4 +1,4 @@
-Portfolio Optimization
+Portfolio optimization
 ======================
 Assume that we have one unit of capital and :math:`n` assets to invest on. The :math:`i` th asset has an expected return rate :math:`\xi_i\ge 0`. Our goal is to find a portfolio with the minimal risk such that the expected return is no less than :math:`\lambda`. This problem can be formulated as
 

@@ -4,7 +4,11 @@ Introduction
 
 Overview
 ===========
-TMAC is an asynchronous parallel C++ library for solving equations and optimization problems on shared memory systems. The package uses `Eigen <http://eigen.tuxfamily.org/index.php?title=Main_Page>`_ Library for matrix and vector classes. It use `BLAS <http://www.netlib.org/blas/>`_ and `Sparse BLAS <http://math.nist.gov/spblas/>`_ for linear algebra operations.  Pthread is used for parallelization. TMAC provides the following features:
+TMAC is a toolbox written in C++11 that implements algorithms based on a set of modern methods for large-scale optimization. It covers a variety of optimization problems, which can be both smooth and nonsmooth, convex and nonconvex, as well as constrained and unconstrained.
+
+The algorithms implemented in TMAC, such as the coordinate update method and operator splitting method, are scalable as they decompose a problem into simple subproblems. These algorithms can run in a multi-threaded fashion, either synchronously or asynchronously, to take advantages of all the cores available.
+
+TMAC is separated into several layers, and this architecture mimics how a scientist writes down an optimization algorithm. Therefore, it is easy for one to obtain a new algorithm by making simple modifications such as adding a new operator and adding a new splitting, while maintaining the multicore parallelism and other features.
 
   * A rich set of predefined operators.
   * A few predefined operator splitting schemes.
@@ -16,7 +20,7 @@ TMAC is an asynchronous parallel C++ library for solving equations and optimizat
   
 TMAC is written in C++. Python, Julia and Matlab interfaces are under development. The following graph is an overview of the design.
 
-.. image:: architecture.png
+.. image:: arch.png
     :width: 400px
     :align: center
 
@@ -25,15 +29,17 @@ TMAC is written in C++. Python, Julia and Matlab interfaces are under developmen
 
 Dependencies
 ==============
-* Functioning C++ compilers (`gcc <https://www.gnu.org/software/gcc/releases.html>`_ )
+* Functioning C++ compilers (`gcc <https://www.gnu.org/software/gcc/releases.html>`_)
 * BLAS library  
 * `GNU make <https://www.gnu.org/software/make/>`_
 * or Microsoft Visual C++
 
 
-References
-============
-.. [TMAC2015] Zhimin Peng, Yangyang Xu, Ming Yan, Wotao Yin, *TMAC: an Algorithmic Framework for Asynchronous Parallel Coordinate Updates*,  arXiv preprint arXiv:1506.02396 (2015)
+Related Papers
+==============
+.. [TMAC2016] Brent Edmunds, Zhimin Peng, Wotao Yin, *TMAC: A Toolbox of Modern Async-Parallel, Coordinate, Splitting, and Stochastic Methods*, UCLA-CAM report 16-38 (2016)
+.. [AROCK2015] Zhimin Peng, Yangyang Xu, Ming Yan, Wotao Yin, *ARock: an Algorithmic Framework for Asynchronous Parallel Coordinate Updates*,  arXiv preprint arXiv:1506.02396 (2015)
+.. [CF2016] Zhimin Peng, Tianyu Wu, Yangyang Xu, Ming Yan, Wotao Yin, *Coordinate Friendly Structures, Algorithms and applications*, Annals of Mathematical Sciences and Applications, 1(1), pp. 57–119, 2016. 
   
 
 License and copyright
@@ -41,7 +47,7 @@ License and copyright
 Except for the Eigen library header files, all files distributed with TMAC are made available under the `New BSD license <http://www.opensource.org/licenses/bsd-license.php>`_,
 which states::
 
-    TMAC is C++ framework for async-parallel coordinate update.
+    TMAC is a toolbox of modern async-parallel, coordinate, splitting, and stochastic methods.
     Copyright (C) 2016 Brent Edmunds, Zhimin Peng, Wotao Yin 
 
     Redistribution and use in source and binary forms, with or without

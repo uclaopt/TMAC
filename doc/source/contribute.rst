@@ -1,24 +1,24 @@
 Contribute to TMAC
 ********************
-We welcome patches. If you plan to contribute a patch, you need to write tests for any new code. Changes should be verified to not break existing tests before they are submitted for review. We use Google test for unit testing.
+We welcome patches. If you plan to contribute a new module, you can consider to add testcases in `tests <https://github.com/uclaopt/TMAC/tree/master/test>`_. Changes should be verified to not break existing tests before they are submitted for review. We use Google test for unit testing.
 
 Setup the repository
 =====================
-1. Fork the TMAC `repository <https://github.com/ZhiminPeng/TMAC>`_ reporsitory;
+1. Fork the TMAC `repository <https://github.com/uclaopt/TMAC>`_ reporsitory;
 2. Open a Terminal to clone the TMAC project to your machine::
 
      git clone https://github.com/YOUR-USERNAME/TMAC
 
 3. Config the remote repository::
 
-     git remote add upstream https://github.com/ZhiminPeng/TMAC
+     git remote add upstream https://github.com/uclaopt/TMAC
 
 4. Sync with the up-to-date code::
 
      git pull upstream master
 
-Create pull request
-===================
+Create pull request (PR)
+========================
 1. You first want to do code development on a branch::
 
      git branch YOUR-BRANCH-NAME
@@ -33,10 +33,19 @@ Create pull request
      
      git push upstream YOUR-BRANCH-NAME
 
-4. Go to the remote `repo <https://github.com/ZhiminPeng/TMAC>`_ page, you will see a message that ask you to create a repo.
+4. Go to the remote `repo <https://github.com/uclaopt/TMAC>`_ page, you will see a message that ask you to create a pull request (PR).
 
-5. Create the pull request, and add sufficient information to describe your modifications.
-     
+5. Create the PR, and add sufficient information to describe your modifications.
+
+
+Combine multiple commits into one
+=================================
+Sometimes we want to combine multiple small commits, especially when later commits are only fixes to previous ones.
+Assume we want to merge the last 3 commits, you can do it with the following command::
+
+  git rebase -i HEAD~3
+
+You will see a pop up editor, then you can replace "pick" on the second and subsequent commits with "squash".
 
 Unit tests
 ==========
@@ -48,20 +57,22 @@ All the unit tests are in test folder. We use gtest for C++ unittests. We will u
   
 Update docs
 ============
-If you add new features to the codebase, you are also required to update the documentation to reflect the new feature. We use `sphinx <http://www.sphinx-doc.org/en/stable/>`_ for documentation. To use it, you need to install the following packages with pip::
+If you add new features to the codebase, you are also required to update the documentation to reflect the new feature. We use `sphinx <http://www.sphinx-doc.org/en/stable/>`_
+and `sphinx_rtd_theme <https://github.com/snide/sphinx_rtd_theme>`_ for documentation. You can find the installation instructions on their websites. You can build document locally with the following commands::
 
-  pip install sphinx
-  pip install sphinx_rtd_theme
+  cd doc
+  make html
 
 
 Applications
 =============
-Applications and demonstration examples are in the `apps <https://github.com/ZhiminPeng/TMAC/tree/master/apps>`_ folder. Source code for new applications should be added here.
+Applications and demonstration examples are in the `apps <https://github.com/uclaopt/TMAC/tree/master/apps>`_ folder. Source code for new applications can be added here.
+We would love to hear your story. If you have interesting applications that can use TMAC, please feel free to add it to the toolbox.
 
 
 Code style
 ==========
-We follow Google's C++ style guide on C++ code.
+We follow `Google's C++ style guide <https://google.github.io/styleguide/cppguide.html>`_ on C++ code.
 
 
 Language independent features

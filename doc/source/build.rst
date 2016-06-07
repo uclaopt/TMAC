@@ -64,7 +64,7 @@ Download TMAC
 ----------------
 The TMAC package can be downloaded from the following link::
 
-  https://github.com/ZhiminPeng/TMAC
+  https://github.com/uclaopt/TMAC
   
   
 Build TMAC
