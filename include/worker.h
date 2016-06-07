@@ -138,7 +138,7 @@ void sync_par_worker(Operator algorithm, Range range, Params* params,
     Computation_Barrier.wait();
     algorithm.update(updates, range.start,num_cords);
     Update_Barrier.wait();
-    algorithm.update_cache_vars(rank,params->total_num_threads);
+    algorithm.update_cache_vars(rank, params->total_num_threads);
     Cache_Update_Barrier.wait();
   }
   return;
