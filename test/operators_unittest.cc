@@ -327,7 +327,7 @@ TEST(ProximalElasticNetTest, Constructor) {
   // default constructor
   prox_elastic_net p_en;
   EXPECT_DOUBLE_EQ(p_en.step_size, 0.);
-  EXPECT_DOUBLE_EQ(p_en.weight, 1.);
+  EXPECT_DOUBLE_EQ(p_en.weight_1, 1.);
   EXPECT_DOUBLE_EQ(p_en.weight_2, 1.);
 
   // constructor initialized by step_size
@@ -337,10 +337,10 @@ TEST(ProximalElasticNetTest, Constructor) {
 
 
   // constructor initialized by step_size and weights
-  double weight = 9.99, weight_2 = 9.99;
-  prox_elastic_net p3(step_size, weight, weight_2);
+  double weight_1 = 9.99, weight_2 = 9.99;
+  prox_elastic_net p3(step_size, weight_1, weight_2);
   EXPECT_DOUBLE_EQ(p3.step_size, step_size);
-  EXPECT_DOUBLE_EQ(p3.weight, weight);
+  EXPECT_DOUBLE_EQ(p3.weight_1, weight_1);
   EXPECT_DOUBLE_EQ(p3.weight_2, weight_2);  
   
 }
@@ -571,23 +571,6 @@ TEST(ProjectionPositiveConeTest, FullOperator) {
   EXPECT_DOUBLE_EQ(v_out[0], 2.);
   EXPECT_DOUBLE_EQ(v_out[1], 0.);  
   
-}
-
-
-// test the vector operator 
-TEST(ProjectionBoxTest, VectorOperator) {
-  
-  int n = 3;
-  Vector lower(n, 0.), upper(n, 1.5);
-  Vector v(n, 2.);
-  v[1] = -1;
-  v[2] = 1.;
-  double step_size = 10.;
-  proj_box p(&lower, &upper);
-  EXPECT_DOUBLE_EQ(p(&v, 0), 1.5);
-  EXPECT_DOUBLE_EQ(p(&v, 1), 0.);
-  EXPECT_DOUBLE_EQ(p(&v, 2), 1.);  
-
 }
 
 
@@ -1105,209 +1088,6 @@ TEST(ForwardQPTest, FullOperator) {
 
 // test for update_cache_vars()
 TEST(ForwardQPTest, UpdateCacheVars) {
-  
-}
-
-// unit test for Jacobi method for linear equations
-TEST(JacobiLinearEquationTest, Constructor) {
-  //test for class Matrix
-  // default constructor
-  linear_eqn_jacobi_operator<Matrix> p1;
-  EXPECT_DOUBLE_EQ(p1.step_size, 0.);
-  EXPECT_DOUBLE_EQ(p1.weight, 1.);
-
-  // constructor initialized by step_size
-  double step_size = 10.;
-  linear_eqn_jacobi_operator<Matrix> p2(step_size);
-  EXPECT_DOUBLE_EQ(p2.step_size, 10.);
-  EXPECT_DOUBLE_EQ(p2.weight, 1.);
-
-  // constructor initialized by step_size and weight
-  double weight = 9.99;
-  linear_eqn_jacobi_operator<Matrix> p3(step_size, weight);
-  EXPECT_DOUBLE_EQ(p3.step_size, 10.);
-  EXPECT_DOUBLE_EQ(p3.weight, weight);
-
-  // initialize with data
-  int m = 20;
-  int n = 20;
-  Matrix Q(m, n, 0.99);
-  Vector c(n, 1.99);
-  step_size = 2.99;
-  weight = 3.99;
-  linear_eqn_jacobi_operator<Matrix> p4(&Q, &c, step_size, weight);
-  EXPECT_DOUBLE_EQ(p4.step_size, step_size);
-  EXPECT_DOUBLE_EQ(p4.weight, weight);
-
-  //test for class SpMat
-  linear_eqn_jacobi_operator<SpMat> p1_Sp;
-  EXPECT_DOUBLE_EQ(p1_Sp.step_size, 0.);
-  EXPECT_DOUBLE_EQ(p1_Sp.weight, 1.);
-
-  // constructor initialized by step_size
-  step_size = 10.;
-  linear_eqn_jacobi_operator<SpMat> p2_Sp(step_size);
-  EXPECT_DOUBLE_EQ(p2_Sp.step_size, 10.);
-  EXPECT_DOUBLE_EQ(p2_Sp.weight, 1.);
-
-  // constructor initialized by step_size and weight
-  weight = 9.99;
-  linear_eqn_jacobi_operator<SpMat> p3_Sp(step_size, weight);
-  EXPECT_DOUBLE_EQ(p3_Sp.step_size, 10.);
-  EXPECT_DOUBLE_EQ(p3_Sp.weight, weight);
-
-  // initialize with data
-  m = 20;
-  n = 20;
-  SpMat Q_Sp(m, n);
-  step_size = 2.99;
-  weight = 3.99;
-  linear_eqn_jacobi_operator<SpMat> p4_Sp(&Q_Sp, &c, step_size, weight);
-  EXPECT_DOUBLE_EQ(p4_Sp.step_size, step_size);
-  EXPECT_DOUBLE_EQ(p4_Sp.weight, weight);
- 
-}
-
-// test the update_step_size member function
-TEST(JacobiLinearEquationTest, UpdateStepSize) {
-  double step_size = 1.;
-  // test for Matrix
-  linear_eqn_jacobi_operator<Matrix> p(step_size);
-  p.update_step_size(100.);
-  EXPECT_DOUBLE_EQ(p.step_size, 100.);
-  EXPECT_DOUBLE_EQ(p.weight, 1.);  
-
-  // test for SpMat
-  step_size = 1.;
-  linear_eqn_jacobi_operator<SpMat> p_Sp(step_size);
-  p_Sp.update_step_size(100.);
-  EXPECT_DOUBLE_EQ(p_Sp.step_size, 100.);
-  EXPECT_DOUBLE_EQ(p_Sp.weight, 1.);  
-}
-
-// test the scalar operator
-TEST(JacobiLinearEquationTest, ScalarOperator) {
-
-  double step_size = 1.;
-
-  // test for Matrix
-  linear_eqn_jacobi_operator<Matrix> p(step_size);
-  // test numbers bigger than step_size
-  EXPECT_DOUBLE_EQ(p(1.), DOUBLE_MARKER);
-  // test numbers in [-step_size, step_size]
-  EXPECT_DOUBLE_EQ(p(-1.), DOUBLE_MARKER);
-  // test numbers smaller than -step_size
-  EXPECT_DOUBLE_EQ(p(0.), DOUBLE_MARKER);
-  // test with a given index
-  EXPECT_DOUBLE_EQ(p(0., 100.), DOUBLE_MARKER);  
-
-  // test for SpMat
-  step_size = 1.;
-  linear_eqn_jacobi_operator<SpMat> p_Sp(step_size);
-  // test numbers bigger than step_size
-  EXPECT_DOUBLE_EQ(p_Sp(1.), DOUBLE_MARKER);
-  // test numbers in [-step_size, step_size]
-  EXPECT_DOUBLE_EQ(p_Sp(-1.), DOUBLE_MARKER);
-  // test numbers smaller than -step_size
-  EXPECT_DOUBLE_EQ(p_Sp(0.), DOUBLE_MARKER);
-  // test with a given index
-  EXPECT_DOUBLE_EQ(p_Sp(0., 100.), DOUBLE_MARKER);  
-}
-
-// test the vector operator 
-TEST(JacobiLinearEquationTest, VectorOperator) {
-  
-  int n = 2;
-  Vector v(n, 2.);
-  v[1] = -1;
-  double step_size = 10.;
-  
-  // test for Matrix
-  Matrix Q(n, n, 1.);
-  Vector c(n, 1.);
-  Q(0,0) = 2;
-  
-  linear_eqn_jacobi_operator<Matrix> p(&Q, &c, step_size);
-  EXPECT_DOUBLE_EQ(p(&v, 0),1.);
-  EXPECT_DOUBLE_EQ(v[0], 2.);
-  
-  p.update_step_size(1.);
-  EXPECT_DOUBLE_EQ(p.step_size, 1.);
-  EXPECT_DOUBLE_EQ(p(&v, 1), -1.);
- 
-
-  // test for SpMat
-  std::vector<Eigen::Triplet<double> > triplets(n);
-  int k = 0, i;
-  for (i = 0; i < n; i++) {
-      triplets[k++] = Eigen::Triplet<double> (i, i, 1.);
-    }
-
-  SpMat Q_Sp(n, n);
-  Q_Sp.setFromTriplets(triplets.begin(), triplets.end());
-
-  linear_eqn_jacobi_operator<SpMat> p_Sp(&Q_Sp, &c, step_size);
-  EXPECT_DOUBLE_EQ(p_Sp(&v, 0),1.);
-  EXPECT_DOUBLE_EQ(v[0], 2.);
-  
-  p_Sp.update_step_size(1.);
-  EXPECT_DOUBLE_EQ(p_Sp.step_size, 1.);
-  EXPECT_DOUBLE_EQ(p_Sp(&v, 1), 1.);
-}
-
-// test the full update operator 
-TEST(JacobiLinearEquationTest, FullOperator) {
-  
-  int n = 2;
-  int m = n;
-
-  // test for class Matrix
-  Matrix Q(m, n, 1.);
-  Vector c(m, 1.);
-  Q(0,0) = 2;
-  Vector v_in(n, 2.), v_out(n, 1.);
-  v_in[1] = -1.;
-
-  double step_size = 10.;
-  linear_eqn_jacobi_operator<Matrix> p(&Q, &c, step_size);
-  p(&v_in, &v_out);
-  
-  EXPECT_DOUBLE_EQ(v_out[0], 1.);
-  EXPECT_DOUBLE_EQ(v_out[1], -1.);  
-
-  p.update_step_size(1.);
-  EXPECT_DOUBLE_EQ(p.step_size, 1.);    
-  p(&v_in, &v_out);
-  EXPECT_DOUBLE_EQ(v_out[0], 1.);
-  EXPECT_DOUBLE_EQ(v_out[1], -1.);  
-
-  // test for class SpMat
-  std::vector<Eigen::Triplet<double> > triplets(n);
-  int k = 0, i;
-  for (i = 0; i < n; i++) {
-      triplets[k++] = Eigen::Triplet<double> (i, i, 1.);
-  }
-
-  SpMat Q_Sp(n, n);
-  Q_Sp.setFromTriplets(triplets.begin(), triplets.end());
-  std::fill(v_in.begin(), v_in.end(), 2.);
-  std::fill(v_out.begin(), v_out.end(), 1.);
-  v_in[1] = -1.;
-  linear_eqn_jacobi_operator<SpMat> p_Sp(&Q_Sp, &c, step_size);
-  p_Sp(&v_in, &v_out);
-  
-  EXPECT_DOUBLE_EQ(v_out[0], 1.);
-  EXPECT_DOUBLE_EQ(v_out[1], 1.);  
-
-  p_Sp.update_step_size(1.);
-  EXPECT_DOUBLE_EQ(p_Sp.step_size, 1.);    
-  p_Sp(&v_in, &v_out);
-  EXPECT_DOUBLE_EQ(v_out[0], 1.);
-  EXPECT_DOUBLE_EQ(v_out[1], 1.);  
-}
-
-// test for update_cache_vars()
-TEST(JacobiLinearEquationTest, UpdateCacheVars) {
   
 }
 
@@ -2040,88 +1820,76 @@ TEST(HuberLossTest, UpdateCacheVars) {
 }
 
 
-// unit test for forward operator for quadratic function
-TEST(PortfolioTest, Constructor) {
-  //test for class Matrix
-  // default constructor
+// unit tests for the Portfolio_3S operator
+
+// test for constructors
+TEST(PortfolioTest, Constructor){
+  // test for class Matrix
+  // defult Constructor
   portfolio_3s<Matrix> p1;
   EXPECT_DOUBLE_EQ(p1.step_size, 0.);
   EXPECT_DOUBLE_EQ(p1.weight, 1.);
 
-  // constructor initialized by step_size
-
+  // constructor initialized by step_size and weight  
   double step_size = 10.;
-  double weight = 9.99;  
-
-  portfolio_3s<Matrix> p2(step_size);
+  double weight = 9.99;
+  portfolio_3s<Matrix> p2(step_size, weight);
   EXPECT_DOUBLE_EQ(p2.step_size, 10.);
-  EXPECT_DOUBLE_EQ(p2.weight, 1.);
-
-  // constructor initialized by step_size and weight
-
-  portfolio_3s<Matrix> p3(step_size, weight);
-  EXPECT_DOUBLE_EQ(p3.step_size, 10.);
-  EXPECT_DOUBLE_EQ(p3.weight, weight);
-
-  //test for class SpMat
-  portfolio_3s<SpMat> p1_Sp;
-  EXPECT_DOUBLE_EQ(p1_Sp.step_size, 0.);
-  EXPECT_DOUBLE_EQ(p1_Sp.weight, 1.);
-
-  // constructor initialized by step_size
-  step_size = 10.;
-  portfolio_3s<SpMat> p2_Sp(step_size);
-  EXPECT_DOUBLE_EQ(p2_Sp.step_size, 10.);
-  EXPECT_DOUBLE_EQ(p2_Sp.weight, 1.);
-
-  // constructor initialized by step_size and weight
-  weight = 9.99;
-  portfolio_3s<SpMat> p3_Sp(step_size, weight);
-  EXPECT_DOUBLE_EQ(p3_Sp.step_size, 10.);
-  EXPECT_DOUBLE_EQ(p3_Sp.weight, weight);
+  EXPECT_DOUBLE_EQ(p2.weight,weight);
 
   // initialize with data
   int n = 2;
   Matrix Q(n, n, 0.99);
-  Vector epsilon(n, 1.99);
+  Vector xi(n, 1.99);
   double c = 0.1;
   step_size = 2.99;
   weight = 3.99;
-  portfolio_3s<Matrix> p4(&Q, &epsilon, c, step_size, weight);
-  EXPECT_DOUBLE_EQ(p4.step_size, step_size);
-  EXPECT_DOUBLE_EQ(p4.weight, weight);
+  portfolio_3s<Matrix> p3(&Q, &xi, c, step_size, weight);
+  EXPECT_DOUBLE_EQ(p3.step_size, step_size);
+  EXPECT_DOUBLE_EQ(p3.weight, weight);  
 
+  // test for class SpMat
+  // defult Constructor
+  portfolio_3s<SpMat> p1_Sp;
+  EXPECT_DOUBLE_EQ(p1_Sp.step_size, 0.);
+  EXPECT_DOUBLE_EQ(p1_Sp.weight, 1.);  
+
+  // constructor initialized by step_size and weight  
+  step_size = 10.;
+  weight = 9.99;
+  portfolio_3s<SpMat> p2_Sp(step_size, weight);
+  EXPECT_DOUBLE_EQ(p2_Sp.step_size, 10.);
+  EXPECT_DOUBLE_EQ(p2_Sp.weight, weight);
+   
   // initialize with data
-
+  n = 2;
   SpMat Q_Sp(n, n);
-  std::vector<Eigen::Triplet<double> > triplets(1);
+  std::vector<Eigen::Triplet<double>> triplets(1);
   triplets.push_back(Eigen::Triplet<double> (0, 0, 1.));
-  Q_Sp.setFromTriplets(triplets.begin(), triplets.end());  
-  
-  step_size = 2.99;
-  weight = 3.99;
-  portfolio_3s<SpMat> p4_Sp(&Q_Sp, &epsilon, c, step_size, weight);
-  EXPECT_DOUBLE_EQ(p4_Sp.step_size, step_size);
-  EXPECT_DOUBLE_EQ(p4_Sp.weight, weight);
-  
+  Q_Sp.setFromTriplets(triplets.begin(), triplets.end());
+
+  step_size = 10.;
+  weight = 9.99;
+  portfolio_3s<SpMat> p3_Sp(&Q_Sp, &xi, c, step_size, weight) ;
+  EXPECT_DOUBLE_EQ(p3_Sp.step_size, step_size);
+  EXPECT_DOUBLE_EQ(p3_Sp.weight, weight);    
+
 }
 
 // test the update_step_size member function
 TEST(PortfolioTest, UpdateStepSize) {
   double step_size = 1.;
   // test for Matrix
-  portfolio_3s<Matrix> p(step_size);
+  portfolio_3s<Matrix> p;
   p.update_step_size(100.);
   EXPECT_DOUBLE_EQ(p.step_size, 100.);
   EXPECT_DOUBLE_EQ(p.weight, 1.);  
 
   // test for SpMat
-  step_size = 1.;
-  portfolio_3s<SpMat> p_Sp(step_size);
-  
+  portfolio_3s<SpMat> p_Sp;
   p_Sp.update_step_size(100.);
   EXPECT_DOUBLE_EQ(p_Sp.step_size, 100.);
-  EXPECT_DOUBLE_EQ(p_Sp.weight, 1.);  
+  EXPECT_DOUBLE_EQ(p_Sp.weight, 1.); 
 }
 
 // test the scalar operator
@@ -2152,20 +1920,20 @@ TEST(PortfolioTest, ScalarOperator) {
   // test with a given index
   EXPECT_DOUBLE_EQ(p_Sp(0., 100.), DOUBLE_MARKER);  
 }
-
-// test the vector operator 
+  
+// test the vector operator
 TEST(PortfolioTest, VectorOperator) {
   
   int n = 2;
   Vector v(n, 0.);
   double step_size = 1.;
-  int m = 2;
   
   // test for Matrix
-  Matrix Q(m, n, 1.);
-  Vector c(m, 1.);
+  Matrix Q(n, n, 1.);
+  Vector xi(n, 1.);
+  double c = 1.;
   
-  portfolio_3s<Matrix> p(&Q, &c, step_size);
+  portfolio_3s<Matrix> p(&Q, &xi, c, step_size);
   EXPECT_DOUBLE_EQ(p(&v, 0),-0.5);
   EXPECT_DOUBLE_EQ(v[0], 0.);
   
@@ -2175,18 +1943,18 @@ TEST(PortfolioTest, VectorOperator) {
  
 
   // test for SpMat
-  std::vector<Eigen::Triplet<double> > triplets(m*n);
+  std::vector<Eigen::Triplet<double> > triplets(n*n);
   int k = 0, i, j;
-  for (i = 0; i < m; i++) {
+  for (i = 0; i < n; i++) {
     for (j = 0; j < n; j++) {
       triplets[k++] = Eigen::Triplet<double> (i, j, 1.);
     }
   }
 
-  SpMat Q_Sp(m, n);
+  SpMat Q_Sp(n, n);
   Q_Sp.setFromTriplets(triplets.begin(), triplets.end());
 
-  portfolio_3s<SpMat> p_Sp(&Q_Sp, &c, step_size);
+  portfolio_3s<SpMat> p_Sp(&Q_Sp, &xi, c, step_size);
   EXPECT_DOUBLE_EQ(p_Sp(&v, 0),-0.5);
   EXPECT_DOUBLE_EQ(v[0], 0.);
   
@@ -2195,13 +1963,57 @@ TEST(PortfolioTest, VectorOperator) {
   EXPECT_DOUBLE_EQ(p_Sp(&v, 1), -0.5);
 }
 
-// test the full update operator 
+// test the full update operator
 TEST(PortfolioTest, FullOperator) {
   
+  int n = 2;
+  Vector v(n, 0.);
+  Vector u(n, 0.);
+
+  double step_size = 1.;
+  
+  // test for Matrix
+  Matrix Q(n, n, 1.);
+  Vector xi(n, 1.);
+  double c = 1.;
+  
+  portfolio_3s<Matrix> p(&Q, &xi, c, step_size);
+  p(&v, &u);
+
+  EXPECT_DOUBLE_EQ(u[0], -0.5);
+  EXPECT_DOUBLE_EQ(u[1], -0.5);  
+  EXPECT_DOUBLE_EQ(v[0], 0.);
+
+  p.update_step_size(10.);
+  EXPECT_DOUBLE_EQ(p.step_size, 10.);
+  EXPECT_DOUBLE_EQ(p(&v, 1), -0.5);
+  
+  // test for SpMat
+  std::vector<Eigen::Triplet<double> > triplets(n*n);
+  int k = 0, i, j;
+  for (i = 0; i < n; i++) {
+    for (j = 0; j < n; j++) {
+      triplets[k++] = Eigen::Triplet<double> (i, j, 1.);
+    }
+  }
+
+  SpMat Q_Sp(n, n);
+  Q_Sp.setFromTriplets(triplets.begin(), triplets.end());
+
+  portfolio_3s<SpMat> p_Sp(&Q_Sp, &xi, c, step_size);
+  p_Sp(&v, &u);
+  EXPECT_DOUBLE_EQ(u[0], -0.5);
+  EXPECT_DOUBLE_EQ(u[1], -0.5);  
+  EXPECT_DOUBLE_EQ(v[0], 0.);
+  
+  p_Sp.update_step_size(1.);
+  EXPECT_DOUBLE_EQ(p_Sp.step_size, 1.);
+  EXPECT_DOUBLE_EQ(p_Sp(&v, 1), -0.5); 
 
 }
+
 
 // test for update_cache_vars()
-TEST(PortfolioTest, UpdateCacheVars) {
-  
-}
+TEST(PortfolioTest, UpdateCacheVars){
+
+} 
