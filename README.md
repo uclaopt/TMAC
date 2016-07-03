@@ -19,9 +19,9 @@ TMAC can be installed to run on the following platforms:
 
    * Linux
    * Mac OS X
-   * Windows [(guide)](http://www.math.ucla.edu/~wotaoyin/windows_coding.html)
+   * Windows [(MINGW32 (32-bit) guide, ](http://www.math.ucla.edu/~wotaoyin/software/tmac_windows_installation_mingw32.html) [MINGW64 (64-bit) guide,](http://www.math.ucla.edu/~wotaoyin/software/tmac_windows_installation_mingw64.html)  [Cygwin (32/64-bit) guide)](http://www.math.ucla.edu/~wotaoyin/software/tmac_windows_installation_cygwin.html)
 
-Building TMAC requires  
+Building TMAC requires
 
    * GNU-compatible Make
    * GCC (version 4.7 or above)
