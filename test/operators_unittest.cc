@@ -2161,7 +2161,7 @@ TEST(PortfolioTest, VectorOperator) {
   double step_size = 1.;
   
   // test for Matrix
-  Matrix Q(m, n, 1.);
+  Matrix Q(n, n, 1.);
   Vector epsilon(n, 1.);
   double c = 1.;
   
@@ -2175,15 +2175,15 @@ TEST(PortfolioTest, VectorOperator) {
  
 
   // test for SpMat
-  std::vector<Eigen::Triplet<double> > triplets(m*n);
+  std::vector<Eigen::Triplet<double> > triplets(n*n);
   int k = 0, i, j;
-  for (i = 0; i < m; i++) {
+  for (i = 0; i < n; i++) {
     for (j = 0; j < n; j++) {
       triplets[k++] = Eigen::Triplet<double> (i, j, 1.);
     }
   }
 
-  SpMat Q_Sp(m, n);
+  SpMat Q_Sp(n, n);
   Q_Sp.setFromTriplets(triplets.begin(), triplets.end());
 
   portfolio_3s<SpMat> p_Sp(&Q_Sp, &epsilon, c, step_size);
