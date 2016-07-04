@@ -1461,8 +1461,8 @@ public:
     }else if (w2<=0 && w3>=0) {
       add(y, a2, -w2);
     }else if (w3<=0 && w4>=0) {
-      add(y, tilde_a1, -w1);
-      add(y, tilde_a2, -w2); 
+      add(y, tild_a1, -w1);
+      add(y, tild_a2, -w2); 
     }else {
       add(y, a1, -w1);
     }
