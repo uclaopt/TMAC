@@ -371,4 +371,86 @@ public:
 };
 
 
+// 3S Splitting
+// z^{k+1} = (1 - lambda_k) z^k + lambda_k (I - Second + First(2 * Second - I - gamma * Third * Second)) (z^k)
+// which can be simplified to the following
+// y^k = Second(x^k)
+// w^k = Third(y^k)
+// z^k = First(2 * y^k - x^k - gamma * w^k)
+// x^{k+1} = x^k + lambda_k (z^k - y^k)
+
+template <typename First, typename Second, typename Third>
+class 3SSplitting : public SchemeInterface {
+public:  
+  First op1;
+  Second op2; 
+  Third op3;
+  Vector *x;
+  Vector y;
+  Vector w; 
+  Vector z;
+  double relaxation_step_size;
+
+  3SSplitting(Vector* x_, First op1_, Second op2_, Third op3_, double gamma_) {
+    x = x_;
+    op1 = op1_;
+    op2 = op2_;
+    op3 = op3_;
+    gamma = gamma_;
+    relaxation_step_size = 1.;
+    y.resize(x->size());
+    w.resize(x->size());
+    z.resize(x->size());
+  }
+
+  void update_params(Params* params) {
+    op1.update_step_size(params->get_step_size());
+    op2.update_step_size(params->get_step_size());
+    op3.update_step_size(params->get_step_size());
+    relaxation_step_size = params->get_tmac_step_size();
+  }
+  
+  double operator() (int index) {
+    // Step 1: get the old x[index]
+    double old_x_at_idx = (*x)[index];
+    // Step 2: local computation
+    op2(x, &y);
+    op3(y, &w);
+    // z = 2y - x - gamma * w
+    z = y;
+    scale(z, 2.);
+    add(z, *x, -1.);
+    add(z, w, -gamma);
+    // prox(z, i)
+    double temp = op1(&z, index);
+    // Step 3: get the most recent x[index]
+    old_x_at_idx = (*x)[index];
+    // Step 4: update x at index 
+    (*x)[index] += relaxation_step_size * (temp - y[index]);
+    // Step 5: update the maintained variables
+    return temp-y[index];    
+  }
+
+
+  // TODO: implement this for sync-operator
+  void operator()(int index, double &S_i) {
+  }
+
+  void update(Vector& s, int range_start, int num_cords) {
+    for (size_t i = 0; i < num_cords; ++i ) {
+      (*x)[i+range_start] -= relaxation_step_size * s[i];
+    }
+  }
+  
+  void update (double s, int idx ) {
+    (*x)[idx] -= relaxation_step_size * s;
+  }
+
+  void update_cache_vars (int rank, int index ) {
+  }
+  
+};
+
+
+
 #endif

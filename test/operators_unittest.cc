@@ -2159,13 +2159,13 @@ TEST(PortfolioTest, VectorOperator) {
   int n = 2;
   Vector v(n, 0.);
   double step_size = 1.;
-  int m = 2;
   
   // test for Matrix
-  Matrix Q(m, n, 1.);
-  Vector c(m, 1.);
+  Matrix Q(n, n, 1.);
+  Vector epsilon(n, 1.);
+  double c = 1.;
   
-  portfolio_3s<Matrix> p(&Q, &c, step_size);
+  portfolio_3s<Matrix> p(&Q, &epsilon, c, step_size);
   EXPECT_DOUBLE_EQ(p(&v, 0),-0.5);
   EXPECT_DOUBLE_EQ(v[0], 0.);
   
@@ -2175,18 +2175,18 @@ TEST(PortfolioTest, VectorOperator) {
  
 
   // test for SpMat
-  std::vector<Eigen::Triplet<double> > triplets(m*n);
+  std::vector<Eigen::Triplet<double> > triplets(n*n);
   int k = 0, i, j;
-  for (i = 0; i < m; i++) {
+  for (i = 0; i < n; i++) {
     for (j = 0; j < n; j++) {
       triplets[k++] = Eigen::Triplet<double> (i, j, 1.);
     }
   }
 
-  SpMat Q_Sp(m, n);
+  SpMat Q_Sp(n, n);
   Q_Sp.setFromTriplets(triplets.begin(), triplets.end());
 
-  portfolio_3s<SpMat> p_Sp(&Q_Sp, &c, step_size);
+  portfolio_3s<SpMat> p_Sp(&Q_Sp, &epsilon, c, step_size);
   EXPECT_DOUBLE_EQ(p_Sp(&v, 0),-0.5);
   EXPECT_DOUBLE_EQ(v[0], 0.);
   
@@ -2195,11 +2195,55 @@ TEST(PortfolioTest, VectorOperator) {
   EXPECT_DOUBLE_EQ(p_Sp(&v, 1), -0.5);
 }
 
-// test the full update operator 
+// test the full update operator
 TEST(PortfolioTest, FullOperator) {
   
+  int n = 2;
+  Vector v(n, 0.);
+  Vector u(n, 0.);
+
+  double step_size = 1.;
+  
+  // test for Matrix
+  Matrix Q(n, n, 1.);
+  Vector epsilon(n, 1.);
+  double c = 1.;
+  
+  portfolio_3s<Matrix> p(&Q, &epsilon, c, step_size);
+  p(&v, &u);
+
+  EXPECT_DOUBLE_EQ(u[0], -0.5);
+  EXPECT_DOUBLE_EQ(u[1], -0.5);  
+  EXPECT_DOUBLE_EQ(v[0], 0.);
+
+  p.update_step_size(10.);
+  EXPECT_DOUBLE_EQ(p.step_size, 10.);
+  EXPECT_DOUBLE_EQ(p(&v, 1), -0.5);
+  
+  // test for SpMat
+  std::vector<Eigen::Triplet<double> > triplets(n*n);
+  int k = 0, i, j;
+  for (i = 0; i < n; i++) {
+    for (j = 0; j < n; j++) {
+      triplets[k++] = Eigen::Triplet<double> (i, j, 1.);
+    }
+  }
+
+  SpMat Q_Sp(n, n);
+  Q_Sp.setFromTriplets(triplets.begin(), triplets.end());
+
+  portfolio_3s<SpMat> p_Sp(&Q_Sp, &epsilon, c, step_size);
+  p_Sp(&v, &u);
+  EXPECT_DOUBLE_EQ(u[0], -0.5);
+  EXPECT_DOUBLE_EQ(u[1], -0.5);  
+  EXPECT_DOUBLE_EQ(v[0], 0.);
+  
+  p_Sp.update_step_size(1.);
+  EXPECT_DOUBLE_EQ(p_Sp.step_size, 1.);
+  EXPECT_DOUBLE_EQ(p_Sp(&v, 1), -0.5); 
 
 }
+
 
 // test for update_cache_vars()
 TEST(PortfolioTest, UpdateCacheVars) {

@@ -1443,8 +1443,54 @@ public:
   }
 
   // TODO: implement the full update operator
-  void operator() (Vector* v_in, Vector* v_out) {
-  }
+  void operator() (Vector* v_in, Vector* v_out){
+    w1 = dot(a1, *v_in) - b1;
+    w2 = dot(a2, *v_in) - b2;
+    w3 = dot(a3, *v_in) - b3;
+    w4 = dot(a4, *v_in) - b4;
+    int len = v_in->size();
+    
+    Vector x(len, 0.);
+    x = (*v_in);
+    // project x to D2
+    
+    Vector y(len, 0.);
+    y = (*v_in);
+    if (w1<=0 && w2>=0) {
+      y = (*v_in);
+    }else if (w2<=0 && w3>=0) {
+      add(y, a2, -w2);
+    }else if (w3<=0 && w4>=0) {
+      add(y, tild_a1, -w1);
+      add(y, tild_a2, -w2); 
+    }else {
+      add(y, a1, -w1);
+    }
+    
+    // calculate z = 2*y - x- gamma*Q*y
+    Vector temp(len, 0.);
+    Vector z(len, 0.);
+    multiply(*Q, y, temp);
+    scale(temp, step_size);
+    z = y;
+    scale(z, 2.);
+    add(z, x, -1.);
+    add(z, temp, -1.);
+    
+    // project z to D1
+    for (int i = 0; i < len; i++){
+      z[i] = max(0., z[i]);
+    }
+   
+    // update x
+    add(z, y, -1);
+    add(x, z, 1.);
+
+    for (int i = 0; i<len; i++) {
+      (*v_out)[i] = x[i]; 
+    }        
+}
+
 
   double operator() (double val, int index = 1) {
     return DOUBLE_MARKER;
