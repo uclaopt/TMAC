@@ -47,7 +47,7 @@ TEST_BENCHMARK := $(BINDIR)/test_benchmark
 CFLAGS := -g -std=c++0x -MMD -w
 
 
-LIB := -lblas -lgfortran -lpthread
+LIB := -lblas -lpthread
 INC := -I include
 
 all:  $(TMAC_GD_LS) $(TMAC_GD_HB) $(TMAC_FBS_LASSO) $(TMAC_FBS_L2_SVM) $(TMAC_FBS_L1LOG) $(TMAC_BFS_L2BALL_QP) $(TMAC_PRS_DEMO) $(TMAC_JACOBI) $(TMAC_3S_PORTFOLIO) $(TMAC_FBS_DUAL_SVM)

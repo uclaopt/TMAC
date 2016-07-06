@@ -17,8 +17,8 @@ Welcome to **TMAC**: A Toolbox of Modern Async-Parallel, Coordinate, Splitting, 
 ## Platforms
 TMAC can be installed to run on the following platforms:
 
-   * Linux
-   * Mac OS X
+   * Linux [(guide)](https://github.com/uclaopt/TMAC/blob/master/doc/source/build.rst#requirements-for-linux)
+   * Mac OS X [(guide)](https://github.com/uclaopt/TMAC/blob/master/doc/source/build.rst#requirements-for-mac)
    * Windows [(MINGW32 (32-bit) guide, ](http://www.math.ucla.edu/~wotaoyin/software/tmac_windows_installation_mingw32.html) [MINGW64 (64-bit) guide,](http://www.math.ucla.edu/~wotaoyin/software/tmac_windows_installation_mingw64.html)  [Cygwin (32/64-bit) guide)](http://www.math.ucla.edu/~wotaoyin/software/tmac_windows_installation_cygwin.html)
 
 Building TMAC requires
@@ -100,6 +100,12 @@ We would like to acknowledge the [Eigen](http://eigen.tuxfamily.org/index.php?ti
 ## Related Papers
 
 ```
+@article{edmunds2016tmac,
+  title={TMAC: A Toolbox of Modern Async-Parallel, Coordinate, Splitting, and Stochastic Methods},
+  author={Edmunds, Brent and Peng, Zhimin and Yin, Wotao},
+  journal={arXiv preprint arXiv:1606.04551},
+  year={2016}
+}
 
 @article{peng2015arock,
   title = {ARock: an Algorithmic Framework for Asynchronous Parallel Coordinate Updates},
@@ -115,7 +121,7 @@ We would like to acknowledge the [Eigen](http://eigen.tuxfamily.org/index.php?ti
   number = {1},
   journal = {Annals of Mathematical Sciences and Applications},
   author = {Peng, Zhimin and Wu, Tianyu and Xu, Yangyang and Yan, Ming and Yin, Wotao},
-  month = jan,
+  month = Jan,
   year = {2016},
   pages = {59--119}
 }
