@@ -100,6 +100,12 @@ We would like to acknowledge the [Eigen](http://eigen.tuxfamily.org/index.php?ti
 ## Related Papers
 
 ```
+@article{edmunds2016tmac,
+  title={TMAC: A Toolbox of Modern Async-Parallel, Coordinate, Splitting, and Stochastic Methods},
+  author={Edmunds, Brent and Peng, Zhimin and Yin, Wotao},
+  journal={arXiv preprint arXiv:1606.04551},
+  year={2016}
+}
 
 @article{peng2015arock,
   title = {ARock: an Algorithmic Framework for Asynchronous Parallel Coordinate Updates},
@@ -115,7 +121,7 @@ We would like to acknowledge the [Eigen](http://eigen.tuxfamily.org/index.php?ti
   number = {1},
   journal = {Annals of Mathematical Sciences and Applications},
   author = {Peng, Zhimin and Wu, Tianyu and Xu, Yangyang and Yan, Ming and Yin, Wotao},
-  month = jan,
+  month = Jan,
   year = {2016},
   pages = {59--119}
 }
