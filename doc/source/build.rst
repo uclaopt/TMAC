@@ -19,7 +19,7 @@ You can install them with the following commands:
   1. To install XCode, You can go to the App Store application and check "Updates". After updating Xcode, be sure to launch the Xcode application and accept the Apple license terms.
 
   2. To install the command line tools, you can use the following command::
-       
+
        xcode-select --install
 
 Step 2. Install GNU gcc
@@ -29,7 +29,7 @@ To install GNU gcc, you can follow the following steps.
    1. download gcc-4.9-bin.tar.gz download or newer from `here <http://prdownloads.sourceforge.net/hpc/gcc-4.9-bin.tar.gz>`_;
 
    2. cd to your downloads folder and un-gzip the archive gunzip gcc-4.9-bin.tar.gz;
-	
+
    3. in the same folder run::
 
 	sudo tar -xvf gcc-4.9-bin.tar -C /
@@ -53,11 +53,11 @@ You can either use MinGW or Cygwin to setup a coding environment to run TMAC. He
 
 Cygwin
 ^^^^^^^
-You can find the instructions for installing Cygwin `here <http://www.math.ucla.edu/~wotaoyin/windows_coding_cygwin.html>`_;
+You can find the instructions for installing Cygwin `here <http://www.math.ucla.edu/~wotaoyin/software/tmac_windows_installation_cygwin.html>`_;
 
 MinGW
 ^^^^^^
-You can find the instructions for installing MinGW `here <http://www.math.ucla.edu/~wotaoyin/windows_coding.html>`_;
+You can find the instructions for installing MinGW (32-bit) `here <http://www.math.ucla.edu/~wotaoyin/software/tmac_windows_installation_mingw32.html>`_ and MinGW (64-bit) `here. <http://www.math.ucla.edu/~wotaoyin/software/tmac_windows_installation_mingw64.html>`_
 
 
 Download TMAC
@@ -65,8 +65,7 @@ Download TMAC
 The TMAC package can be downloaded from the following link::
 
   https://github.com/uclaopt/TMAC
-  
-  
+
 Build TMAC
 ----------------
 On Linux or Unix machines with g++ and GNU make installed in standard locations, building TMAC can be as simple as::
