@@ -1,0 +1,269 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Quadratically constrained quadratic program &mdash; TMAC 0.2.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="TMAC 0.2.1 documentation" href="../index.html"/>
+        <link rel="up" title="Optimization" href="../optimization.html"/>
+        <link rel="next" title="Total variation for image processing" href="tv.html"/>
+        <link rel="prev" title="Intersection of convex sets" href="inter_cvx_set.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> TMAC
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../build.html">Download, build and run</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core.html">Core functionality</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../optimization.html">Optimization</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="least_squares.html">Least squares</a></li>
+<li class="toctree-l2"><a class="reference internal" href="huber_loss.html">Huber loss</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regression.html">Regularized regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inter_cvx_set.html">Intersection of convex sets</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Quadratically constrained quadratic program</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tv.html">Total variation for image processing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="portfolio.html">Portfolio optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="svm.html">Support vector machine (SVM)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../equations.html">Equation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute.html">Contribute to TMAC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io.html">Input/output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">TMAC</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../optimization.html">Optimization</a> &raquo;</li>
+      
+    <li>Quadratically constrained quadratic program</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/opt/qcqp.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="quadratically-constrained-quadratic-program">
+<h1>Quadratically constrained quadratic program<a class="headerlink" href="#quadratically-constrained-quadratic-program" title="Permalink to this headline">¶</a></h1>
+<p>We consider the following special QCQP problem:</p>
+<div class="math">
+\[\min_x -\frac{1}{2} x^T Q x + b^T x + d, ~\text{s.t.}~ \|x\|_2 \leq 1\]</div>
+<p>where $Q$ is a symmetric positive definite matrix. We solve the problem with TMAC by using backward-forward splitting.</p>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>In the bin folder, the executable file <code class="xref cpp cpp-type docutils literal"><span class="pre">motac_bfs_l2_ball_qp</span></code> solves the above problem.</p>
+<blockquote>
+<div><p>The usage for motac_prs_demo is:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>./motac_bfs_l2_ball [options]
+           -nthread       &lt; total number of threads, default: 1. &gt;
+           -epoch         &lt; total number of epochs, default: 10. &gt;
+           -problem_size  &lt; the dimension of the problem, default: 0 &gt;
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p>You can run the following command in the test directory to solve the l1 regularized least square problem for the large dense dataset:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>./bin/motac_bfs_l2_ball_qp -nthread 1 -problem_size 100 -epoch 200
+</pre></div>
+</div>
+<p>You can expect to get output similar to the following:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>Parameter settings:
+---------------------------------
+Problem size:               100
+TMAC step size:            0.5
+Operator step size:         0.05
+Use controller:             false
+---------------------------------
+Objective value is: 45.8257
+Computing time  is: 1.97591
+||x||_2 = 0.834947
+---------------------------------
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The current app use synthesis data, you can easily modify the code to load your own data. You can also modify the feasible set to other supported constraints.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="tv.html" class="btn btn-neutral float-right" title="Total variation for image processing" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="inter_cvx_set.html" class="btn btn-neutral" title="Intersection of convex sets" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright .
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.2.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,330 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Contribute to TMAC &mdash; TMAC 0.2.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="TMAC 0.2.1 documentation" href="index.html"/>
+        <link rel="next" title="Input/output" href="io.html"/>
+        <link rel="prev" title="PDE" href="eqn/pde.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> TMAC
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build.html">Download, build and run</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core.html">Core functionality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="optimization.html">Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="equations.html">Equation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Contribute to TMAC</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#setup-the-repository">Setup the repository</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#create-pull-request-pr">Create pull request (PR)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#combine-multiple-commits-into-one">Combine multiple commits into one</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#unit-tests">Unit tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#update-docs">Update docs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#applications">Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#code-style">Code style</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#language-independent-features">Language independent features</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="io.html">Input/output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">TMAC</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Contribute to TMAC</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/contribute.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="contribute-to-tmac">
+<h1>Contribute to TMAC<a class="headerlink" href="#contribute-to-tmac" title="Permalink to this headline">¶</a></h1>
+<p>We welcome patches. If you plan to contribute a new module, you can consider to add testcases in <a class="reference external" href="https://github.com/uclaopt/TMAC/tree/master/test">tests</a>. Changes should be verified to not break existing tests before they are submitted for review. We use Google test for unit testing.</p>
+<div class="section" id="setup-the-repository">
+<h2>Setup the repository<a class="headerlink" href="#setup-the-repository" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Fork the TMAC <a class="reference external" href="https://github.com/uclaopt/TMAC">repository</a> reporsitory;</p>
+</li>
+<li><p class="first">Open a Terminal to clone the TMAC project to your machine:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>git clone https://github.com/YOUR-USERNAME/TMAC
+</pre></div>
+</div>
+</li>
+<li><p class="first">Config the remote repository:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>git remote add upstream https://github.com/uclaopt/TMAC
+</pre></div>
+</div>
+</li>
+<li><p class="first">Sync with the up-to-date code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>git pull upstream master
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="create-pull-request-pr">
+<h2>Create pull request (PR)<a class="headerlink" href="#create-pull-request-pr" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">You first want to do code development on a branch:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>git branch YOUR-BRANCH-NAME
+git checkout YOUR-BRANCH-NAME
+</pre></div>
+</div>
+</li>
+<li><p class="first">After you have done some coding, you can stage and commit your code locally:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>git add FILE_NAME
+git commit -m &quot;MESSAGE TO DESCRIBE YOUR CHANGES&quot;
+</pre></div>
+</div>
+</li>
+<li><p class="first">Now you can push the update to GitHub:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>git push upstream YOUR-BRANCH-NAME
+</pre></div>
+</div>
+</li>
+<li><p class="first">Go to the remote <a class="reference external" href="https://github.com/uclaopt/TMAC">repo</a> page, you will see a message that ask you to create a pull request (PR).</p>
+</li>
+<li><p class="first">Create the PR, and add sufficient information to describe your modifications.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="combine-multiple-commits-into-one">
+<h2>Combine multiple commits into one<a class="headerlink" href="#combine-multiple-commits-into-one" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes we want to combine multiple small commits, especially when later commits are only fixes to previous ones.
+Assume we want to merge the last 3 commits, you can do it with the following command:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>git rebase -i HEAD~3
+</pre></div>
+</div>
+<p>You will see a pop up editor, then you can replace &#8220;pick&#8221; on the second and subsequent commits with &#8220;squash&#8221;.</p>
+</div>
+<div class="section" id="unit-tests">
+<h2>Unit tests<a class="headerlink" href="#unit-tests" title="Permalink to this headline">¶</a></h2>
+<p>All the unit tests are in test folder. We use gtest for C++ unittests. We will use Python nose for Python test cases. If you are adding tests to a new file, you will need to modify the Makefile to compile the source code, otherwise, nothing needs to be changed in the Makefile. The following commands should build and run the unit tests:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>make
+./your_unittest
+</pre></div>
+</div>
+</div>
+<div class="section" id="update-docs">
+<h2>Update docs<a class="headerlink" href="#update-docs" title="Permalink to this headline">¶</a></h2>
+<p>If you add new features to the codebase, you are also required to update the documentation to reflect the new feature. We use <a class="reference external" href="http://www.sphinx-doc.org/en/stable/">sphinx</a>
+and <a class="reference external" href="https://github.com/snide/sphinx_rtd_theme">sphinx_rtd_theme</a> for documentation. You can find the installation instructions on their websites. You can build document locally with the following commands:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>cd doc
+make html
+</pre></div>
+</div>
+</div>
+<div class="section" id="applications">
+<h2>Applications<a class="headerlink" href="#applications" title="Permalink to this headline">¶</a></h2>
+<p>Applications and demonstration examples are in the <a class="reference external" href="https://github.com/uclaopt/TMAC/tree/master/apps">apps</a> folder. Source code for new applications can be added here.
+We would love to hear your story. If you have interesting applications that can use TMAC, please feel free to add it to the toolbox.</p>
+</div>
+<div class="section" id="code-style">
+<h2>Code style<a class="headerlink" href="#code-style" title="Permalink to this headline">¶</a></h2>
+<p>We follow <a class="reference external" href="https://google.github.io/styleguide/cppguide.html">Google&#8217;s C++ style guide</a> on C++ code.</p>
+</div>
+<div class="section" id="language-independent-features">
+<h2>Language independent features<a class="headerlink" href="#language-independent-features" title="Permalink to this headline">¶</a></h2>
+<p>If you want to implement TMAC in a different programming language or add interfaces for other programming languages, the following features should be taken into consideration:</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p class="first">Fast-indexing. The major data structures for TMAC are dense vector, dense matrix, and sparse matrix. Fast-indexing means that either the rows or the cols in a matrix should be accessed quickly.</p>
+</li>
+<li><p class="first">Fast level 1 BLAS. Level 1 BLAS operations are the main computations in each iteration. Fast implementation should be used.</p>
+</li>
+<li><dl class="first docutils">
+<dt>Multi-threading. The programming language should provide a threading library that has the following features:</dt>
+<dd><ul class="first last simple">
+<li>spawn a given number of threads;</li>
+<li>create atomic variables;</li>
+<li>achieve inter-threads communication through mutex and conditional variables.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first">Shared variables. Threads should have fast read and write access to shared variables (such as data, unknown variable, maintained variables).</p>
+</li>
+<li><p class="first">Profile tools. The programming language should have multi-threading profiling tools so that we can track the execution time, identify which functions are consuming the most time so that we can evaluate them for possible performance improvements.</p>
+</li>
+</ol>
+</div></blockquote>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="io.html" class="btn btn-neutral float-right" title="Input/output" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="eqn/pde.html" class="btn btn-neutral" title="PDE" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright .
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.2.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,320 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Download, build and run &mdash; TMAC 0.2.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="TMAC 0.2.1 documentation" href="index.html"/>
+        <link rel="next" title="Core functionality" href="core.html"/>
+        <link rel="prev" title="Introduction" href="intro.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> TMAC
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Download, build and run</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#requirements-for-linux">Requirements for Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#requirements-for-mac">Requirements for Mac</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#step-1-install-xcode-and-the-command-line-tools-for-xcode">Step 1. Install XCode and the Command Line Tools for XCode.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-2-install-gnu-gcc">Step 2. Install GNU gcc</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#requirements-for-windows">Requirements for Windows</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cygwin">Cygwin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mingw">MinGW</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#download-tmac">Download TMAC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#build-tmac">Build TMAC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#test-tmac">Test TMAC</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="core.html">Core functionality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="optimization.html">Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="equations.html">Equation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contribute.html">Contribute to TMAC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="io.html">Input/output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">TMAC</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Download, build and run</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/build.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="download-build-and-run">
+<h1>Download, build and run<a class="headerlink" href="#download-build-and-run" title="Permalink to this headline">¶</a></h1>
+<p>TMAC&#8217;s build system relies on <a class="reference external" href="https://www.gnu.org/software/make/">GNU make</a>. It can be easily build on Linux and Unix environments, and various versions of Microsoft Windows. A relative up-to-date C++ compiler (e.g., gcc &gt;= 4.7) is required in all cases.</p>
+<div class="section" id="requirements-for-linux">
+<h2>Requirements for Linux<a class="headerlink" href="#requirements-for-linux" title="Permalink to this headline">¶</a></h2>
+<p>You can use the following commands to install g++, and BLA:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>sudo apt-get install build-essential
+sudo apt-get install libblas-dev liblapack-dev
+</pre></div>
+</div>
+</div>
+<div class="section" id="requirements-for-mac">
+<h2>Requirements for Mac<a class="headerlink" href="#requirements-for-mac" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="step-1-install-xcode-and-the-command-line-tools-for-xcode">
+<h3>Step 1. Install XCode and the Command Line Tools for XCode.<a class="headerlink" href="#step-1-install-xcode-and-the-command-line-tools-for-xcode" title="Permalink to this headline">¶</a></h3>
+<p>You can install them with the following commands:</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p class="first">To install XCode, You can go to the App Store application and check &#8220;Updates&#8221;. After updating Xcode, be sure to launch the Xcode application and accept the Apple license terms.</p>
+</li>
+<li><p class="first">To install the command line tools, you can use the following command:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">xcode</span><span class="o">-</span><span class="n">select</span> <span class="o">--</span><span class="n">install</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="step-2-install-gnu-gcc">
+<h3>Step 2. Install GNU gcc<a class="headerlink" href="#step-2-install-gnu-gcc" title="Permalink to this headline">¶</a></h3>
+<p>To install GNU gcc, you can follow the following steps.</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p class="first">download gcc-4.9-bin.tar.gz download or newer from <a class="reference external" href="http://prdownloads.sourceforge.net/hpc/gcc-4.9-bin.tar.gz">here</a>;</p>
+</li>
+<li><p class="first">cd to your downloads folder and un-gzip the archive gunzip gcc-4.9-bin.tar.gz;</p>
+</li>
+<li><p class="first">in the same folder run:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>sudo tar -xvf gcc-4.9-bin.tar -C /
+</pre></div>
+</div>
+<p>this will place new executable to /usr/local/bin</p>
+</li>
+<li><p class="first">add the following to ~/.bash_profile:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>export PATH=/usr/local/bin:$PATH;
+</pre></div>
+</div>
+</li>
+<li><p class="first">open new terminal and run:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>which gcc.
+</pre></div>
+</div>
+<p>This should point to /usr/local/bin/gcc.</p>
+</li>
+</ol>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="requirements-for-windows">
+<h2>Requirements for Windows<a class="headerlink" href="#requirements-for-windows" title="Permalink to this headline">¶</a></h2>
+<p>You can either use MinGW or Cygwin to setup a coding environment to run TMAC. Here we include the installation instructions.</p>
+<div class="section" id="cygwin">
+<h3>Cygwin<a class="headerlink" href="#cygwin" title="Permalink to this headline">¶</a></h3>
+<p>You can find the instructions for installing Cygwin <a class="reference external" href="http://www.math.ucla.edu/~wotaoyin/software/tmac_windows_installation_cygwin.html">here</a>;</p>
+</div>
+<div class="section" id="mingw">
+<h3>MinGW<a class="headerlink" href="#mingw" title="Permalink to this headline">¶</a></h3>
+<p>You can find the instructions for installing MinGW (32-bit) <a class="reference external" href="http://www.math.ucla.edu/~wotaoyin/software/tmac_windows_installation_mingw32.html">here</a> and MinGW (64-bit) <a class="reference external" href="http://www.math.ucla.edu/~wotaoyin/software/tmac_windows_installation_mingw64.html">here.</a></p>
+</div>
+</div>
+<div class="section" id="download-tmac">
+<h2>Download TMAC<a class="headerlink" href="#download-tmac" title="Permalink to this headline">¶</a></h2>
+<p>The TMAC package can be downloaded from the following link:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>https://github.com/uclaopt/TMAC
+</pre></div>
+</div>
+</div>
+<div class="section" id="build-tmac">
+<h2>Build TMAC<a class="headerlink" href="#build-tmac" title="Permalink to this headline">¶</a></h2>
+<p>On Linux or Unix machines with g++ and GNU make installed in standard locations, building TMAC can be as simple as:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>cd TMAC
+make
+</pre></div>
+</div>
+<p>The executable files are in the bin folder. The following is a sample of the executable files:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>tmac_fbs_l1_log [solver for regularized logistic regression with forward backward splitting]
+</pre></div>
+</div>
+</div>
+<div class="section" id="test-tmac">
+<h2>Test TMAC<a class="headerlink" href="#test-tmac" title="Permalink to this headline">¶</a></h2>
+<p>Once TMAC has been successfully compiled, it is a good idea to verify that the executable files are functioning properly. To test TMAC for l1 regularized logistic regression problem, run the following commands:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>./bin/tmac_fbs_l1_log -data ./data/rcv1_train.svm -epoch 10 -nthread 2 -lambda 1.
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="core.html" class="btn btn-neutral float-right" title="Core functionality" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="intro.html" class="btn btn-neutral" title="Introduction" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright .
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.2.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,395 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Linear algebra &mdash; TMAC 0.2.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="TMAC 0.2.1 documentation" href="../index.html"/>
+        <link rel="up" title="Core functionality" href="../core.html"/>
+        <link rel="next" title="Operators" href="operator.html"/>
+        <link rel="prev" title="Sparse matrix" href="sp_mtx.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> TMAC
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../build.html">Download, build and run</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../core.html">Core functionality</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="ds_vec.html">Dense vector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sp_vec.html">Sparse vector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ds_mtx.html">Dense matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sp_mtx.html">Sparse matrix</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Linear algebra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operator.html">Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="splitting.html">Splitting schemes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="controller.html">Controller</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization.html">Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../equations.html">Equation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute.html">Contribute to TMAC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io.html">Input/output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">TMAC</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../core.html">Core functionality</a> &raquo;</li>
+      
+    <li>Linear algebra</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/core/algebra.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="linear-algebra">
+<h1>Linear algebra<a class="headerlink" href="#linear-algebra" title="Permalink to this headline">¶</a></h1>
+<p>The <code class="xref cpp cpp-type docutils literal"><span class="pre">algebra.h</span></code> file provides a few functions for linear
+algebra operations. Thoese functions include calculating the norm of a vector, computing inner product of vectors, performing matrix vector operations, etc. We provide both naive implementation (under namespace MyAlgebra) and (Sparse) BLAS based implementation (under namespace BLASAlgebra) for these functions. You can specify the namespace through the <code class="xref cpp cpp-type docutils literal"><span class="pre">algebra_namespace_switcher.h</span></code> header file.</p>
+<dl class="class">
+<dt>
+<code class="descname">algebra.h</code></dt>
+<dd><p class="rubric">Vector functions</p>
+<dl class="function">
+<dt id="_CPPv2N19PhonyNameDueToError4normER6Vectori">
+<span id="PhonyNameDueToError::norm__VectorR.i"></span>double <code class="descclassname"></code><code class="descname">norm</code><span class="sig-paren">(</span><a class="reference internal" href="ds_vec.html#_CPPv26Vector" title="Vector">Vector</a> &amp;<em>x</em>, int <em>type</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N19PhonyNameDueToError4normER6Vectori" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the norm of a vector of different type:</p>
+<blockquote>
+<div><ul class="simple">
+<li>type = 0: <span class="math">\(\ell_0\)</span> norm, the number of nonzeros;</li>
+<li>type = 1: <span class="math">\(\ell_1\)</span> norm. Sum of the absolute values;</li>
+<li>type = 2: <span class="math">\(\ell_2\)</span> norm. Euclidean norm;</li>
+<li>type = 3: <span class="math">\(\ell_\infty\)</span> norm. Maximum of the absolute value.</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N19PhonyNameDueToError4normER6Vector">
+<span id="PhonyNameDueToError::norm__VectorR"></span>double <code class="descclassname"></code><code class="descname">norm</code><span class="sig-paren">(</span><a class="reference internal" href="ds_vec.html#_CPPv26Vector" title="Vector">Vector</a> &amp;<em>x</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N19PhonyNameDueToError4normER6Vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the <span class="math">\(\ell_2\)</span> norm of a vector.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N19PhonyNameDueToError3subER6VectorR6Vector">
+<span id="PhonyNameDueToError::sub__VectorR.VectorR"></span>void <code class="descclassname"></code><code class="descname">sub</code><span class="sig-paren">(</span><a class="reference internal" href="ds_vec.html#_CPPv26Vector" title="Vector">Vector</a> &amp;<em>a</em>, <a class="reference internal" href="ds_vec.html#_CPPv26Vector" title="Vector">Vector</a> &amp;<em>b</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N19PhonyNameDueToError3subER6VectorR6Vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subtract b from a, i.e., a = a - b.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N19PhonyNameDueToError3addER6VectorR6Vector">
+<span id="PhonyNameDueToError::add__VectorR.VectorR"></span>void <code class="descclassname"></code><code class="descname">add</code><span class="sig-paren">(</span><a class="reference internal" href="ds_vec.html#_CPPv26Vector" title="Vector">Vector</a> &amp;<em>a</em>, <a class="reference internal" href="ds_vec.html#_CPPv26Vector" title="Vector">Vector</a> &amp;<em>b</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N19PhonyNameDueToError3addER6VectorR6Vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add dense vector b to vector a, i.e., a = a + b.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N19PhonyNameDueToError3addER6VectorR5SpVec">
+<span id="PhonyNameDueToError::add__VectorR.SpVecR"></span>void <code class="descclassname"></code><code class="descname">add</code><span class="sig-paren">(</span><a class="reference internal" href="ds_vec.html#_CPPv26Vector" title="Vector">Vector</a> &amp;<em>a</em>, SpVec &amp;<em>b</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N19PhonyNameDueToError3addER6VectorR5SpVec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add sparse vector b to vector a, i.e., a = a + b.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N19PhonyNameDueToError3dotER6VectorR6Vector">
+<span id="PhonyNameDueToError::dot__VectorR.VectorR"></span>double <code class="descclassname"></code><code class="descname">dot</code><span class="sig-paren">(</span><a class="reference internal" href="ds_vec.html#_CPPv26Vector" title="Vector">Vector</a> &amp;<em>a</em>, <a class="reference internal" href="ds_vec.html#_CPPv26Vector" title="Vector">Vector</a> &amp;<em>b</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N19PhonyNameDueToError3dotER6VectorR6Vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the inner product of vector a and vector b.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N19PhonyNameDueToError4copyER6VectorR6Vectorii">
+<span id="PhonyNameDueToError::copy__VectorR.VectorR.i.i"></span>void <code class="descclassname"></code><code class="descname">copy</code><span class="sig-paren">(</span><a class="reference internal" href="ds_vec.html#_CPPv26Vector" title="Vector">Vector</a> &amp;<em>x</em>, <a class="reference internal" href="ds_vec.html#_CPPv26Vector" title="Vector">Vector</a> &amp;<em>y</em>, int <em>start</em>, int <em>end</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N19PhonyNameDueToError4copyER6VectorR6Vectorii" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy part of a vector to another vector, i.e., y = x(start:end)</p>
+</dd></dl>
+
+<p class="rubric">Matrix functions</p>
+<dl class="function">
+<dt id="_CPPv2N19PhonyNameDueToError21calculate_column_normER6MatrixR6Vector">
+<span id="PhonyNameDueToError::calculate_column_norm__MatrixR.VectorR"></span>void <code class="descclassname"></code><code class="descname">calculate_column_norm</code><span class="sig-paren">(</span><a class="reference internal" href="ds_mtx.html#_CPPv26Matrix" title="Matrix">Matrix</a> &amp;<em>A</em>, <a class="reference internal" href="ds_vec.html#_CPPv26Vector" title="Vector">Vector</a> &amp;<em>nrm</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N19PhonyNameDueToError21calculate_column_normER6MatrixR6Vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the <span class="math">\(\ell_2\)</span> norm for each column of dense matrix A.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N19PhonyNameDueToError21calculate_column_normER5SpMatR6Vector">
+<span id="PhonyNameDueToError::calculate_column_norm__SpMatR.VectorR"></span>void <code class="descclassname"></code><code class="descname">calculate_column_norm</code><span class="sig-paren">(</span>SpMat &amp;<em>A</em>, <a class="reference internal" href="ds_vec.html#_CPPv26Vector" title="Vector">Vector</a> &amp;<em>nrm</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N19PhonyNameDueToError21calculate_column_normER5SpMatR6Vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the <span class="math">\(\ell_2\)</span> norm for each column of sparse matrix A.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N19PhonyNameDueToError8multiplyER5SpMatR5SpMat">
+<span id="PhonyNameDueToError::multiply__SpMatR.SpMatR"></span>void <code class="descclassname"></code><code class="descname">multiply</code><span class="sig-paren">(</span>SpMat &amp;<em>A</em>, SpMat &amp;<em>AAt</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N19PhonyNameDueToError8multiplyER5SpMatR5SpMat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Multiply A with A&#8217;, i.e., AAt = A * A&#8217;</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N19PhonyNameDueToError8multiplyER6MatrixR6Matrix">
+<span id="PhonyNameDueToError::multiply__MatrixR.MatrixR"></span>void <code class="descclassname"></code><code class="descname">multiply</code><span class="sig-paren">(</span><a class="reference internal" href="ds_mtx.html#_CPPv26Matrix" title="Matrix">Matrix</a> &amp;<em>A</em>, <a class="reference internal" href="ds_mtx.html#_CPPv26Matrix" title="Matrix">Matrix</a> &amp;<em>AAt</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N19PhonyNameDueToError8multiplyER6MatrixR6Matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Multiply A with A&#8217;, i.e., AAt = A * A&#8217;</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N19PhonyNameDueToError4copyER6MatrixR6Matrixii">
+<span id="PhonyNameDueToError::copy__MatrixR.MatrixR.i.i"></span>void <code class="descclassname"></code><code class="descname">copy</code><span class="sig-paren">(</span><a class="reference internal" href="ds_mtx.html#_CPPv26Matrix" title="Matrix">Matrix</a> &amp;<em>A</em>, <a class="reference internal" href="ds_mtx.html#_CPPv26Matrix" title="Matrix">Matrix</a> &amp;<em>B</em>, int <em>start</em>, int <em>end</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N19PhonyNameDueToError4copyER6MatrixR6Matrixii" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy part of a dense matrix to another dense matrix, i.e., B = A(start:end, :)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N19PhonyNameDueToError4copyER5SpMatR5SpMatii">
+<span id="PhonyNameDueToError::copy__SpMatR.SpMatR.i.i"></span>void <code class="descclassname"></code><code class="descname">copy</code><span class="sig-paren">(</span>SpMat &amp;<em>A</em>, SpMat &amp;<em>B</em>, int <em>start</em>, int <em>end</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N19PhonyNameDueToError4copyER5SpMatR5SpMatii" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy part of a sparse matrix to another sparse matrix, i.e., B = A(start:end, :)</p>
+</dd></dl>
+
+<p class="rubric">Matrix vector functions</p>
+<dl class="function">
+<dt id="_CPPv2N19PhonyNameDueToError14trans_multiplyER6MatrixR6VectorR6Vector">
+<span id="PhonyNameDueToError::trans_multiply__MatrixR.VectorR.VectorR"></span>void <code class="descclassname"></code><code class="descname">trans_multiply</code><span class="sig-paren">(</span><a class="reference internal" href="ds_mtx.html#_CPPv26Matrix" title="Matrix">Matrix</a> &amp;<em>A</em>, <a class="reference internal" href="ds_vec.html#_CPPv26Vector" title="Vector">Vector</a> &amp;<em>x</em>, <a class="reference internal" href="ds_vec.html#_CPPv26Vector" title="Vector">Vector</a> &amp;<em>Atx</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N19PhonyNameDueToError14trans_multiplyER6MatrixR6VectorR6Vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate <span class="math">\(Atx = A^T \, x\)</span>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N19PhonyNameDueToError3subER6VectorR6Matrixid">
+<span id="PhonyNameDueToError::sub__VectorR.MatrixR.i.double"></span>void <code class="descclassname"></code><code class="descname">sub</code><span class="sig-paren">(</span><a class="reference internal" href="ds_vec.html#_CPPv26Vector" title="Vector">Vector</a> &amp;<em>a</em>, <a class="reference internal" href="ds_mtx.html#_CPPv26Matrix" title="Matrix">Matrix</a> &amp;<em>A</em>, int <em>row</em>, double <em>scalar</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N19PhonyNameDueToError3subER6VectorR6Matrixid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subtract a scalar times a row of matrix from a given vector,
+i.e., a = a - scalar * A(row, :)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N19PhonyNameDueToError3subER6VectorR5SpMatid">
+<span id="PhonyNameDueToError::sub__VectorR.SpMatR.i.double"></span>void <code class="descclassname"></code><code class="descname">sub</code><span class="sig-paren">(</span><a class="reference internal" href="ds_vec.html#_CPPv26Vector" title="Vector">Vector</a> &amp;<em>a</em>, SpMat &amp;<em>A</em>, int <em>row</em>, double <em>scalar</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N19PhonyNameDueToError3subER6VectorR5SpMatid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subtract a scalar times a row of matrix from a given vector,
+i.e., a = a - scalar * A(row, :)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N19PhonyNameDueToError3subER5SpVecR5SpMatid">
+<span id="PhonyNameDueToError::sub__SpVecR.SpMatR.i.double"></span>void <code class="descclassname"></code><code class="descname">sub</code><span class="sig-paren">(</span>SpVec &amp;<em>a</em>, SpMat &amp;<em>A</em>, int <em>row</em>, double <em>scalar</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N19PhonyNameDueToError3subER5SpVecR5SpMatid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subtract a scalar times a row of matrix from a given vector,
+i.e., a = a - scalar * A(row, :)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N19PhonyNameDueToError3subER5SpVecR6Matrixid">
+<span id="PhonyNameDueToError::sub__SpVecR.MatrixR.i.double"></span>void <code class="descclassname"></code><code class="descname">sub</code><span class="sig-paren">(</span>SpVec &amp;<em>a</em>, <a class="reference internal" href="ds_mtx.html#_CPPv26Matrix" title="Matrix">Matrix</a> &amp;<em>A</em>, int <em>row</em>, double <em>scalar</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N19PhonyNameDueToError3subER5SpVecR6Matrixid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subtract a scalar times a row of matrix from a given vector,
+i.e., a = a - scalar * A(row, :)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N19PhonyNameDueToError3dotER5SpMatR6Vectori">
+<span id="PhonyNameDueToError::dot__SpMatR.VectorR.i"></span>double <code class="descclassname"></code><code class="descname">dot</code><span class="sig-paren">(</span>SpMat &amp;<em>A</em>, <a class="reference internal" href="ds_vec.html#_CPPv26Vector" title="Vector">Vector</a> &amp;<em>x</em>, int <em>row</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N19PhonyNameDueToError3dotER5SpMatR6Vectori" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N19PhonyNameDueToError3dotER6MatrixR6Vectori">
+<span id="PhonyNameDueToError::dot__MatrixR.VectorR.i"></span>double <code class="descclassname"></code><code class="descname">dot</code><span class="sig-paren">(</span><a class="reference internal" href="ds_mtx.html#_CPPv26Matrix" title="Matrix">Matrix</a> &amp;<em>A</em>, <a class="reference internal" href="ds_vec.html#_CPPv26Vector" title="Vector">Vector</a> &amp;<em>x</em>, int <em>row</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N19PhonyNameDueToError3dotER6MatrixR6Vectori" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calcuate inner product of A(row, :) * x.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N19PhonyNameDueToError8multiplyER5SpMatR6VectorR6Vector">
+<span id="PhonyNameDueToError::multiply__SpMatR.VectorR.VectorR"></span>void <code class="descclassname"></code><code class="descname">multiply</code><span class="sig-paren">(</span>SpMat &amp;<em>A</em>, <a class="reference internal" href="ds_vec.html#_CPPv26Vector" title="Vector">Vector</a> &amp;<em>x</em>, <a class="reference internal" href="ds_vec.html#_CPPv26Vector" title="Vector">Vector</a> &amp;<em>Ax</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N19PhonyNameDueToError8multiplyER5SpMatR6VectorR6Vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>multiply sparse matrix A with x, i.e., <span class="math">\(Ax = A \cdot x\)</span></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N19PhonyNameDueToError8multiplyER6MatrixR6VectorR6Vector">
+<span id="PhonyNameDueToError::multiply__MatrixR.VectorR.VectorR"></span>void <code class="descclassname"></code><code class="descname">multiply</code><span class="sig-paren">(</span><a class="reference internal" href="ds_mtx.html#_CPPv26Matrix" title="Matrix">Matrix</a> &amp;<em>A</em>, <a class="reference internal" href="ds_vec.html#_CPPv26Vector" title="Vector">Vector</a> &amp;<em>x</em>, <a class="reference internal" href="ds_vec.html#_CPPv26Vector" title="Vector">Vector</a> &amp;<em>Ax</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N19PhonyNameDueToError8multiplyER6MatrixR6VectorR6Vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>multiply dense matrix A with x, i.e., <span class="math">\(Ax = A \cdot x\)</span></p>
+</dd></dl>
+
+<p class="rubric">Print functions</p>
+<dl class="function">
+<dt id="_CPPv2N19PhonyNameDueToError5printER6Vector">
+<span id="PhonyNameDueToError::print__VectorR"></span>void <code class="descclassname"></code><code class="descname">print</code><span class="sig-paren">(</span><a class="reference internal" href="ds_vec.html#_CPPv26Vector" title="Vector">Vector</a> &amp;<em>x</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N19PhonyNameDueToError5printER6Vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print the vector.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N19PhonyNameDueToError5printER6Matrix">
+<span id="PhonyNameDueToError::print__MatrixR"></span>void <code class="descclassname"></code><code class="descname">print</code><span class="sig-paren">(</span><a class="reference internal" href="ds_mtx.html#_CPPv26Matrix" title="Matrix">Matrix</a> &amp;<em>x</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N19PhonyNameDueToError5printER6Matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print the dense matrix.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N19PhonyNameDueToError5printER5SpMat">
+<span id="PhonyNameDueToError::print__SpMatR"></span>void <code class="descclassname"></code><code class="descname">print</code><span class="sig-paren">(</span>SpMat &amp;<em>x</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N19PhonyNameDueToError5printER5SpMat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print the sparse matrix.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="operator.html" class="btn btn-neutral float-right" title="Operators" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="sp_mtx.html" class="btn btn-neutral" title="Sparse matrix" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright .
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.2.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
