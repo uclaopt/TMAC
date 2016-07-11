@@ -32,7 +32,7 @@
   
     <link rel="top" title="TMAC 0.2.1 documentation" href="index.html"/>
         <link rel="next" title="Core functionality" href="core.html"/>
-        <link rel="prev" title="Introduction" href="intro.html"/> 
+        <link rel="prev" title="Welcome to the TMAC’s documentation!" href="index.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -82,7 +82,6 @@
             
             
                 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">Download and install</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#latest-version">Latest version</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#required-and-optional-software-for-installation">Required and optional software for installation</a></li>
@@ -160,24 +159,27 @@
 <div class="section" id="linux-installation">
 <h2>Linux installation<a class="headerlink" href="#linux-installation" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic simple">
-<li>Install the packages of coding essentials, BLAS, and LAPACK:</li>
+<li>Install the packages of coding essentials, BLAS, and LAPACK</li>
 </ol>
-<blockquote>
-<div>&gt; sudo apt-get install build-essential
-&gt; sudo apt-get install libblas-dev liblapack-dev</div></blockquote>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>sudo apt-get install build-essential
+sudo apt-get install libblas-dev liblapack-dev
+</pre></div>
+</div>
 <ol class="arabic simple" start="2">
 <li>Download TMAC and build it:</li>
 </ol>
-<blockquote>
-<div>&gt; git clone <a class="reference external" href="https://github.com/uclaopt/tmac.git">https://github.com/uclaopt/tmac.git</a>
-&gt; cd tmac
-&gt; make</div></blockquote>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>git clone https://github.com/uclaopt/tmac.git
+<span class="nb">cd</span> tmac
+make
+</pre></div>
+</div>
 <ol class="arabic simple" start="3">
 <li>Once TMAC is successfully built, you can test run a Peaceman-Rachford Splitting example, first with 1 thread and then with 2 threads:</li>
 </ol>
-<blockquote>
-<div>&gt; ./bin/tmac_prs_demo -problem_size 1500 -nthread 1
-&gt; ./bin/tmac_prs_demo -problem_size 1500 -nthread 2</div></blockquote>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>./bin/tmac_prs_demo -problem_size <span class="m">1500</span> -nthread 1
+./bin/tmac_prs_demo -problem_size <span class="m">1500</span> -nthread 2
+</pre></div>
+</div>
 </div>
 <div class="section" id="mac-inistallation">
 <h2>Mac inistallation<a class="headerlink" href="#mac-inistallation" title="Permalink to this headline">¶</a></h2>
@@ -185,22 +187,25 @@
 <li>Install XCode: in App Store, update Xcode; then, launch Xcode and accept its license terms</li>
 <li>Install XCode&#8217;s command line tools:</li>
 </ol>
-<blockquote>
-<div>&gt; xcode-select &#8211;install
-&gt; gcc -v    # verify you have version &gt;= 4.7</div></blockquote>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>xcode-select --install
+gcc -v    <span class="c1"># verify you have version &gt;= 4.7</span>
+</pre></div>
+</div>
 <ol class="arabic simple" start="3">
 <li>Download TMAC and build it:</li>
 </ol>
-<blockquote>
-<div>&gt; git clone <a class="reference external" href="https://github.com/uclaopt/tmac.git">https://github.com/uclaopt/tmac.git</a>
-&gt; cd tmac
-&gt; make</div></blockquote>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>git clone https://github.com/uclaopt/tmac.git
+<span class="nb">cd</span> tmac
+make
+</pre></div>
+</div>
 <ol class="arabic simple" start="4">
 <li>Once TMAC is successfully built, you can test run a Peaceman-Rachford Splitting example, first with 1 thread and then with 2 threads:</li>
 </ol>
-<blockquote>
-<div>&gt; ./bin/tmac_prs_demo -problem_size 1500 -nthread 1
-&gt; ./bin/tmac_prs_demo -problem_size 1500 -nthread 2</div></blockquote>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>./bin/tmac_prs_demo -problem_size <span class="m">1500</span> -nthread 1
+./bin/tmac_prs_demo -problem_size <span class="m">1500</span> -nthread 2
+</pre></div>
+</div>
 </div>
 <div class="section" id="windows-installation">
 <h2>Windows installation<a class="headerlink" href="#windows-installation" title="Permalink to this headline">¶</a></h2>
@@ -230,7 +235,7 @@
         <a href="core.html" class="btn btn-neutral float-right" title="Core functionality" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="intro.html" class="btn btn-neutral" title="Introduction" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral" title="Welcome to the TMAC’s documentation!" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

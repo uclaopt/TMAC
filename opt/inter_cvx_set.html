@@ -83,7 +83,6 @@
             
             
                 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../build.html">Download and install</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../core.html">Core functionality</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../optimization.html">Optimization</a><ul class="current">
@@ -159,10 +158,10 @@
 <p>where <span class="math">\(\iota_S (x)\)</span> is the indicator function of the set S. We apply the TMAC with the Peaceman-Rachford splitting operator. To ensure coordinate friendly, We first apply the projection operator to the <span class="math">\(\ell_2\)</span> ball, then we apply the projection to the <span class="math">\(\ell_{\infty}\)</span> ball.</p>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
-<p>In the bin folder, the executable file <code class="xref cpp cpp-type docutils literal"><span class="pre">motac_prs_demo</span></code> solves the above problem.</p>
+<p>In the bin folder, the executable file <code class="xref cpp cpp-type docutils literal"><span class="pre">tmac_prs_demo</span></code> solves the above problem.</p>
 <blockquote>
-<div><p>The usage for motac_prs_demo is:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>./motac_prs_demo [options]
+<div><p>The usage for tmac_prs_demo is:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>./tmac_prs_demo [options]
            -nthread       &lt; total number of threads, default: 1. &gt;
            -epoch         &lt; total number of epochs, default: 10. &gt;
            -problem_size  &lt; the dimension of the problem, default: 0 &gt;
@@ -173,7 +172,7 @@
 <div class="section" id="example">
 <h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
 <p>You can run the following command in the test directory to solve the l1 regularized least square problem for the large dense dataset:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>./bin/motac_prs_demo -epoch 100 -nthread 2 -problem_size 100
+<div class="highlight-python"><div class="highlight"><pre><span></span>./bin/tmac_prs_demo -epoch 100 -nthread 2 -problem_size 100
 </pre></div>
 </div>
 <p>You can expect to get output similar to the following:</p>

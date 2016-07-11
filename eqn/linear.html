@@ -83,7 +83,6 @@
             
             
                 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../build.html">Download and install</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../core.html">Core functionality</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../optimization.html">Optimization</a></li>
@@ -160,27 +159,24 @@
 </div>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
-<p>In the bin folder, the executable file <code class="xref cpp cpp-type docutils literal"><span class="pre">motac_jacobi</span></code> solves the linear equationm:</p>
-<blockquote>
-<div><p>The usage for motac_jacobi is:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>./motac_jacobi [options]
-           -data       &lt; matrix market file for A &gt;
-           -label      &lt; matrix market file for b &gt;
+<p>In the bin folder, the executable file <code class="xref cpp cpp-type docutils literal"><span class="pre">tmac_jacobi</span></code> solves the linear equationm. The usage for tmac_jacobi is the following.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>./tmac_jacobi <span class="o">[</span>options<span class="o">]</span>
+           -data       &lt; matrix market file <span class="k">for</span> A &gt;
+           -label      &lt; matrix market file <span class="k">for</span> b &gt;
            -nthread    &lt; total number of threads, default: 1. &gt;
            -epoch      &lt; total number of epochs, default: 10. &gt;
 </pre></div>
 </div>
-</div></blockquote>
 </div>
 <div class="section" id="example">
 <h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
 <p>You can run the following command in the test directory to solve the linear equation for the dense dataset:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>./bin/motac_jacobi -data ./data/ds_A.mtx -label ./data/ds_b.mtx -epoch 10 -nthread 2.
+<div class="highlight-bash"><div class="highlight"><pre><span></span>./bin/tmac_jacobi -data ./data/ds_A.mtx -label ./data/ds_b.mtx -epoch <span class="m">10</span> -nthread 2.
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The datasets are not included in the source code, but you can download them from <a class="reference external" href="https://www.dropbox.com/sh/neqh6ege48hut2x/AACv02EH19XN-N7DXADV2NrIa?dl=0">here</a>.</p>
+<p class="last">The datasets are not included in the source code, but you can download them from <cite>here &lt;https://github.com/uclaopt/datasets/tree/master/linear_equation&gt;_</cite></p>
 </div>
 <p>You can expect to get output similar to the following:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span>Parameter settings:

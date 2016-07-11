@@ -83,7 +83,6 @@
             
             
                 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../build.html">Download and install</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../core.html">Core functionality</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../optimization.html">Optimization</a><ul class="current">
@@ -164,10 +163,10 @@
 </div>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
-<p>In the bin folder, the executable file <code class="xref cpp cpp-type docutils literal"><span class="pre">motac_gd_ls</span></code> solves the least squares problem:</p>
+<p>In the bin folder, the executable file <code class="xref cpp cpp-type docutils literal"><span class="pre">tmac_gd_ls</span></code> solves the least squares problem:</p>
 <blockquote>
-<div><p>The usage for motac_gd_ls is:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>./motac_gd_ls [options]
+<div><p>The usage for tmac_gd_ls is:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>./tmac_gd_ls [options]
            -data       &lt; matrix market file for A &gt;
            -label      &lt; matrix market file for b &gt;
            -nthread    &lt; total number of threads, default: 1. &gt;
@@ -179,7 +178,7 @@
 <div class="section" id="example">
 <h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
 <p>You can run the following command in the test directory to solve the least squares problem for the large dense dataset:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>./bin/motac_gd_ls -data ./data/ds_large_A.mtx -label ./data/ds_large_b.mtx -epoch 100 -nthread 2 -lambda 1.
+<div class="highlight-python"><div class="highlight"><pre><span></span>./bin/tmac_gd_ls -data ./data/ds_large_A.mtx -label ./data/ds_large_b.mtx -epoch 100 -nthread 2 -lambda 1.
 </pre></div>
 </div>
 <div class="admonition note">

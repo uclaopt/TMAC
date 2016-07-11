@@ -83,7 +83,6 @@
             
             
                 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../build.html">Download and install</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../core.html">Core functionality</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../optimization.html">Optimization</a><ul class="current">
@@ -166,23 +165,20 @@
 </div>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
-<p>In the bin folder, the executable file <code class="xref cpp cpp-type docutils literal"><span class="pre">motac_fbs_lasso</span></code> solves the <span class="math">\(\ell_1\)</span> regularized least square problem:</p>
-<blockquote>
-<div><p>The usage for motac_fbs_lasso is:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>./motac_fbs_lasso [options]
-           -data       &lt; matrix market file for A &gt;
-           -label      &lt; matrix market file for b &gt;
+<p>In the bin folder, the executable file <code class="xref cpp cpp-type docutils literal"><span class="pre">tmac_fbs_lasso</span></code> solves the <span class="math">\(\ell_1\)</span> regularized least square problem. The usage for tmac_fbs_lasso is:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>./tmac_fbs_lasso <span class="o">[</span>options<span class="o">]</span>
+           -data       &lt; matrix market file <span class="k">for</span> A &gt;
+           -label      &lt; matrix market file <span class="k">for</span> b &gt;
            -nthread    &lt; total number of threads, default: 1. &gt;
            -epoch      &lt; total number of epochs, default: 10. &gt;
            -lambda     &lt; regularization parameter, default 1. &gt;
 </pre></div>
 </div>
-</div></blockquote>
 </div>
 <div class="section" id="example">
 <h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
-<p>You can run the following command in the test directory to solve the l1 regularized least square problem for the large dense dataset:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>./bin/motac_fbs_lasso -data ./data/ds_large_A.mtx -label ./data/ds_large_b.mtx -epoch 10 -nthread 2 -lambda 1.
+<p>You can run the following command in the test directory to solve the l1 regularized least square problem for the large dense dataset.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>./bin/tmac_fbs_lasso -data ./data/ds_large_A.mtx -label ./data/ds_large_b.mtx -epoch <span class="m">10</span> -nthread <span class="m">2</span> -lambda 1.
 </pre></div>
 </div>
 <div class="admonition note">
@@ -207,7 +203,7 @@ Computing time  is: 0.008394
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">You can find other applications (l2 norm least square with backward forward splitting, SVM with squared hinge loss, etc) in the binary folder. The source codes for the apps are <a class="reference external" href="https://github.com/ZhiminPeng/motac-new/tree/master/apps">here</a>.</p>
+<p class="last">You can find other applications (l2 norm least square with backward forward splitting, SVM with squared hinge loss, etc) in the binary folder. The source codes for the apps are <a class="reference external" href="https://github.com/ZhiminPeng/tmac-new/tree/master/apps">here</a>.</p>
 </div>
 </div>
 </div>

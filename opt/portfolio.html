@@ -83,7 +83,6 @@
             
             
                 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../build.html">Download and install</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../core.html">Core functionality</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../optimization.html">Optimization</a><ul class="current">
@@ -168,10 +167,10 @@
 </div>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
-<p>In the bin folder, the executable file <code class="xref cpp cpp-type docutils literal"><span class="pre">motac_3s_portfolio</span></code> minimizes the Huber loss:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>The usage for ./bin/motac_3s_portfolio is:
+<p>In the bin folder, the executable file <code class="xref cpp cpp-type docutils literal"><span class="pre">tmac_3s_portfolio</span></code> minimizes the Huber loss:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>The usage for ./bin/tmac_3s_portfolio is:
 --------------------------------------------------------------
-./bin/motac_3s_portfolio [options]
+./bin/tmac_3s_portfolio [options]
 -data      &lt;data file with matrix market format, size: n x n&gt;
 -label     &lt;label file with matrix market format&gt;
 -nthread   &lt;total number of threads, default is set to 2&gt;
@@ -183,7 +182,7 @@
 <div class="section" id="example">
 <h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
 <p>You can run the following command in the test directory to minimize the Huber loss for the large dense dataset:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>./bin/motac_3s_portfolio -data ./data/port_Q.mtx -label ./data/port_eps.mtx -epoch 100 -nthread 2 -lambda 0.02
+<div class="highlight-python"><div class="highlight"><pre><span></span>./bin/tmac_3s_portfolio -data ./data/port_Q.mtx -label ./data/port_eps.mtx -epoch 100 -nthread 2 -lambda 0.02
 </pre></div>
 </div>
 <div class="admonition note">

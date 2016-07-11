@@ -83,7 +83,6 @@
             
             
                 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../build.html">Download and install</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../core.html">Core functionality</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../optimization.html">Optimization</a><ul class="current">
@@ -165,10 +164,10 @@
 </div>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
-<p>In the bin folder, the executable file <code class="xref cpp cpp-type docutils literal"><span class="pre">motac_fbs_dual_svm</span></code> solves the dual formulation of SVM.</p>
+<p>In the bin folder, the executable file <code class="xref cpp cpp-type docutils literal"><span class="pre">tmac_fbs_dual_svm</span></code> solves the dual formulation of SVM.</p>
 <blockquote>
-<div><p>The usage for motac_fbs_dual_svm is:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>./motac_fbs_dual_svm [options]
+<div><p>The usage for tmac_fbs_dual_svm is:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>./tmac_fbs_dual_svm [options]
            -data       &lt; data in LIBSVM format &gt;
            -nthread    &lt; total number of threads, default: 1. &gt;
            -epoch      &lt; total number of epochs, default: 10. &gt;
@@ -180,7 +179,7 @@
 <div class="section" id="example">
 <h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
 <p>You can run the following command to train a SVM model on the news20 dataset:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>./bin/motac_fbs_dual_svm -data ./data/news20.binary -epoch 10 -nthread 2 -lambda .001
+<div class="highlight-python"><div class="highlight"><pre><span></span>./bin/tmac_fbs_dual_svm -data ./data/news20.binary -epoch 10 -nthread 2 -lambda .001
 </pre></div>
 </div>
 <p>You can expect to get output similar to the following:</p>

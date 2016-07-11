@@ -83,7 +83,6 @@
             
             
                 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../build.html">Download and install</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../core.html">Core functionality</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../optimization.html">Optimization</a><ul class="current">
@@ -156,24 +155,21 @@
 <p>We consider the following special QCQP problem:</p>
 <div class="math">
 \[\min_x -\frac{1}{2} x^T Q x + b^T x + d, ~\text{s.t.}~ \|x\|_2 \leq 1\]</div>
-<p>where $Q$ is a symmetric positive definite matrix. We solve the problem with TMAC by using backward-forward splitting.</p>
+<p>where <span class="math">\(Q\)</span> is a symmetric positive definite matrix. We solve the problem with TMAC by using backward-forward splitting.</p>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
-<p>In the bin folder, the executable file <code class="xref cpp cpp-type docutils literal"><span class="pre">motac_bfs_l2_ball_qp</span></code> solves the above problem.</p>
-<blockquote>
-<div><p>The usage for motac_prs_demo is:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>./motac_bfs_l2_ball [options]
+<p>In the bin folder, the executable file <code class="xref cpp cpp-type docutils literal"><span class="pre">tmac_bfs_l2_ball_qp</span></code> solves the above problem. The usage for tmac_prs_demo is:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>./tmac_bfs_l2_ball <span class="o">[</span>options<span class="o">]</span>
            -nthread       &lt; total number of threads, default: 1. &gt;
            -epoch         &lt; total number of epochs, default: 10. &gt;
-           -problem_size  &lt; the dimension of the problem, default: 0 &gt;
+           -problem_size  &lt; the dimension of the problem, default: <span class="m">0</span> &gt;
 </pre></div>
 </div>
-</div></blockquote>
 </div>
 <div class="section" id="example">
 <h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
-<p>You can run the following command in the test directory to solve the l1 regularized least square problem for the large dense dataset:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>./bin/motac_bfs_l2_ball_qp -nthread 1 -problem_size 100 -epoch 200
+<p>You can run the following command in the test directory to solve the l1 regularized least square problem for the large dense dataset.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>./bin/tmac_bfs_l2_ball_qp -nthread <span class="m">1</span> -problem_size <span class="m">100</span> -epoch 200
 </pre></div>
 </div>
 <p>You can expect to get output similar to the following:</p>
