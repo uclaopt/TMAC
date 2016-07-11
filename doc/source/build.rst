@@ -9,8 +9,8 @@ In the future, precompiled executables for Windows users will be available for d
 Required and optional software for installation
 -----------------------
 - A C++11 compiler (e.g., GCC version 4.7 or higher)
-- (optional) `GNU make <https://www.gnu.org/software/make/>`_ for using the ``make`` coammand to build the entire package
 - BLAS
+- (recommended) `GNU make <https://www.gnu.org/software/make/>`_
 
 Linux installation
 -----------------------
