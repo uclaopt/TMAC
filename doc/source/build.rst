@@ -29,7 +29,6 @@ Linux installation
 
   ./bin/tmac_prs_demo -problem_size 1500 -nthread 1  # run a Peaceman-Rachford Splitting example with 1 thread
   ./bin/tmac_prs_demo -problem_size 1500 -nthread 2  # run with 2 threads
-  ./bin/tmac_prs_demo -problem_size 1500 -nthread 4  # run with 4 threads
 
 Mac inistallation
 --------------------
@@ -49,7 +48,6 @@ Mac inistallation
 
   ./bin/tmac_prs_demo -problem_size 1500 -nthread 1  # run a Peaceman-Rachford Splitting example with 1 thread
   ./bin/tmac_prs_demo -problem_size 1500 -nthread 2  # run with 2 threads
-  ./bin/tmac_prs_demo -problem_size 1500 -nthread 4  # run with 4 threads
   
 Windows installation
 -------------------------
