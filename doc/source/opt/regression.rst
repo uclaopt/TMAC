@@ -13,35 +13,37 @@ We have implemented TMAC for :math:`r(x) = \|x\|_1`, :math:`\ell_i(x) = (a_i^T x
 
 Data preparation
 -----------------
-We implement LASSO with dense matrix in matrix market format, and sparse logistic regression with sparse matrix in LIBSVM format. You can easily modify the code to deal with other types of matrices. 
+We implement LASSO with dense matrix in matrix market format, and sparse logistic regression with sparse matrix in LIBSVM format. You can easily modify the code to deal with other types of matrices.
 
 
 
 Usage
 ---------
-In the bin folder, the executable file :cpp:type:`motac_fbs_lasso` solves the :math:`\ell_1` regularized least square problem:
+In the bin folder, the executable file :cpp:type:`tmac_fbs_lasso` solves the :math:`\ell_1` regularized least square problem. The usage for tmac_fbs_lasso is:
 
-  The usage for motac_fbs_lasso is::
+.. code-block:: bash
 
-    ./motac_fbs_lasso [options] 
+    ./tmac_fbs_lasso [options]
                -data       < matrix market file for A >
-               -label      < matrix market file for b > 
-               -nthread    < total number of threads, default: 1. > 
-               -epoch      < total number of epochs, default: 10. > 
-               -lambda     < regularization parameter, default 1. > 
+               -label      < matrix market file for b >
+               -nthread    < total number of threads, default: 1. >
+               -epoch      < total number of epochs, default: 10. >
+               -lambda     < regularization parameter, default 1. >
 
-  
+
 Example
 -----------
 
-You can run the following command in the test directory to solve the l1 regularized least square problem for the large dense dataset::
+You can run the following command in the test directory to solve the l1 regularized least square problem for the large dense dataset.
 
-  ./bin/motac_fbs_lasso -data ./data/ds_large_A.mtx -label ./data/ds_large_b.mtx -epoch 10 -nthread 2 -lambda 1.
+.. code-block:: bash
+
+  ./bin/tmac_fbs_lasso -data ./data/ds_large_A.mtx -label ./data/ds_large_b.mtx -epoch 10 -nthread 2 -lambda 1.
 
 .. note::
 
    The datasets are not included in the source code, but you can download them from `here <https://www.dropbox.com/sh/neqh6ege48hut2x/AACv02EH19XN-N7DXADV2NrIa?dl=0>`_.
-  
+
 You can expect to get output similar to the following::
 
   Parameter settings:
@@ -61,6 +63,6 @@ You can expect to get output similar to the following::
 
 .. note::
 
-   You can find other applications (l2 norm least square with backward forward splitting, SVM with squared hinge loss, etc) in the binary folder. The source codes for the apps are `here <https://github.com/ZhiminPeng/motac-new/tree/master/apps>`_.
+   You can find other applications (l2 norm least square with backward forward splitting, SVM with squared hinge loss, etc) in the binary folder. The source codes for the apps are `here <https://github.com/ZhiminPeng/tmac-new/tree/master/apps>`_.
 
    

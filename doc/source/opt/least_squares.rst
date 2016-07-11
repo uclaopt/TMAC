@@ -16,11 +16,11 @@ We solve the least squares problem with dense matrix in matrix market format, an
 
 Usage
 ---------
-In the bin folder, the executable file :cpp:type:`motac_gd_ls` solves the least squares problem:
+In the bin folder, the executable file :cpp:type:`tmac_gd_ls` solves the least squares problem:
 
-  The usage for motac_gd_ls is::
+  The usage for tmac_gd_ls is::
 
-    ./motac_gd_ls [options] 
+    ./tmac_gd_ls [options] 
                -data       < matrix market file for A >
                -label      < matrix market file for b > 
                -nthread    < total number of threads, default: 1. > 
@@ -31,7 +31,7 @@ Example
 
 You can run the following command in the test directory to solve the least squares problem for the large dense dataset::
 
-  ./bin/motac_gd_ls -data ./data/ds_large_A.mtx -label ./data/ds_large_b.mtx -epoch 100 -nthread 2 -lambda 1.
+  ./bin/tmac_gd_ls -data ./data/ds_large_A.mtx -label ./data/ds_large_b.mtx -epoch 100 -nthread 2 -lambda 1.
 
 .. note::
 

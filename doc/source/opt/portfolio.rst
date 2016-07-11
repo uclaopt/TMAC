@@ -22,12 +22,12 @@ We consume :math:`Q` in matrix market format. You can easily modify the code to 
 
 Usage
 ---------
-In the bin folder, the executable file :cpp:type:`motac_3s_portfolio` minimizes the Huber loss::
+In the bin folder, the executable file :cpp:type:`tmac_3s_portfolio` minimizes the Huber loss::
 
 
-  The usage for ./bin/motac_3s_portfolio is: 
+  The usage for ./bin/tmac_3s_portfolio is: 
   --------------------------------------------------------------
-  ./bin/motac_3s_portfolio [options] 
+  ./bin/tmac_3s_portfolio [options] 
   -data      <data file with matrix market format, size: n x n> 
   -label     <label file with matrix market format> 
   -nthread   <total number of threads, default is set to 2> 
@@ -40,7 +40,7 @@ Example
 
 You can run the following command in the test directory to minimize the Huber loss for the large dense dataset::
 
-  ./bin/motac_3s_portfolio -data ./data/port_Q.mtx -label ./data/port_eps.mtx -epoch 100 -nthread 2 -lambda 0.02
+  ./bin/tmac_3s_portfolio -data ./data/port_Q.mtx -label ./data/port_eps.mtx -epoch 100 -nthread 2 -lambda 0.02
 
 .. note::
 
