@@ -16,48 +16,39 @@ Linux installation
 -----------------------
 1. Install the packages of coding essentials, BLAS, and LAPACK::
 
-  sudo apt-get install build-essential
-  
-  sudo apt-get install libblas-dev liblapack-dev
+  > sudo apt-get install build-essential
+  > sudo apt-get install libblas-dev liblapack-dev
 
 2. Download TMAC and build it::
   
-  git clone https://github.com/uclaopt/tmac.git
-  
-  cd tmac
-  
-  make
+  > git clone https://github.com/uclaopt/tmac.git
+  > cd tmac
+  > make
   
 3. Once TMAC is successfully built, you can test run a Peaceman-Rachford Splitting example, first with 1 thread and then with 2 threads::
 
-  ./bin/tmac_prs_demo -problem_size 1500 -nthread 1
-  
-  ./bin/tmac_prs_demo -problem_size 1500 -nthread 2
+  > ./bin/tmac_prs_demo -problem_size 1500 -nthread 1
+  > ./bin/tmac_prs_demo -problem_size 1500 -nthread 2
 
 Mac inistallation
 --------------------
 1. Install XCode: in App Store, update Xcode; then, launch Xcode and accept its license terms
 2. Install XCode's command line tools::
   
-  xcode-select --install
-  
-  gcc -v    # verify you have version >= 4.7
+  > xcode-select --install
+  > gcc -v    # verify you have version >= 4.7
   
 3. Download TMAC and build it::
   
-  git clone https://github.com/uclaopt/tmac.git
-  
-  cd tmac
-  
-  make
+  > git clone https://github.com/uclaopt/tmac.git
+  > cd tmac
+  > make
   
 4. Once TMAC is successfully built, you can test run a Peaceman-Rachford Splitting example, first with 1 thread and then with 2 threads::
 
-  ./bin/tmac_prs_demo -problem_size 1500 -nthread 1
-  
-  ./bin/tmac_prs_demo -problem_size 1500 -nthread 2
+  > ./bin/tmac_prs_demo -problem_size 1500 -nthread 1
+  > ./bin/tmac_prs_demo -problem_size 1500 -nthread 2
 
-  
 Windows installation
 -------------------------
 Please choose one of the following approaches. Any one of them will set up a coding environment to install the required software and build TMAC.
