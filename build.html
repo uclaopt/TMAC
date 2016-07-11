@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Download, build and run &mdash; TMAC 0.2.1 documentation</title>
+  <title>Download and install &mdash; TMAC 0.2.1 documentation</title>
   
 
   
@@ -83,21 +83,13 @@
             
                 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Download, build and run</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#requirements-for-linux">Requirements for Linux</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#requirements-for-mac">Requirements for Mac</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#step-1-install-xcode-and-the-command-line-tools-for-xcode">Step 1. Install XCode and the Command Line Tools for XCode.</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#step-2-install-gnu-gcc">Step 2. Install GNU gcc</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#requirements-for-windows">Requirements for Windows</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#cygwin">Cygwin</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#mingw">MinGW</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#download-tmac">Download TMAC</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#build-tmac">Build TMAC</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#test-tmac">Test TMAC</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Download and install</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#latest-version">Latest version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#required-and-optional-software-for-installation">Required and optional software for installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#linux-installation">Linux installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mac-inistallation">Mac inistallation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#windows-installation">Windows installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#what-to-do-next">What to do next?</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="core.html">Core functionality</a></li>
@@ -136,7 +128,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li>Download, build and run</li>
+    <li>Download and install</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -150,101 +142,81 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="download-build-and-run">
-<h1>Download, build and run<a class="headerlink" href="#download-build-and-run" title="Permalink to this headline">¶</a></h1>
-<p>TMAC&#8217;s build system relies on <a class="reference external" href="https://www.gnu.org/software/make/">GNU make</a>. It can be easily build on Linux and Unix environments, and various versions of Microsoft Windows. A relative up-to-date C++ compiler (e.g., gcc &gt;= 4.7) is required in all cases.</p>
-<div class="section" id="requirements-for-linux">
-<h2>Requirements for Linux<a class="headerlink" href="#requirements-for-linux" title="Permalink to this headline">¶</a></h2>
-<p>You can use the following commands to install g++, and BLA:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>sudo apt-get install build-essential
-sudo apt-get install libblas-dev liblapack-dev
-</pre></div>
+  <div class="section" id="download-and-install">
+<h1>Download and install<a class="headerlink" href="#download-and-install" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="latest-version">
+<h2>Latest version<a class="headerlink" href="#latest-version" title="Permalink to this headline">¶</a></h2>
+<p>The current version of the entire TMAC package can be downloaded at <a class="reference external" href="https://github.com/uclaopt/TMAC">https://github.com/uclaopt/TMAC</a>. The package includes all source codes, help documents, and demos. Some demos require external datasets at <a class="reference external" href="https://github.com/uclaopt/datasets">our dataset center</a> and <a class="reference external" href="https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/">the LIBSVM website</a>.</p>
+<p>In the future, precompiled executables for Windows users will be available for download.</p>
 </div>
+<div class="section" id="required-and-optional-software-for-installation">
+<h2>Required and optional software for installation<a class="headerlink" href="#required-and-optional-software-for-installation" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>A C++11 compiler (e.g., GCC version 4.7 or higher)</li>
+<li>BLAS</li>
+<li>(recommended) <a class="reference external" href="https://www.gnu.org/software/make/">GNU make</a></li>
+</ul>
 </div>
-<div class="section" id="requirements-for-mac">
-<h2>Requirements for Mac<a class="headerlink" href="#requirements-for-mac" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="step-1-install-xcode-and-the-command-line-tools-for-xcode">
-<h3>Step 1. Install XCode and the Command Line Tools for XCode.<a class="headerlink" href="#step-1-install-xcode-and-the-command-line-tools-for-xcode" title="Permalink to this headline">¶</a></h3>
-<p>You can install them with the following commands:</p>
-<blockquote>
-<div><ol class="arabic">
-<li><p class="first">To install XCode, You can go to the App Store application and check &#8220;Updates&#8221;. After updating Xcode, be sure to launch the Xcode application and accept the Apple license terms.</p>
-</li>
-<li><p class="first">To install the command line tools, you can use the following command:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">xcode</span><span class="o">-</span><span class="n">select</span> <span class="o">--</span><span class="n">install</span>
-</pre></div>
-</div>
-</li>
+<div class="section" id="linux-installation">
+<h2>Linux installation<a class="headerlink" href="#linux-installation" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Install the packages of coding essentials, BLAS, and LAPACK:</li>
 </ol>
-</div></blockquote>
-</div>
-<div class="section" id="step-2-install-gnu-gcc">
-<h3>Step 2. Install GNU gcc<a class="headerlink" href="#step-2-install-gnu-gcc" title="Permalink to this headline">¶</a></h3>
-<p>To install GNU gcc, you can follow the following steps.</p>
 <blockquote>
-<div><ol class="arabic">
-<li><p class="first">download gcc-4.9-bin.tar.gz download or newer from <a class="reference external" href="http://prdownloads.sourceforge.net/hpc/gcc-4.9-bin.tar.gz">here</a>;</p>
-</li>
-<li><p class="first">cd to your downloads folder and un-gzip the archive gunzip gcc-4.9-bin.tar.gz;</p>
-</li>
-<li><p class="first">in the same folder run:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>sudo tar -xvf gcc-4.9-bin.tar -C /
-</pre></div>
-</div>
-<p>this will place new executable to /usr/local/bin</p>
-</li>
-<li><p class="first">add the following to ~/.bash_profile:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>export PATH=/usr/local/bin:$PATH;
-</pre></div>
-</div>
-</li>
-<li><p class="first">open new terminal and run:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>which gcc.
-</pre></div>
-</div>
-<p>This should point to /usr/local/bin/gcc.</p>
-</li>
+<div>&gt; sudo apt-get install build-essential
+&gt; sudo apt-get install libblas-dev liblapack-dev</div></blockquote>
+<ol class="arabic simple" start="2">
+<li>Download TMAC and build it:</li>
 </ol>
-</div></blockquote>
+<blockquote>
+<div>&gt; git clone <a class="reference external" href="https://github.com/uclaopt/tmac.git">https://github.com/uclaopt/tmac.git</a>
+&gt; cd tmac
+&gt; make</div></blockquote>
+<ol class="arabic simple" start="3">
+<li>Once TMAC is successfully built, you can test run a Peaceman-Rachford Splitting example, first with 1 thread and then with 2 threads:</li>
+</ol>
+<blockquote>
+<div>&gt; ./bin/tmac_prs_demo -problem_size 1500 -nthread 1
+&gt; ./bin/tmac_prs_demo -problem_size 1500 -nthread 2</div></blockquote>
 </div>
+<div class="section" id="mac-inistallation">
+<h2>Mac inistallation<a class="headerlink" href="#mac-inistallation" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Install XCode: in App Store, update Xcode; then, launch Xcode and accept its license terms</li>
+<li>Install XCode&#8217;s command line tools:</li>
+</ol>
+<blockquote>
+<div>&gt; xcode-select &#8211;install
+&gt; gcc -v    # verify you have version &gt;= 4.7</div></blockquote>
+<ol class="arabic simple" start="3">
+<li>Download TMAC and build it:</li>
+</ol>
+<blockquote>
+<div>&gt; git clone <a class="reference external" href="https://github.com/uclaopt/tmac.git">https://github.com/uclaopt/tmac.git</a>
+&gt; cd tmac
+&gt; make</div></blockquote>
+<ol class="arabic simple" start="4">
+<li>Once TMAC is successfully built, you can test run a Peaceman-Rachford Splitting example, first with 1 thread and then with 2 threads:</li>
+</ol>
+<blockquote>
+<div>&gt; ./bin/tmac_prs_demo -problem_size 1500 -nthread 1
+&gt; ./bin/tmac_prs_demo -problem_size 1500 -nthread 2</div></blockquote>
 </div>
-<div class="section" id="requirements-for-windows">
-<h2>Requirements for Windows<a class="headerlink" href="#requirements-for-windows" title="Permalink to this headline">¶</a></h2>
-<p>You can either use MinGW or Cygwin to setup a coding environment to run TMAC. Here we include the installation instructions.</p>
-<div class="section" id="cygwin">
-<h3>Cygwin<a class="headerlink" href="#cygwin" title="Permalink to this headline">¶</a></h3>
-<p>You can find the instructions for installing Cygwin <a class="reference external" href="http://www.math.ucla.edu/~wotaoyin/software/tmac_windows_installation_cygwin.html">here</a>;</p>
+<div class="section" id="windows-installation">
+<h2>Windows installation<a class="headerlink" href="#windows-installation" title="Permalink to this headline">¶</a></h2>
+<p>Please choose one of the following approaches. Any one of them will set up a coding environment to install the required software and build TMAC.</p>
+<ul class="simple">
+<li>Cygwin: <a class="reference external" href="http://www.math.ucla.edu/~wotaoyin/software/tmac_windows_installation_cygwin.html">32/64-bit step-by-step installation</a>;</li>
+<li>MinGW:  <a class="reference external" href="http://www.math.ucla.edu/~wotaoyin/software/tmac_windows_installation_mingw32.html">32-bit installation</a> and <a class="reference external" href="http://www.math.ucla.edu/~wotaoyin/software/tmac_windows_installation_mingw64.html">64-bit installation</a>.</li>
+<li>Visual Studio: (under construction)</li>
+</ul>
 </div>
-<div class="section" id="mingw">
-<h3>MinGW<a class="headerlink" href="#mingw" title="Permalink to this headline">¶</a></h3>
-<p>You can find the instructions for installing MinGW (32-bit) <a class="reference external" href="http://www.math.ucla.edu/~wotaoyin/software/tmac_windows_installation_mingw32.html">here</a> and MinGW (64-bit) <a class="reference external" href="http://www.math.ucla.edu/~wotaoyin/software/tmac_windows_installation_mingw64.html">here.</a></p>
-</div>
-</div>
-<div class="section" id="download-tmac">
-<h2>Download TMAC<a class="headerlink" href="#download-tmac" title="Permalink to this headline">¶</a></h2>
-<p>The TMAC package can be downloaded from the following link:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>https://github.com/uclaopt/TMAC
-</pre></div>
-</div>
-</div>
-<div class="section" id="build-tmac">
-<h2>Build TMAC<a class="headerlink" href="#build-tmac" title="Permalink to this headline">¶</a></h2>
-<p>On Linux or Unix machines with g++ and GNU make installed in standard locations, building TMAC can be as simple as:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>cd TMAC
-make
-</pre></div>
-</div>
-<p>The executable files are in the bin folder. The following is a sample of the executable files:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>tmac_fbs_l1_log [solver for regularized logistic regression with forward backward splitting]
-</pre></div>
-</div>
-</div>
-<div class="section" id="test-tmac">
-<h2>Test TMAC<a class="headerlink" href="#test-tmac" title="Permalink to this headline">¶</a></h2>
-<p>Once TMAC has been successfully compiled, it is a good idea to verify that the executable files are functioning properly. To test TMAC for l1 regularized logistic regression problem, run the following commands:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>./bin/tmac_fbs_l1_log -data ./data/rcv1_train.svm -epoch 10 -nthread 2 -lambda 1.
-</pre></div>
-</div>
+<div class="section" id="what-to-do-next">
+<h2>What to do next?<a class="headerlink" href="#what-to-do-next" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Run the examples: ...</li>
+<li>Build your own algorithms: ...</li>
+</ul>
 </div>
 </div>
 

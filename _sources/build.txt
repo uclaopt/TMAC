@@ -1,87 +1,64 @@
-Download, build and run
+Download and install
 ==========================
-TMAC's build system relies on `GNU make <https://www.gnu.org/software/make/>`_. It can be easily build on Linux and Unix environments, and various versions of Microsoft Windows. A relative up-to-date C++ compiler (e.g., gcc >= 4.7) is required in all cases.
-
-Requirements for Linux
+Latest version
 -----------------------
-You can use the following commands to install g++, and BLA::
+The current version of the entire TMAC package can be downloaded at `https://github.com/uclaopt/TMAC <https://github.com/uclaopt/TMAC>`_. The package includes all source codes, help documents, and demos. Some demos require external datasets at `our dataset center <https://github.com/uclaopt/datasets>`_ and `the LIBSVM website <https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/>`_.
 
-  sudo apt-get install build-essential
-  sudo apt-get install libblas-dev liblapack-dev
+In the future, precompiled executables for Windows users will be available for download.
 
+Required and optional software for installation
+-----------------------
+- A C++11 compiler (e.g., GCC version 4.7 or higher)
+- BLAS
+- (recommended) `GNU make <https://www.gnu.org/software/make/>`_
 
-Requirements for Mac
+Linux installation
+-----------------------
+1. Install the packages of coding essentials, BLAS, and LAPACK::
+
+  > sudo apt-get install build-essential
+  > sudo apt-get install libblas-dev liblapack-dev
+
+2. Download TMAC and build it::
+  
+  > git clone https://github.com/uclaopt/tmac.git
+  > cd tmac
+  > make
+  
+3. Once TMAC is successfully built, you can test run a Peaceman-Rachford Splitting example, first with 1 thread and then with 2 threads::
+
+  > ./bin/tmac_prs_demo -problem_size 1500 -nthread 1
+  > ./bin/tmac_prs_demo -problem_size 1500 -nthread 2
+
+Mac inistallation
 --------------------
-Step 1. Install XCode and the Command Line Tools for XCode.
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-You can install them with the following commands:
+1. Install XCode: in App Store, update Xcode; then, launch Xcode and accept its license terms
+2. Install XCode's command line tools::
+  
+  > xcode-select --install
+  > gcc -v    # verify you have version >= 4.7
+  
+3. Download TMAC and build it::
+  
+  > git clone https://github.com/uclaopt/tmac.git
+  > cd tmac
+  > make
+  
+4. Once TMAC is successfully built, you can test run a Peaceman-Rachford Splitting example, first with 1 thread and then with 2 threads::
 
-  1. To install XCode, You can go to the App Store application and check "Updates". After updating Xcode, be sure to launch the Xcode application and accept the Apple license terms.
+  > ./bin/tmac_prs_demo -problem_size 1500 -nthread 1
+  > ./bin/tmac_prs_demo -problem_size 1500 -nthread 2
 
-  2. To install the command line tools, you can use the following command::
-
-       xcode-select --install
-
-Step 2. Install GNU gcc
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-To install GNU gcc, you can follow the following steps.
-
-   1. download gcc-4.9-bin.tar.gz download or newer from `here <http://prdownloads.sourceforge.net/hpc/gcc-4.9-bin.tar.gz>`_;
-
-   2. cd to your downloads folder and un-gzip the archive gunzip gcc-4.9-bin.tar.gz;
-
-   3. in the same folder run::
-
-	sudo tar -xvf gcc-4.9-bin.tar -C /
-
-      this will place new executable to /usr/local/bin
-
-   4. add the following to ~/.bash_profile::
-
-	export PATH=/usr/local/bin:$PATH;
-
-   5. open new terminal and run::
-
-	which gcc.
-
-      This should point to /usr/local/bin/gcc.
-
-
-Requirements for Windows
+Windows installation
 -------------------------
-You can either use MinGW or Cygwin to setup a coding environment to run TMAC. Here we include the installation instructions.
+Please choose one of the following approaches. Any one of them will set up a coding environment to install the required software and build TMAC.
 
-Cygwin
-^^^^^^^
-You can find the instructions for installing Cygwin `here <http://www.math.ucla.edu/~wotaoyin/software/tmac_windows_installation_cygwin.html>`_;
+- Cygwin: `32/64-bit step-by-step installation <http://www.math.ucla.edu/~wotaoyin/software/tmac_windows_installation_cygwin.html>`_;
+- MinGW:  `32-bit installation <http://www.math.ucla.edu/~wotaoyin/software/tmac_windows_installation_mingw32.html>`_ and `64-bit installation <http://www.math.ucla.edu/~wotaoyin/software/tmac_windows_installation_mingw64.html>`_.
+- Visual Studio: (under construction)
 
-MinGW
-^^^^^^
-You can find the instructions for installing MinGW (32-bit) `here <http://www.math.ucla.edu/~wotaoyin/software/tmac_windows_installation_mingw32.html>`_ and MinGW (64-bit) `here. <http://www.math.ucla.edu/~wotaoyin/software/tmac_windows_installation_mingw64.html>`_
-
-
-Download TMAC
+What to do next?
 ----------------
-The TMAC package can be downloaded from the following link::
-
-  https://github.com/uclaopt/TMAC
-
-Build TMAC
-----------------
-On Linux or Unix machines with g++ and GNU make installed in standard locations, building TMAC can be as simple as::
-
-  cd TMAC
-  make
-
-The executable files are in the bin folder. The following is a sample of the executable files::
-
-  tmac_fbs_l1_log [solver for regularized logistic regression with forward backward splitting]
-
-
-
-Test TMAC
--------------------------
-Once TMAC has been successfully compiled, it is a good idea to verify that the executable files are functioning properly. To test TMAC for l1 regularized logistic regression problem, run the following commands::
-
-  ./bin/tmac_fbs_l1_log -data ./data/rcv1_train.svm -epoch 10 -nthread 2 -lambda 1.
+- Run the examples: ...
+- Build your own algorithms: ...
 
