@@ -1,5 +1,9 @@
-Download, build and run
+Download and install
 ==========================
+Latest version
+-----------------------
+The current version of the entire TMAC package can be downloaded (or cloned) from `https://github.com/uclaopt/TMAC https://github.com/uclaopt/TMAC>`_. The package includes all source codes, help documents, and demos. Some demos require external datasets at `our dataset center <https://github.com/uclaopt/datasets>`_ and `the LIBSVM website <https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/>`_.
+
 TMAC's build system relies on `GNU make <https://www.gnu.org/software/make/>`_. It can be easily build on Linux and Unix environments, and various versions of Microsoft Windows. A relative up-to-date C++ compiler (e.g., gcc >= 4.7) is required in all cases.
 
 Requirements for Linux
