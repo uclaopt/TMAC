@@ -27,9 +27,9 @@ Linux installation
   
 3. Once TMAC is successfully built, you can run an example by::
 
-  ./bin/tmac_prs_demo -problem_size 1500 -nthread 1    # run a Peaceman-Rachford Splitting example with 1 thread
-  ./bin/tmac_prs_demo -problem_size 1500 -nthread 2    # run with 2 threads
-  ./bin/tmac_prs_demo -problem_size 1500 -nthread 4    # run with 4 threads
+  ./bin/tmac_prs_demo -problem_size 1500 -nthread 1  # run a Peaceman-Rachford Splitting example with 1 thread
+  ./bin/tmac_prs_demo -problem_size 1500 -nthread 2  # run with 2 threads
+  ./bin/tmac_prs_demo -problem_size 1500 -nthread 4  # run with 4 threads
 
 Mac inistallation
 --------------------
@@ -46,10 +46,10 @@ Mac inistallation
   make
   
 4. Once TMAC is successfully built, you can run an example by::
-  
-  ./bin/tmac_prs_demo -problem_size 1500 -nthread 1    # run a Peaceman-Rachford Splitting example with 1 thread
-  ./bin/tmac_prs_demo -problem_size 1500 -nthread 2    # run with 2 threads
-  ./bin/tmac_prs_demo -problem_size 1500 -nthread 4    # run with 4 threads
+
+  ./bin/tmac_prs_demo -problem_size 1500 -nthread 1  # run a Peaceman-Rachford Splitting example with 1 thread
+  ./bin/tmac_prs_demo -problem_size 1500 -nthread 2  # run with 2 threads
+  ./bin/tmac_prs_demo -problem_size 1500 -nthread 4  # run with 4 threads
   
 Windows installation
 -------------------------
