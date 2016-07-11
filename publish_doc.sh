@@ -6,7 +6,7 @@ touch .nojekyll
 git checkout master doc
 cd doc
 make html
-mv build/html ../
+mv build/html/* ../
 cd ..
 rm -rf doc
 git add -A
