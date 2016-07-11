@@ -10,11 +10,11 @@ where :math:`\iota_S (x)` is the indicator function of the set S. We apply the T
 
 Usage
 ---------
-In the bin folder, the executable file :cpp:type:`motac_prs_demo` solves the above problem.
+In the bin folder, the executable file :cpp:type:`tmac_prs_demo` solves the above problem.
 
-  The usage for motac_prs_demo is::
+  The usage for tmac_prs_demo is::
 
-    ./motac_prs_demo [options] 
+    ./tmac_prs_demo [options] 
                -nthread       < total number of threads, default: 1. > 
                -epoch         < total number of epochs, default: 10. > 
 	       -problem_size  < the dimension of the problem, default: 0 >
@@ -24,7 +24,7 @@ Example
 
 You can run the following command in the test directory to solve the l1 regularized least square problem for the large dense dataset::
 
-  ./bin/motac_prs_demo -epoch 100 -nthread 2 -problem_size 100
+  ./bin/tmac_prs_demo -epoch 100 -nthread 2 -problem_size 100
 
   
 You can expect to get output similar to the following::

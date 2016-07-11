@@ -18,11 +18,11 @@ We support LIBSVM format. The code can be easily adopt to data in  matrix market
 
 Usage
 ---------
-In the bin folder, the executable file :cpp:type:`motac_fbs_dual_svm` solves the dual formulation of SVM.
+In the bin folder, the executable file :cpp:type:`tmac_fbs_dual_svm` solves the dual formulation of SVM.
 
-  The usage for motac_fbs_dual_svm is::
+  The usage for tmac_fbs_dual_svm is::
 
-    ./motac_fbs_dual_svm [options] 
+    ./tmac_fbs_dual_svm [options] 
                -data       < data in LIBSVM format >
                -nthread    < total number of threads, default: 1. > 
                -epoch      < total number of epochs, default: 10. > 
@@ -34,7 +34,7 @@ Example
 
 You can run the following command to train a SVM model on the news20 dataset::
 
-  ./bin/motac_fbs_dual_svm -data ./data/news20.binary -epoch 10 -nthread 2 -lambda .001
+  ./bin/tmac_fbs_dual_svm -data ./data/news20.binary -epoch 10 -nthread 2 -lambda .001
   
 You can expect to get output similar to the following::
 

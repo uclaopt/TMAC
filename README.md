@@ -45,16 +45,7 @@ We build a user-friendly interface to run TMAC for different applications throug
 ```
 
 ## Documentation
-
-We use [sphinx](http://www.sphinx-doc.org/en/stable/) for documentation. To use it, you need to install [sphinx](http://www.sphinx-doc.org/en/stable/install.html)
- and [sphinx_rtd_theme](https://github.com/snide/sphinx_rtd_theme). To compile the source code for the documentation, you can run the following commands::
-
-```bash
-cd doc
-make html
-```
-
-Then the html files are in the ```build/html``` folder.
+You can view  the documentations [here](http://uclaopt.github.io/TMAC/)
 
 
 ## Contributing Code
