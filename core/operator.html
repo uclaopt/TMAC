@@ -105,6 +105,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../contribute.html">Contribute to TMAC</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../io.html">Input/output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
 </ul>
 
             
@@ -154,35 +155,14 @@
   <div class="section" id="operators">
 <h1>Operators<a class="headerlink" href="#operators" title="Permalink to this headline">¶</a></h1>
 <p>We provide a total of 17 coordinate friendly operators. We categorize them into three classes: proximal operator, projection operator, and forward operator. The following is the general structure for the operators. You can use it as a template to add more operators.</p>
-<div class="highlight-c++"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="n">functor_name</span> <span class="p">{</span>
-  <span class="c1">// the step_size that associated with the operator</span>
-  <span class="kt">double</span> <span class="n">step_size</span><span class="p">;</span>
-  <span class="c1">// weight on the original function, e.g., f(x) = weight ||x||_1</span>
-  <span class="kt">double</span> <span class="n">weight</span><span class="p">;</span>
-
-  <span class="c1">// returns the operator evaluated on v at the given index</span>
-  <span class="kt">double</span> <span class="nf">operator</span><span class="p">()</span> <span class="p">(</span><span class="n">Vector</span><span class="o">*</span> <span class="n">v</span><span class="p">,</span> <span class="kt">int</span> <span class="n">index</span><span class="p">)</span> <span class="p">{</span>
-
-  <span class="p">}</span>
-
-  <span class="c1">// (Optional) update the cached variables, it</span>
-  <span class="c1">// takes the old x_i and new x_i, updated at index.</span>
-  <span class="kt">void</span> <span class="nf">update_cache_vars</span> <span class="p">(</span><span class="kt">double</span> <span class="n">old_x_i</span><span class="p">,</span> <span class="kt">double</span> <span class="n">new_x_i</span><span class="p">,</span> <span class="kt">int</span> <span class="n">index</span><span class="p">)</span> <span class="p">{</span>
-
-  <span class="p">}</span>
-
-  <span class="c1">// update the step size. The step size might be</span>
-  <span class="c1">// changed during the iterative process</span>
-  <span class="kt">void</span> <span class="nf">update_step_size</span> <span class="p">(</span><span class="kt">double</span> <span class="n">step_size_</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">step_size</span> <span class="o">=</span> <span class="n">step_size_</span><span class="p">;</span>
-  <span class="p">}</span>
-
-  <span class="n">functor_name</span> <span class="p">(</span><span class="kt">double</span> <span class="n">step_size_</span><span class="p">,</span> <span class="kt">double</span> <span class="n">weight_</span> <span class="o">=</span> <span class="mf">1.</span><span class="p">)</span> <span class="o">:</span>
-      <span class="n">step_size</span><span class="p">(</span><span class="n">step_size_</span><span class="p">),</span> <span class="n">weight</span><span class="p">(</span><span class="n">weight_</span><span class="p">)</span> <span class="p">{}</span>
-
-  <span class="c1">// default constructor</span>
-  <span class="n">functor_name</span> <span class="p">()</span> <span class="o">:</span> <span class="n">step_size</span><span class="p">(</span><span class="mf">0.</span><span class="p">),</span> <span class="n">weight</span><span class="p">(</span><span class="mf">1.</span><span class="p">)</span> <span class="p">{}</span>
-
+<div class="highlight-c++"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">OperatorInterface</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+  <span class="k">virtual</span> <span class="kt">double</span> <span class="k">operator</span><span class="p">()</span> <span class="p">(</span><span class="n">Vector</span><span class="o">*</span> <span class="n">v</span><span class="p">,</span> <span class="kt">int</span> <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{}</span>
+  <span class="k">virtual</span> <span class="kt">double</span> <span class="k">operator</span><span class="p">()</span> <span class="p">(</span><span class="kt">double</span> <span class="n">val</span><span class="p">,</span> <span class="kt">int</span> <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{}</span>
+  <span class="k">virtual</span> <span class="kt">void</span> <span class="k">operator</span><span class="p">()</span> <span class="p">(</span><span class="n">Vector</span><span class="o">*</span> <span class="n">v_in</span><span class="p">,</span> <span class="n">Vector</span><span class="o">*</span> <span class="n">v_out</span><span class="p">)</span> <span class="p">{}</span>
+  <span class="k">virtual</span> <span class="kt">void</span> <span class="n">update_step_size</span><span class="p">(</span><span class="kt">double</span> <span class="n">step_size_</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">update_cache_vars</span><span class="p">(</span><span class="kt">double</span> <span class="n">old_x_i</span><span class="p">,</span> <span class="kt">double</span> <span class="n">new_x_i</span><span class="p">,</span> <span class="kt">int</span> <span class="n">index</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">update_cache_vars</span><span class="p">(</span><span class="n">Vector</span><span class="o">*</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">rank</span><span class="p">,</span> <span class="kt">int</span> <span class="n">num_threads</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">};</span>
 </pre></div>
 </div>

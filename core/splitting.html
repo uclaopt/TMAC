@@ -100,6 +100,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../contribute.html">Contribute to TMAC</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../io.html">Input/output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
 </ul>
 
             
@@ -160,29 +161,24 @@
 </ul>
 </div></blockquote>
 <p>The following is a template for the splitting schemes. Each splitting scheme is a functor. The functor contains the pointers to the operators, and unknown variable.</p>
-<div class="highlight-c++"><div class="highlight"><pre><span></span> <span class="k">struct</span> <span class="n">OperatorSplitting</span> <span class="p">{</span>
-
-   <span class="kt">double</span> <span class="n">relaxation_step_size</span><span class="p">;</span>
-
-   <span class="kt">void</span> <span class="nf">operator</span><span class="p">(</span><span class="kt">int</span> <span class="n">index</span><span class="p">)</span> <span class="p">{</span>
-     <span class="c1">// update the unknown variable x at index</span>
-     <span class="c1">// update the maintained variables</span>
-   <span class="p">}</span>
-
-   <span class="kt">void</span> <span class="nf">update_params</span><span class="p">(</span><span class="n">Params</span><span class="o">*</span> <span class="n">params</span><span class="p">)</span> <span class="p">{</span>
-     <span class="c1">// update the operator related parameters</span>
-     <span class="c1">// update the relaxation parameter</span>
-   <span class="p">}</span>
-
-   <span class="c1">// The constructure should also be defined</span>
-   <span class="n">OperatorSplitting</span><span class="p">(</span><span class="n">argument</span> <span class="n">list</span><span class="p">)</span> <span class="p">{</span>
-     <span class="c1">// initialize the member variables with the input arguments</span>
-   <span class="p">}</span>
+<div class="highlight-c++"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SchemeInterface</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+  <span class="c1">//update internal scheme parameters</span>
+  <span class="k">virtual</span> <span class="kt">void</span> <span class="n">update_params</span><span class="p">(</span><span class="n">Params</span><span class="o">*</span> <span class="n">params</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="c1">//compute and apply coordinate update, return S_{index}</span>
+  <span class="k">virtual</span> <span class="kt">double</span> <span class="nf">operator</span><span class="p">()</span> <span class="p">(</span><span class="kt">int</span> <span class="n">index</span><span class="p">)</span> <span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+  <span class="c1">//compute and store S_{index} in variable S_i</span>
+  <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">operator</span><span class="p">()</span> <span class="p">(</span><span class="kt">int</span> <span class="n">index</span><span class="p">,</span> <span class="kt">double</span><span class="o">&amp;</span> <span class="n">S_i</span><span class="p">)</span> <span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+  <span class="c1">//apply block of S stored in s to solution vector</span>
+  <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">update</span><span class="p">(</span><span class="n">Vector</span><span class="o">&amp;</span> <span class="n">s</span><span class="p">,</span> <span class="kt">int</span> <span class="n">range_start</span><span class="p">,</span> <span class="kt">int</span> <span class="n">num_cords</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="c1">//apply coordinate of S stored in s to solution vector</span>
+  <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">update</span><span class="p">(</span><span class="kt">double</span> <span class="n">s</span><span class="p">,</span> <span class="kt">int</span> <span class="n">idx</span> <span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="c1">//update rank worth of cache_vars based on num_threads</span>
+  <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">update_cache_vars</span><span class="p">(</span><span class="kt">int</span> <span class="n">rank</span><span class="p">,</span> <span class="kt">int</span> <span class="n">num_threads</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">};</span>
-
-<span class="n">In</span> <span class="n">general</span><span class="p">,</span> <span class="n">each</span> <span class="n">splitting</span> <span class="n">scheme</span> <span class="n">will</span> <span class="n">be</span> <span class="n">templated</span> <span class="n">on</span> <span class="n">one</span> <span class="n">or</span> <span class="n">more</span> <span class="n">operators</span><span class="p">.</span> <span class="n">Operator</span> <span class="n">objective</span> <span class="n">will</span> <span class="n">be</span> <span class="n">defined</span> <span class="n">as</span> <span class="n">the</span> <span class="n">member</span> <span class="n">variables</span><span class="p">.</span>
 </pre></div>
 </div>
+<p>In general, each splitting scheme will be templated on one or more operators. Operator objective will be defined as the member variables.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Inside the parenthesis operator, relaxation will be used. Operator related cached variables will also be updated.</p>

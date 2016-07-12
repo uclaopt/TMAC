@@ -88,6 +88,7 @@
 <li class="toctree-l1"><a class="reference internal" href="contribute.html">Contribute to TMAC</a></li>
 <li class="toctree-l1"><a class="reference internal" href="io.html">Input/output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a></li>
 </ul>
 
             
@@ -141,27 +142,18 @@
 <p>TMAC is a toolbox written in C++11 that implements algorithms based on a set of modern methods for large-scale optimization. It covers a variety of optimization problems, which can be both smooth and nonsmooth, convex and nonconvex, as well as constrained and unconstrained.</p>
 <p>The algorithms implemented in TMAC, such as the coordinate update method and operator splitting method, are scalable as they decompose a problem into simple subproblems. These algorithms can run in a multi-threaded fashion, either synchronously or asynchronously, to take advantages of all the cores available.</p>
 <p>TMAC is separated into several layers, and this architecture mimics how a scientist writes down an optimization algorithm. Therefore, it is easy for one to obtain a new algorithm by making simple modifications such as adding a new operator and adding a new splitting, while maintaining the multicore parallelism and other features.</p>
+<p>The main components of TMAC include:</p>
 <blockquote>
 <div><ul class="simple">
-<li>A rich set of predefined operators.</li>
-<li>A few predefined operator splitting schemes.</li>
-<li>An asynchronous coordinate update framework.</li>
-<li>Options to load datasets in various format.</li>
-<li>A rich set of applications build on top of TMAC.</li>
-<li>Support for Matlab, Python and Julia (coming soon)</li>
+<li>A rich set of operators: proximal operators, projection operators, and gradient operators</li>
+<li>Operator splitting schemes: forward-backward, backward-forward, Douglas-Rachford, Peaceman-Rachford</li>
+<li>A shared-memory (asynchronous) parallel driver</li>
+<li>Examples: (sparse) logistic regression, LASSO, portfolio optimization, nonnegative matrix factorization, insection of two sets</li>
+<li>Supported dataset formats: matrix market, LIBSVM</li>
 </ul>
 </div></blockquote>
 <p>TMAC is written in C++. Python, Julia and Matlab interfaces are under development. The following graph is an overview of the design.</p>
 <a class="reference internal image-reference" href="_images/arch.png"><img alt="_images/arch.png" class="align-center" src="_images/arch.png" style="width: 400px;" /></a>
-</div>
-<div class="section" id="dependencies">
-<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li>Functioning C++ compilers (<a class="reference external" href="https://www.gnu.org/software/gcc/releases.html">gcc</a>)</li>
-<li>BLAS library</li>
-<li><a class="reference external" href="https://www.gnu.org/software/make/">GNU make</a></li>
-<li>or Microsoft Visual C++</li>
-</ul>
 </div>
 <div class="section" id="related-papers">
 <h2>Related Papers<a class="headerlink" href="#related-papers" title="Permalink to this headline">¶</a></h2>
@@ -189,7 +181,7 @@
 <p>Except for the Eigen library header files, all files distributed with TMAC are made available under the <a class="reference external" href="http://www.opensource.org/licenses/bsd-license.php">New BSD license</a>,
 which states:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span>TMAC is a toolbox of modern async-parallel, coordinate, splitting, and stochastic methods.
-Copyright (C) 2016 UCLAOPT
+Copyright (C) 2016 UCLAOPT Research Group
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
