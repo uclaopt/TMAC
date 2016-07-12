@@ -17,6 +17,7 @@ Welcome to the TMAC's documentation!
    contribute
    io
    api
+   faq
 
 Overview
 ===========
@@ -26,12 +27,14 @@ The algorithms implemented in TMAC, such as the coordinate update method and ope
 
 TMAC is separated into several layers, and this architecture mimics how a scientist writes down an optimization algorithm. Therefore, it is easy for one to obtain a new algorithm by making simple modifications such as adding a new operator and adding a new splitting, while maintaining the multicore parallelism and other features.
 
-  * A rich set of predefined operators.
-  * A few predefined operator splitting schemes.
-  * An asynchronous coordinate update framework.
-  * Options to load datasets in various format.
-  * A rich set of applications build on top of TMAC.
-  * Support for Matlab, Python and Julia (coming soon)
+The main components of TMAC include:
+
+   * A rich set of operators: proximal operators, projection operators, and gradient operators
+   * Operator splitting schemes: forward-backward, backward-forward, Douglas-Rachford, Peaceman-Rachford
+   * A shared-memory (asynchronous) parallel driver
+   * Examples: (sparse) logistic regression, LASSO, portfolio optimization, nonnegative matrix factorization, insection of two sets
+   * Supported dataset formats: matrix market, LIBSVM
+
 
 
 TMAC is written in C++. Python, Julia and Matlab interfaces are under development. The following graph is an overview of the design.
@@ -39,16 +42,6 @@ TMAC is written in C++. Python, Julia and Matlab interfaces are under developmen
 .. image:: arch.png
     :width: 400px
     :align: center
-
-
-
-
-Dependencies
-==============
-* Functioning C++ compilers (`gcc <https://www.gnu.org/software/gcc/releases.html>`_)
-* BLAS library
-* `GNU make <https://www.gnu.org/software/make/>`_
-* or Microsoft Visual C++
 
 
 Related Papers
@@ -64,7 +57,7 @@ Except for the Eigen library header files, all files distributed with TMAC are m
 which states::
 
     TMAC is a toolbox of modern async-parallel, coordinate, splitting, and stochastic methods.
-    Copyright (C) 2016 UCLAOPT
+    Copyright (C) 2016 UCLAOPT Research Group
 
     Redistribution and use in source and binary forms, with or without
     modification, are permitted provided that the following conditions are met:
