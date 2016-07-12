@@ -13,29 +13,27 @@ The following is a template for the splitting schemes. Each splitting scheme is 
 
 
 .. code-block:: c++
-		
-    struct OperatorSplitting {
 
-      double relaxation_step_size;
-      
-      void operator(int index) {
-        // update the unknown variable x at index
-        // update the maintained variables
-      }
-   
-      void update_params(Params* params) {
-        // update the operator related parameters
-        // update the relaxation parameter    
-      }
-   
-      // The constructure should also be defined
-      OperatorSplitting(argument list) {
-        // initialize the member variables with the input arguments
-      }
+   class SchemeInterface {
+   public:
+     //update internal scheme parameters
+     virtual void update_params(Params* params) = 0;
+     //compute and apply coordinate update, return S_{index}
+     virtual double operator() (int index) =0;
+     //compute and store S_{index} in variable S_i
+     virtual void operator() (int index, double& S_i) =0;
+     //apply block of S stored in s to solution vector
+     virtual void update(Vector& s, int range_start, int num_cords) = 0;
+     //apply coordinate of S stored in s to solution vector
+     virtual void update(double s, int idx ) = 0;
+     //update rank worth of cache_vars based on num_threads
+     virtual void update_cache_vars(int rank, int num_threads) = 0;
    };
 
-   In general, each splitting scheme will be templated on one or more operators. Operator objective will be defined as the member variables.
-   
+
+
+In general, each splitting scheme will be templated on one or more operators. Operator objective will be defined as the member variables.
+
 .. note::
 
    Inside the parenthesis operator, relaxation will be used. Operator related cached variables will also be updated. 

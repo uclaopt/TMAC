@@ -71,6 +71,6 @@ Please choose one of the following approaches. Any one of them will set up a cod
 
 What to do next?
 ----------------
-- Run the examples: `least squares <uclaopt.github.io/opt/least_squares.html>`_, `regularized regression <uclaopt.github.io/opt/regression.html>`, and more.
+- Run the examples: `least squares <uclaopt.github.io/opt/least_squares.html>`_, `regularized regression <uclaopt.github.io/opt/regression.html>`_, and `more <uclaopt.github.io/optimization.html>`.
 - Build your own algorithms.
 
