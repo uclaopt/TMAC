@@ -1,6 +1,6 @@
 Contribute to TMAC
 ********************
-We welcome patches. If you plan to contribute a new module, you can consider to add testcases in `tests <https://github.com/uclaopt/TMAC/tree/master/test>`_. Changes should be verified to not break existing tests before they are submitted for review. We use Google test for unit testing.
+oWe welcome patches. If you plan to contribute a new module, you can consider to add testcases in `tests <https://github.com/uclaopt/TMAC/tree/master/test>`_. Changes should be verified to not break existing tests before they are submitted for review. We use Google test for unit testing.
 
 Setup the repository
 =====================
@@ -30,7 +30,7 @@ Create pull request (PR)
      git commit -m "MESSAGE TO DESCRIBE YOUR CHANGES"
 
 3. Now you can push the update to GitHub::
-     
+
      git push upstream YOUR-BRANCH-NAME
 
 4. Go to the remote `repo <https://github.com/uclaopt/TMAC>`_ page, you will see a message that ask you to create a pull request (PR).
@@ -54,7 +54,6 @@ All the unit tests are in test folder. We use gtest for C++ unittests. We will u
   make
   ./your_unittest
 
-  
 Update docs
 ============
 If you add new features to the codebase, you are also required to update the documentation to reflect the new feature. We use `sphinx <http://www.sphinx-doc.org/en/stable/>`_
@@ -62,7 +61,6 @@ and `sphinx_rtd_theme <https://github.com/snide/sphinx_rtd_theme>`_ for document
 
   cd doc
   make html
-
 
 Applications
 =============

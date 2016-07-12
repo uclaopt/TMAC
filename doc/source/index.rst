@@ -17,6 +17,7 @@ Welcome to the TMAC's documentation!
    contribute
    io
    api
+   faq
 
 Overview
 ===========
@@ -41,16 +42,6 @@ TMAC is written in C++. Python, Julia and Matlab interfaces are under developmen
     :align: center
 
 
-
-
-Dependencies
-==============
-* Functioning C++ compilers (`gcc <https://www.gnu.org/software/gcc/releases.html>`_)
-* BLAS library
-* `GNU make <https://www.gnu.org/software/make/>`_
-* or Microsoft Visual C++
-
-
 Related Papers
 ==============
 .. [TMAC2016] Brent Edmunds, Zhimin Peng, Wotao Yin, *TMAC: A Toolbox of Modern Async-Parallel, Coordinate, Splitting, and Stochastic Methods*, UCLA-CAM report 16-38 (2016)
@@ -64,7 +55,7 @@ Except for the Eigen library header files, all files distributed with TMAC are m
 which states::
 
     TMAC is a toolbox of modern async-parallel, coordinate, splitting, and stochastic methods.
-    Copyright (C) 2016 UCLAOPT
+    Copyright (C) 2016 UCLAOPT Research Group
 
     Redistribution and use in source and binary forms, with or without
     modification, are permitted provided that the following conditions are met:

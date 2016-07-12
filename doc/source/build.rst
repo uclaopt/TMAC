@@ -7,7 +7,7 @@ The current version of the entire TMAC package can be downloaded at `https://git
 In the future, precompiled executables for Windows users will be available for download.
 
 Required and optional software for installation
------------------------
+-------------------------------------------------
 - A C++11 compiler (e.g., GCC version 4.7 or higher)
 - BLAS
 - (recommended) `GNU make <https://www.gnu.org/software/make/>`_
@@ -21,7 +21,7 @@ Linux installation
   sudo apt-get install build-essential
   sudo apt-get install libblas-dev liblapack-dev
 
-2. Download TMAC and build it::
+2. Download TMAC and build it:
 
 .. code-block:: bash
 
@@ -29,7 +29,7 @@ Linux installation
   cd tmac
   make
 
-3. Once TMAC is successfully built, you can test run a Peaceman-Rachford Splitting example, first with 1 thread and then with 2 threads::
+3. You can test run a Peaceman-Rachford Splitting example, first with 1 thread and then with 2 threads:
 
 .. code-block:: bash
 
@@ -39,7 +39,7 @@ Linux installation
 Mac inistallation
 --------------------
 1. Install XCode: in App Store, update Xcode; then, launch Xcode and accept its license terms
-2. Install XCode's command line tools::
+2. Install XCode's command line tools:
 
 .. code-block:: bash
 
@@ -71,6 +71,6 @@ Please choose one of the following approaches. Any one of them will set up a cod
 
 What to do next?
 ----------------
-- Run the examples: ...
-- Build your own algorithms: ...
+- Run the examples: `least squares <uclaopt.github.io/opt/least_squares.html>`_, `regularized regression <uclaopt.github.io/opt/regression.html>`, and more.
+- Build your own algorithms.
 
