@@ -48,18 +48,15 @@ make html
 
 Then the html files are in the ```build/html``` folder.
 
+## How to develop a new algorithm with the TMAC features
 
-## Contributing Code
-We welcome patches. If you plan to contribute a patch, you need to write tests for any new code. Changes should be verified to not
-break existing tests before they are submitted for review. We use Google Test for unit testing. Our unit tests are in the test folder.
-If you are adding tests to a new file, you will need to modify the Makefile to compile the source code, otherwise, nothing needs to be
-changed in the Makefile. The following commands should build and run the unit tests.
+Once you understand TMAC's architecture and interface, it is easy to develop a new algorithm for your problem that inherits many TMAC methods and features. A tutorial is here.
 
-The details for contributing to TMAC is [here](https://github.com/uclaopt/TMAC/blob/master/doc/source/contribute.rst).
+## Open collaborations
 
-The contributors' list is [here](https://github.com/uclaopt/TMAC/blob/master/CONTRIBUTORS.md).
+TMAC includes contributions from a number of people around the world. They are listed [here](https://github.com/uclaopt/TMAC/blob/master/CONTRIBUTORS.md).
 
-
+Guidelines for contributions: [here](https://github.com/uclaopt/TMAC/blob/master/doc/source/contribute.rst).
 
 ## Getting the Data
 
