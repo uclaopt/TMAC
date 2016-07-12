@@ -1,11 +1,11 @@
 Contributors of TMAC
 =======================
-TMAC has been developed by an open. Your contributions are welcome.
+TMAC has been developed by an open community.
 
 
 List of Contributors (in alphabetic order)
 -------------------------------------------
-To contributors: please add your name and contributions to the list.
+To contributors:
 
 * [Yezheng Li](https://github.com/yezhengli-Mr9), unit tests of operators, objective function calculators.
 
@@ -15,7 +15,7 @@ To contributors: please add your name and contributions to the list.
 
 Committers
 ----------
-They made substantial contributions to the project and are currently active.
+They made substantial contributions to the project and are active for long terms.
 
 * [Brent Edmunds] (https://github.com/BrentEdmunds), project initiator, code designer, co-programmer of the initial prototypes, head debugger, responsible for multi-threading.
 
@@ -25,7 +25,6 @@ Mentor
 ------
 Professor [Wotao Yin](http://www.math.ucla.edu/~wotaoyin/) in the UCLA Math Department.
 
-
 Funding acknowledgements
 --------------------------
-This project has been funded in part by NSF grants. 
+This project has been funded in part by NSF and ONR grants. 
