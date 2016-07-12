@@ -8,7 +8,7 @@ In the future, precompiled executables for Windows users will be available for d
 
 Required and optional software for installation
 -----------------------
-- A C++11 compiler (e.g., GCC version 4.7 or higher)
+- A C++11 compiler (e.g., gcc version 4.7 or higher)
 - BLAS
 - (recommended) `GNU make <https://www.gnu.org/software/make/>`_
 
@@ -25,7 +25,7 @@ Linux installation
   > cd tmac
   > make
   
-3. Once TMAC is successfully built, you can test run a Peaceman-Rachford Splitting example, first with 1 thread and then with 2 threads::
+3. Test run a Peaceman-Rachford Splitting example, first with 1 thread and then with 2 threads::
 
   > ./bin/tmac_prs_demo -problem_size 1500 -nthread 1
   > ./bin/tmac_prs_demo -problem_size 1500 -nthread 2
@@ -44,7 +44,7 @@ Mac inistallation
   > cd tmac
   > make
   
-4. Once TMAC is successfully built, you can test run a Peaceman-Rachford Splitting example, first with 1 thread and then with 2 threads::
+4. Test run a Peaceman-Rachford Splitting example, first with 1 thread and then with 2 threads::
 
   > ./bin/tmac_prs_demo -problem_size 1500 -nthread 1
   > ./bin/tmac_prs_demo -problem_size 1500 -nthread 2
