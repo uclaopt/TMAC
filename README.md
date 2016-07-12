@@ -48,7 +48,7 @@ make html
 
 Then the html files are in the ```build/html``` folder.
 
-## How to develop a new algorithm with the TMAC features
+## Develop a new algorithm with the TMAC features
 
 Once you understand TMAC's architecture and interface, it is easy to develop a new algorithm for your problem that inherits many TMAC methods and features. A tutorial is here.
 
