@@ -1,42 +1,34 @@
 # TMAC
 
-Welcome to **TMAC**: A Toolbox of Modern Async-Parallel, Coordinate, Splitting, and Stochastic Methods
+Welcome to **TMAC**: A toolbox that implements a set of modern methods:
 
+   * First-order methods: gradient descent, proximal-point, and prox-gradient algorithms
+   * Operator splitting methods based on forward-backward, backward-forward, Douglas-Rachford, Peaceman-Rachford splittings
+   * (Block) coordinate update: cyclic, random, parallel Gauss-Seidel index rules
+   * Parallel and asynchronous parallel coordinate updates
+   * Stochastic gradient methods (coming soon)
 
-## Features
+You can easily apply these methods to your application by just plugging in the functions or operators specific to your problem.
 
-   * A rich set of predefined operators.
-   * A set of predefined operator splitting schemes.
-   * An asynchronous coordinate update framework.
-   * A synchronous parallel update driver.
-   * Options to load datasets in various format.
-   * A rich set of applications build on top of TMAC.
-   * Support for Matlab, Python and Julia (coming soon)
+## Components
 
+   * A rich set of operators: ...
+   * Operator splitting schemes: forward-backward, backward-forward, Douglas-Rachford, Peaceman-Rachford
+   * A shared-memory (asynchronous) parallel driver
+   * Examples: (sparse) logistic regression, LASSO, portfolio optimization, nonnegative matrix factorization, insection of two sets
+   * Supported dataset formats: matrix market, LIBSVM
 
-## Platforms
-TMAC can be installed to run on the following platforms:
+## Support platforms
+
+Linux, Mac OS X, and Windows (32 and 64 bits)
+
+## Installation
 
    * Linux [(guide)](https://github.com/uclaopt/TMAC/blob/master/doc/source/build.rst#requirements-for-linux)
    * Mac OS X [(guide)](https://github.com/uclaopt/TMAC/blob/master/doc/source/build.rst#requirements-for-mac)
    * Windows [(MINGW32 (32-bit) guide, ](http://www.math.ucla.edu/~wotaoyin/software/tmac_windows_installation_mingw32.html) [MINGW64 (64-bit) guide,](http://www.math.ucla.edu/~wotaoyin/software/tmac_windows_installation_mingw64.html)  [Cygwin (32/64-bit) guide)](http://www.math.ucla.edu/~wotaoyin/software/tmac_windows_installation_cygwin.html)
 
-Building TMAC requires
-
-   * GNU-compatible Make
-   * GCC (version 4.7 or above)
-   * Any BLAS library
-
-## Build
-
-Building TMAC can be as simple as:
-
-```bash
-make
-```
-
-
-## Use the Applications
+## Examples
 
 We build a user-friendly interface to run TMAC for different applications through shell. You can run it through the following command:
 
@@ -44,7 +36,7 @@ We build a user-friendly interface to run TMAC for different applications throug
 ./run_me.sh
 ```
 
-## Documentation
+## Full documentation
 
 We use [sphinx](http://www.sphinx-doc.org/en/stable/) for documentation. To use it, you need to install [sphinx](http://www.sphinx-doc.org/en/stable/install.html)
  and [sphinx_rtd_theme](https://github.com/snide/sphinx_rtd_theme). To compile the source code for the documentation, you can run the following commands::
