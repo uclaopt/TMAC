@@ -1,4 +1,4 @@
-Contributors of TMAC
+People
 =======================
 TMAC has been developed by an open community.
 
