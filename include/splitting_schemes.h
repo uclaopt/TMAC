@@ -303,8 +303,8 @@ public:
 // Peaceman-Rachford Splitting
 // x^{k+1} = (1 - eta_k) x^k + eta_k (2 * First - I )(2 * Second - I) (x^k)
 // which can be simplified to the following
-// y^k = First(x^k)
-// z^k = Second(2 y^k - x^k)
+// y^k = Second(x^k)
+// z^k = First(2 y^k - x^k)
 // x^{k+1} = x^k + 2 eta_k (z^k - y^k)
 template <typename First, typename Second>
 class PeacemanRachfordSplitting : public SchemeInterface {
