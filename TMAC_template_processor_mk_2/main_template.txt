@@ -1,0 +1,11 @@
+#include<iostream>
+#include"Operators.h"
+#include"Vector.h"
+#include"Matrix.h"
+
+int main()
+{
+
+#create TMAC
+
+}
