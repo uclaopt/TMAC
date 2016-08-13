@@ -143,10 +143,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main_process.cpp" />
+    <ClCompile Include="mmio.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Matrix.h" />
-    <ClInclude Include="Vector.h" />
+    <ClInclude Include="matrix.h" />
+    <ClInclude Include="mmio.h" />
+    <ClInclude Include="vector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

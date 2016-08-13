@@ -2,10 +2,14 @@
 #include"Operators.h"
 #include"Vector.h"
 #include"Matrix.h"
+#include"mmio.h"
+#include"splitting_schemes.h"
+#include"tmac.h"
 
 int main()
 {
 
 #create TMAC
 
+return 0;
 }
