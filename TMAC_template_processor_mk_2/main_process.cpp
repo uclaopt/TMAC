@@ -345,6 +345,7 @@ std::string create_line(std::string line)
 		// TEST HELPER FUNCTION
 		oss << recursion_helper_function(chosen_template, true, true);
 
+		// Will expand upon this later so that depending on the chosen_template, problem_size will be different
 		if (chosen_template == "template_8.txt")
 			oss << "int problem_size = forward.Q->number_of_rows;" << std::endl;
 	}
