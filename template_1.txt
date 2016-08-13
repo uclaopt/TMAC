@@ -1,4 +1,0 @@
-#process operator ___
-
-#process double step_size
-#process double weight
