@@ -430,6 +430,70 @@ public:
   }
 };
 
+/**********************************************************************
+*
+* proximal of linear product on a hyperplane
+*  f(x) = weight c'x + indicate (Ax = b)
+*  prox_linearpro_hyperplane = Tx + d
+*  where T = I - A'(AA')^(-1)A, 
+*        d =  A'(AA')^(-1)(b + gamma * weight * Ac) - gamma * weight * c.
+*  to simplify calculation, load D = A'(AA')^(-1)A; 
+*                                f = A'(AA')^(-1)b; 
+*                                g = A'(AA')^(-1)Ac;
+*  from interface, then Tx + d = x - Dx + f + gamma * weight * (g - c)
+**********************************************************************/
+class prox_linearpro_hyperplane : public OperatorInterface {
+public:
+	Vector* c;
+	Vector* f;
+	Vector* g;
+	Matrix* D;
+	double gamma;
+	double weight;
+	double step_size;
+
+	double operator() (Vector* v, int index) {
+		int len = v->size();
+		double product = 0;
+		for (int i = 0; i < len; i++) {
+			product += (*D)(index, i) * (*v)[i];
+		}
+		return (*v)[index] - product + (*f)[index] + gamma * weight * ((*g)[index] - (*c)[index]);
+	}
+
+	void operator() (Vector* v_in, Vector* v_out) {
+		
+     }
+
+	void update_cache_vars(double old_x_i, double new_x_i, int index) {
+	}
+	void update_cache_vars(Vector* x, int rank, int num_threads) {
+	}
+
+	void update_step_size(double step_size_) {
+		step_size = step_size_;
+	}
+
+	prox_linearpro_hyperplane() {
+		step_size = 0.;
+		weight = 1.;
+		gamma = 1.;
+		c = nullptr;
+		f = nullptr;
+		g = nullptr;
+		D = nullptr;
+	}
+	prox_linearpro_hyperplane(Vector* c_, Vector* f_, Vector* g_, Matrix* D_, double gamma_, double weight_, double step_size_ = 1.) {
+		c = c_;
+		f = f_;
+		g = g_;
+		D = D_;
+		gamma = gamma_;
+		step_size = step_size_;
+		weight = weight_;
+	}
+
+};
 
 /*************************************************
  *      Projection operators       
@@ -520,6 +584,179 @@ public:
   }
   proj_box (Vector* lower_, Vector* upper_, double step_size_ = 1., double weight_ = 1.) :
       lower(lower_), upper(upper_), step_size(step_size_), weight(weight_) {}
+};
+
+/*****************************************************************
+*
+* projection to second order cone: ||x||_2 <= x_0 is
+* defined by
+*   proj_soc(x_0, x) =(x_0, x), if ||x||_2 <= x_0,
+*                    =(0, 0), if ||x||_2 <= -x_0,
+*                    =(1/2)(1+x_0/||x||_2)(||x||_2, x), otherwise.
+*
+******************************************************************/
+class proj_soc : public OperatorInterface {
+public:
+
+	double weight;
+	double step_size;
+    double operator() (Vector* v, int index) {
+		double rest_norm = 0.;
+		for (int i = 1; i < v->size(); i++)
+			rest_norm += pow((*v)[i], 2.0);
+		rest_norm = sqrt(rest_norm);
+		if ((*v)[0] >= rest_norm)
+			return (*v)[index];
+		else if (-(*v)[0] >= rest_norm)
+			return 0;
+		else {
+			if (index == 0)
+				return 0.5 * ((*v)[0] + rest_norm);
+			else
+				return 0.5 * (1 + (*v)[0] / rest_norm) * (*v)[index];
+		}
+	}
+
+	void operator() (Vector* v_in, Vector* v_out) {
+		double rest_norm = 0.;
+		int len = v_in->size();
+		for (int i = 1; i < len; i++)
+			rest_norm += pow((*v_in)[i], 2.0);
+		rest_norm = sqrt(rest_norm);
+		if ((*v_in)[0] >= rest_norm) {
+			for (int i = 0; i < len; i++)
+				(*v_out)[i] = (*v_in)[i];
+		}
+		else if (-(*v_in)[0] >= rest_norm) {
+			for (int i = 0; i < len; i++)
+				(*v_out)[i] = 0;
+		}
+		else {
+			(*v_out)[0] = 0.5 * ((*v_in)[0] + rest_norm);
+			for (int i = 1; i < len; i++)
+				(*v_out)[i] = 0.5 * (1 + (*v_in)[0] / rest_norm) * (*v_in)[i];
+		}
+
+	}
+	void update_step_size(double step_size_) {
+		step_size = step_size_;
+	}
+	void update_cache_vars(double old_x_i, double new_x_i, int index) {
+	}
+	void update_cache_vars(Vector* x, int rank, int num_threads) {
+	}
+
+	// struct constructors
+	proj_soc() {
+		step_size = 0.;
+		weight = 1.;
+	}
+	proj_soc(double step_size_, double weight_ = 1.) {
+		step_size = step_size_;
+		weight = weight_;
+	}
+
+};
+
+/*****************************************************************
+*
+* projection to multiple second order cones: ||xi||_2 <= xi_0 is
+* i = 1,2,...,l
+* projection to multiple second order cones with linear part means:
+* proj_multi_soc of x + weight * c with input x
+******************************************************************/
+class proj_multi_soc_with_linear : public OperatorInterface {
+public:
+	int cone_num;
+	Vector cone_dim;
+	Vector* c;
+	double weight;
+	double step_size;
+    double operator() (Vector* v, int index) {
+		//cout << "projection socp index" << endl;
+		// locate position
+		int cone_id = 0;
+		int dim_sum = 0;
+		int len = v->size();
+		for (int i = 0; i < len; i++) {
+			dim_sum += cone_dim[i];
+			if (dim_sum > index)
+				cone_id = i;
+		}
+		int cone_end = dim_sum;
+		int cone_start = dim_sum - cone_dim[cone_id];
+		
+		double rest_norm = 0.;
+		for (int i = cone_start + 1; i < cone_end; i++)
+			rest_norm += pow((*v)[i] + weight * (*c)[i], 2.0);
+		rest_norm = sqrt(rest_norm);
+		
+		if ((*v)[cone_start] + weight * (*c)[cone_start] >= rest_norm)
+			return (*v)[index] + weight * (*c)[index];
+		
+		else if (-(*v)[cone_start] - weight * (*c)[cone_start] >= rest_norm)
+			return 0;
+		
+		else {
+			if (index == cone_start)
+				return 0.5 * ((*v)[cone_start] + weight * (*c)[cone_start] + rest_norm);
+			else
+				return 0.5 * (1 + ((*v)[cone_start] + weight * (*c)[cone_start]) / rest_norm) * ((*v)[index]+ weight * (*c)[index]);
+		}
+	}
+
+	void operator() (Vector* v_in, Vector* v_out) {
+		//cout << "projection socp vector" << endl;
+		int cone_start = 0;
+		int cone_end = 0;
+		double rest_norm = 0.;
+		for (int i = 0; i < cone_num; i++) {
+			cone_end += cone_dim[i];
+			for (int j = cone_start + 1; j < cone_end; j++)
+				rest_norm += pow((*v_in)[j] + weight * (*c)[j], 2.0);
+			rest_norm = sqrt(rest_norm);
+			
+			if ((*v_in)[cone_start] + weight * (*c)[cone_start] >= rest_norm) {
+				for (int t = cone_start; t < cone_end; t++)
+					(*v_out)[t] = (*v_in)[t] + weight * (*c)[t];
+			}
+			
+			else if (-(*v_in)[cone_start] - weight * (*c)[cone_start] >= rest_norm) {
+				for (int t = cone_start; t < cone_end; t++)
+					(*v_out)[t] = 0;
+			}
+			
+			else {
+				(*v_out)[cone_start] = 0.5 * ((*v_in)[cone_start] + weight * (*c)[cone_start] + rest_norm);
+				for (int t = cone_start + 1; t < cone_end; t++)
+					(*v_out)[t] = 0.5 * (1 + ((*v_in)[cone_start] + weight * (*c)[cone_start]) / rest_norm) * ((*v_in)[t] + weight * (*c)[t]);
+			}
+			cone_start += cone_dim[i];
+			rest_norm = 0;
+		}
+	}
+	void update_step_size(double step_size_) {
+		step_size = step_size_;
+	}
+	void update_cache_vars(double old_x_i, double new_x_i, int index) {
+	}
+	void update_cache_vars(Vector* x, int rank, int num_threads) {
+	}
+
+	// struct constructors
+	proj_multi_soc_with_linear() {
+		cone_num = 0;
+		cone_dim = NULL;
+		step_size = 0.;
+		weight = 1.;
+	}
+	proj_multi_soc_with_linear(int cone_num_, Vector cone_dim_, Vector* c_, double weight_, double step_size_=1.) {
+		cone_num = cone_num_;
+		cone_dim = cone_dim_;
+		c = c_;
+		weight = weight_;
+	}
+
 };
 
 /* projection to l1 ball
@@ -868,6 +1105,7 @@ public:
     weight = weight_;
   }
 };
+
 
 /***********************************
  ***********************************
@@ -1443,54 +1681,8 @@ public:
   }
 
   // TODO: implement the full update operator
-  void operator() (Vector* v_in, Vector* v_out){
-    w1 = dot(a1, *v_in) - b1;
-    w2 = dot(a2, *v_in) - b2;
-    w3 = dot(a3, *v_in) - b3;
-    w4 = dot(a4, *v_in) - b4;
-    int len = v_in->size();
-    
-    Vector x(len, 0.);
-    x = (*v_in);
-    // project x to D2
-    
-    Vector y(len, 0.);
-    y = (*v_in);
-    if (w1<=0 && w2>=0) {
-      y = (*v_in);
-    }else if (w2<=0 && w3>=0) {
-      add(y, a2, -w2);
-    }else if (w3<=0 && w4>=0) {
-      add(y, tild_a1, -w1);
-      add(y, tild_a2, -w2); 
-    }else {
-      add(y, a1, -w1);
-    }
-    
-    // calculate z = 2*y - x- gamma*Q*y
-    Vector temp(len, 0.);
-    Vector z(len, 0.);
-    multiply(*Q, y, temp);
-    scale(temp, step_size);
-    z = y;
-    scale(z, 2.);
-    add(z, x, -1.);
-    add(z, temp, -1.);
-    
-    // project z to D1
-    for (int i = 0; i < len; i++){
-      z[i] = max(0., z[i]);
-    }
-   
-    // update x
-    add(z, y, -1);
-    add(x, z, 1.);
-
-    for (int i = 0; i<len; i++) {
-      (*v_out)[i] = x[i]; 
-    }        
-}
-
+  void operator() (Vector* v_in, Vector* v_out) {
+  }
 
   double operator() (double val, int index = 1) {
     return DOUBLE_MARKER;

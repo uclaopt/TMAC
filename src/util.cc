@@ -73,6 +73,73 @@ void print_parameters(Params& para) {
   cout << "---------------------------------" << endl;  
 }
 
+void parse_input_argv_socp( Params* para,
+	                        int argc,
+	                        char *argv[],
+	                        std::string& A_file_name,
+	                        std::string& b_file_name,
+	                        std::string& c_file_name,
+	                        int& cone_num,
+	                        Vector& cone_dim,
+							double& alpha,
+							double& gamma,
+							double& lambda)
+{
+	set_default_settings(para);
+	
+	if (argc < 2) {
+		exit_with_help(argv[0], "matrix_market", false);
+	}
+
+	for (int i = 1; i < argc; ++i)
+	{
+		if (argv[i][0] != '-') {
+			break;
+		}
+		if (++i >= argc) {
+			exit_with_help(argv[0], "matrix_market", false);
+		}
+		else if (std::string(argv[i - 1]) == "-problem_size") {
+			para->problem_size = atoi(argv[i]);
+		}
+		else if (std::string(argv[i - 1]) == "-epoch") {
+			para->max_itrs = atoi(argv[i]);
+		}
+		else if (std::string(argv[i - 1]) == "-nthread") {
+			para->total_num_threads = atoi(argv[i]);
+		}
+		else if (std::string(argv[i - 1]) == "-A") {
+			A_file_name = std::string(argv[i]);
+		}
+		else if (std::string(argv[i - 1]) == "-c") {
+			c_file_name = std::string(argv[i]);
+		}
+		else if (std::string(argv[i - 1]) == "-b") {
+			b_file_name = std::string(argv[i]);
+		}
+		else if (std::string(argv[i - 1]) == "-cone_num") {
+			cone_num = atoi(argv[i]);
+		}
+		else if (std::string(argv[i - 1]) == "-cone_dim") {
+			for (int j = 0; j < cone_num; j++, i++) 
+				cone_dim.push_back(atoi(argv[i]));
+		}
+		else if (std::string(argv[i - 1]) == "-alpha") {
+			alpha = atof(argv[i]);
+		}
+		else if (std::string(argv[i - 1]) == "-gamma") {
+			gamma = atof(argv[i]);
+		}
+		else if (std::string(argv[i - 1]) == "-lambda") {
+			lambda = atof(argv[i]);
+		}
+		else {
+			exit_with_help(argv[0], "matrix_market", false);
+		}
+	}
+	return;
+}
+
 
 void parse_input_argv_mm(Params* para,
                          int argc,

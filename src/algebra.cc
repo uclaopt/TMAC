@@ -21,6 +21,46 @@
 #include "constants.h"
 #include "blas_sparse.h"
 
+extern "C" {
+	// LU decomoposition of a general matrix
+	void dgetrf_(int* M, int *N, double* A, int* lda, int* IPIV, int* INFO);
+
+	// generate inverse of a matrix given its LU decomposition
+	void dgetri_(int* N, double* A, int* lda, int* IPIV, double* WORK, int* lwork, int* INFO);
+
+	// matrix-matrix multiplication product C= alphaA.B + betaC                                               
+	void dgemm_(char* TRANSA, char* TRANSB, const int* M,
+		const int* N, const int* K, double* alpha, double* A,
+		const int* LDA, double* B, const int* LDB, double* beta,
+		double* C, const int* LDC);
+
+	// matrix-vector multiplication product Y= alphaA.X + betaY                                               
+	void dgemv_(char* TRANS, const int* M, const int* N,
+		double* alpha, double* A, const int* LDA, double* X,
+		const int* INCX, double* beta, double* C, const int* INCY);
+}
+
+void inverse(double* A, int N) {
+	int *IPIV = new int[N + 1];
+	int LWORK = N*N;
+	double *WORK = new double[LWORK];
+	int INFO;
+
+	dgetrf_(&N, &N, A, &N, IPIV, &INFO);
+	dgetri_(&N, A, &N, IPIV, WORK, &LWORK, &INFO);
+
+	delete IPIV;
+	delete WORK;
+}
+
+void printMatrix(double* A, int rows, int cols) {
+	for (int i = 0; i < rows; i++) {
+		for (int j = 0; j < cols; j++) {
+			cout << A[i*cols + j] << "  ";
+		}
+		cout << endl;
+	}
+}
 // Shrinkage function
 double shrink(double x, double t) {
     if (x > t) {

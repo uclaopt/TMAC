@@ -7,30 +7,33 @@
 #include "worker.h"
 #include "controller.h"
 #include "parameters.h"
+#include "result.h"
 #include <thread>
 
 
 template<typename Splitting>
-void AROCK (Splitting op, Params parameters, Controller<Splitting> controller = Controller<Splitting>()) {
+void AROCK (Splitting op, Params parameters, Result res, Controller<Splitting> controller = Controller<Splitting>()) {
+	
   int total_num_threads = parameters.total_num_threads;
   bool use_controller = parameters.use_controller;
   std::vector<std::thread> mythreads;
   int problem_size = parameters.get_problem_dimension();
   string worker_type = parameters.worker_type;
   int num_workers = use_controller ? total_num_threads - 1 : total_num_threads;
-  
+ 
   for (size_t i = 0; i < num_workers; i++) {
     if (worker_type == "cyclic") {
       // partition the indexes
       int block_size = problem_size / num_workers;
-      Range range(i * block_size, (i + 1) * block_size);
+	  
+	  Range range(i * block_size, (i + 1) * block_size);
       if (i == num_workers - 1) {
         range.end = problem_size;
       }
       // cyclic coordinate update
-      mythreads.push_back(std::thread(async_cyclic_worker<Splitting>, op, range, std::ref(controller), &parameters));
-      
-    } else if (worker_type == "gs") {
+      mythreads.push_back(std::thread(async_cyclic_worker<Splitting>, op, range, std::ref(controller), &parameters, &res));
+   
+	} else if (worker_type == "gs") {
       // async Gauss Seidal rule
       mythreads.push_back(std::thread(async_gs_worker<Splitting>, op, std::ref(controller), &parameters));
 
