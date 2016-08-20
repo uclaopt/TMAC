@@ -10,6 +10,24 @@
 #include <iomanip>
 #include "matrices.h"
 
+/*************************************************
+* 
+* inverse function 
+* input A returned as inv(A)
+*
+**************************************************/
+void inverse(double* A, int N);
+
+
+
+/*************************************************
+*
+* printMatrix helps print entries in A
+*
+**************************************************/
+void printMatrix(double* A, int rows, int cols);
+
+
 
 /*************************************************
  * shrinkage function or soft threshold function,

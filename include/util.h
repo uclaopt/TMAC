@@ -37,6 +37,17 @@ void parse_input_argv_demo(Params* para,
                            int argc,
                            char *argv[]);
 
+void parse_input_argv_socp(Params* para,
+						   int argc,
+	                       char *argv[],
+	                       std::string& A_file_name,
+	                       std::string& b_file_name,
+	                       std::string& c_file_name,
+	                       int& cone_num,
+	                       Vector& cone_dim,
+						   double& alpha,
+						   double& gamma,
+						   double& lambda);
 
 void parse_input_argv_mm(Params* para,
                          int argc,

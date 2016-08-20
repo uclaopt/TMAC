@@ -4,28 +4,33 @@
 #include "parameters.h"
 #include "controller.h"
 #include "range.h"
+#include "result.h"
 #include "barrier.h"
 #include<thread>
 
 // asynchronous cyclic worker
 template<typename Operator>
-void async_cyclic_worker(Operator algorithm, Range range, Controller<Operator>& cont,  Params* params) {
+void async_cyclic_worker(Operator algorithm, Range range, Controller<Operator>& cont,  Params* params, Result* res) {
   auto id = std::this_thread::get_id();
   int max_itrs = params->max_itrs;
   int num_cords = range.end - range.start;
   int idx = 0;
-  
+
   algorithm.update_params(params);
   //alert controller to existence of worker
   if(params->use_controller) {
     cont.add_worker(id, algorithm, params);
   }
 
-  for (int i = 0; i < max_itrs; i++) {
+  for (int i = 1; i <= max_itrs; i++) {
+	  if (i % 20 == 0)
+		  algorithm.stop_check(params, res);
+	  if (res->status != 0)
+		  return;
     for (int j = 0; j < num_cords; j++) {
       idx = j + range.start;
       auto fpr = algorithm(idx);
-      
+
       if (params->use_controller) {
 	cont.process_update(id, idx, fpr);
       }
