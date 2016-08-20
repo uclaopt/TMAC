@@ -31,7 +31,7 @@ Create pull request (PR)
 
 3. Now you can push the update to GitHub::
 
-     git push upstream YOUR-BRANCH-NAME
+     git push origin YOUR-BRANCH-NAME
 
 4. Go to the remote `repo <https://github.com/uclaopt/TMAC>`_ page, you will see a message that ask you to create a pull request (PR).
 
