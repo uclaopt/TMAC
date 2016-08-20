@@ -86,7 +86,7 @@
 <li class="toctree-l1"><a class="reference internal" href="core.html">Core functionality</a></li>
 <li class="toctree-l1"><a class="reference internal" href="optimization.html">Optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="equations.html">Equation</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Contribute to TMAC</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Contribute to TMAC</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#setup-the-repository">Setup the repository</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#create-pull-request-pr">Create pull request (PR)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#combine-multiple-commits-into-one">Combine multiple commits into one</a></li>
@@ -122,7 +122,7 @@
         <div class="rst-content">
           
 
-
+ 
 
 
 
@@ -153,17 +153,17 @@
 <li><p class="first">Fork the TMAC <a class="reference external" href="https://github.com/uclaopt/TMAC">repository</a> reporsitory;</p>
 </li>
 <li><p class="first">Open a Terminal to clone the TMAC project to your machine:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>git clone https://github.com/YOUR-USERNAME/TMAC
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">YOUR</span><span class="o">-</span><span class="n">USERNAME</span><span class="o">/</span><span class="n">TMAC</span>
 </pre></div>
 </div>
 </li>
 <li><p class="first">Config the remote repository:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>git remote add upstream https://github.com/uclaopt/TMAC
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">remote</span> <span class="n">add</span> <span class="n">upstream</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">uclaopt</span><span class="o">/</span><span class="n">TMAC</span>
 </pre></div>
 </div>
 </li>
 <li><p class="first">Sync with the up-to-date code:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>git pull upstream master
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">pull</span> <span class="n">upstream</span> <span class="n">master</span>
 </pre></div>
 </div>
 </li>
@@ -173,19 +173,19 @@
 <h2>Create pull request (PR)<a class="headerlink" href="#create-pull-request-pr" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic">
 <li><p class="first">You first want to do code development on a branch:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>git branch YOUR-BRANCH-NAME
-git checkout YOUR-BRANCH-NAME
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">branch</span> <span class="n">YOUR</span><span class="o">-</span><span class="n">BRANCH</span><span class="o">-</span><span class="n">NAME</span>
+<span class="n">git</span> <span class="n">checkout</span> <span class="n">YOUR</span><span class="o">-</span><span class="n">BRANCH</span><span class="o">-</span><span class="n">NAME</span>
 </pre></div>
 </div>
 </li>
 <li><p class="first">After you have done some coding, you can stage and commit your code locally:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>git add FILE_NAME
-git commit -m &quot;MESSAGE TO DESCRIBE YOUR CHANGES&quot;
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">add</span> <span class="n">FILE_NAME</span>
+<span class="n">git</span> <span class="n">commit</span> <span class="o">-</span><span class="n">m</span> <span class="s2">&quot;MESSAGE TO DESCRIBE YOUR CHANGES&quot;</span>
 </pre></div>
 </div>
 </li>
 <li><p class="first">Now you can push the update to GitHub:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>git push upstream YOUR-BRANCH-NAME
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">push</span> <span class="n">origin</span> <span class="n">YOUR</span><span class="o">-</span><span class="n">BRANCH</span><span class="o">-</span><span class="n">NAME</span>
 </pre></div>
 </div>
 </li>
@@ -199,7 +199,7 @@ git commit -m &quot;MESSAGE TO DESCRIBE YOUR CHANGES&quot;
 <h2>Combine multiple commits into one<a class="headerlink" href="#combine-multiple-commits-into-one" title="Permalink to this headline">¶</a></h2>
 <p>Sometimes we want to combine multiple small commits, especially when later commits are only fixes to previous ones.
 Assume we want to merge the last 3 commits, you can do it with the following command:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>git rebase -i HEAD~3
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">rebase</span> <span class="o">-</span><span class="n">i</span> <span class="n">HEAD</span><span class="o">~</span><span class="mi">3</span>
 </pre></div>
 </div>
 <p>You will see a pop up editor, then you can replace &#8220;pick&#8221; on the second and subsequent commits with &#8220;squash&#8221;.</p>
@@ -207,8 +207,8 @@ Assume we want to merge the last 3 commits, you can do it with the following com
 <div class="section" id="unit-tests">
 <h2>Unit tests<a class="headerlink" href="#unit-tests" title="Permalink to this headline">¶</a></h2>
 <p>All the unit tests are in test folder. We use gtest for C++ unittests. We will use Python nose for Python test cases. If you are adding tests to a new file, you will need to modify the Makefile to compile the source code, otherwise, nothing needs to be changed in the Makefile. The following commands should build and run the unit tests:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>make
-./your_unittest
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">make</span>
+<span class="o">./</span><span class="n">your_unittest</span>
 </pre></div>
 </div>
 </div>
@@ -216,8 +216,8 @@ Assume we want to merge the last 3 commits, you can do it with the following com
 <h2>Update docs<a class="headerlink" href="#update-docs" title="Permalink to this headline">¶</a></h2>
 <p>If you add new features to the codebase, you are also required to update the documentation to reflect the new feature. We use <a class="reference external" href="http://www.sphinx-doc.org/en/stable/">sphinx</a>
 and <a class="reference external" href="https://github.com/snide/sphinx_rtd_theme">sphinx_rtd_theme</a> for documentation. You can find the installation instructions on their websites. You can build document locally with the following commands:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>cd doc
-make html
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">doc</span>
+<span class="n">make</span> <span class="n">html</span>
 </pre></div>
 </div>
 </div>

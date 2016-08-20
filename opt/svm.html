@@ -93,7 +93,7 @@
 <li class="toctree-l2"><a class="reference internal" href="qcqp.html">Quadratically constrained quadratic program</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tv.html">Total variation for image processing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="portfolio.html">Portfolio optimization</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="">Support vector machine (SVM)</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Support vector machine (SVM)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#data-preparation">Data preparation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#example">Example</a></li>
@@ -128,7 +128,7 @@
         <div class="rst-content">
           
 
-
+ 
 
 
 
@@ -168,11 +168,11 @@
 <p>In the bin folder, the executable file <code class="xref cpp cpp-type docutils literal"><span class="pre">tmac_fbs_dual_svm</span></code> solves the dual formulation of SVM.</p>
 <blockquote>
 <div><p>The usage for tmac_fbs_dual_svm is:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>./tmac_fbs_dual_svm [options]
-           -data       &lt; data in LIBSVM format &gt;
-           -nthread    &lt; total number of threads, default: 1. &gt;
-           -epoch      &lt; total number of epochs, default: 10. &gt;
-           -lambda     &lt; regularization parameter, default 1. &gt;
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">tmac_fbs_dual_svm</span> <span class="p">[</span><span class="n">options</span><span class="p">]</span>
+           <span class="o">-</span><span class="n">data</span>       <span class="o">&lt;</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">LIBSVM</span> <span class="nb">format</span> <span class="o">&gt;</span>
+           <span class="o">-</span><span class="n">nthread</span>    <span class="o">&lt;</span> <span class="n">total</span> <span class="n">number</span> <span class="n">of</span> <span class="n">threads</span><span class="p">,</span> <span class="n">default</span><span class="p">:</span> <span class="mf">1.</span> <span class="o">&gt;</span>
+           <span class="o">-</span><span class="n">epoch</span>      <span class="o">&lt;</span> <span class="n">total</span> <span class="n">number</span> <span class="n">of</span> <span class="n">epochs</span><span class="p">,</span> <span class="n">default</span><span class="p">:</span> <span class="mf">10.</span> <span class="o">&gt;</span>
+           <span class="o">-</span><span class="k">lambda</span>     <span class="o">&lt;</span> <span class="n">regularization</span> <span class="n">parameter</span><span class="p">,</span> <span class="n">default</span> <span class="mf">1.</span> <span class="o">&gt;</span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -180,23 +180,23 @@
 <div class="section" id="example">
 <h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
 <p>You can run the following command to train a SVM model on the news20 dataset:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>./bin/tmac_fbs_dual_svm -data ./data/news20.binary -epoch 10 -nthread 2 -lambda .001
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">./</span><span class="nb">bin</span><span class="o">/</span><span class="n">tmac_fbs_dual_svm</span> <span class="o">-</span><span class="n">data</span> <span class="o">./</span><span class="n">data</span><span class="o">/</span><span class="n">news20</span><span class="o">.</span><span class="n">binary</span> <span class="o">-</span><span class="n">epoch</span> <span class="mi">10</span> <span class="o">-</span><span class="n">nthread</span> <span class="mi">2</span> <span class="o">-</span><span class="k">lambda</span> <span class="o">.</span><span class="mi">001</span>
 </pre></div>
 </div>
 <p>You can expect to get output similar to the following:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>Parameter settings:
----------------------------------
-Problem size:               19996
-TMAC step size:             1
-Operator step size:         0.01
-Use controller:             false
----------------------------------
-Objective value is: -19.6826
-Computing time  is: 0.894006
----------------------------------
-# of nonzero in x: 19996
-||x||_2 =: 0.141407
----------------------------------
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Parameter</span> <span class="n">settings</span><span class="p">:</span>
+<span class="o">---------------------------------</span>
+<span class="n">Problem</span> <span class="n">size</span><span class="p">:</span>               <span class="mi">19996</span>
+<span class="n">TMAC</span> <span class="n">step</span> <span class="n">size</span><span class="p">:</span>             <span class="mi">1</span>
+<span class="n">Operator</span> <span class="n">step</span> <span class="n">size</span><span class="p">:</span>         <span class="mf">0.01</span>
+<span class="n">Use</span> <span class="n">controller</span><span class="p">:</span>             <span class="n">false</span>
+<span class="o">---------------------------------</span>
+<span class="n">Objective</span> <span class="n">value</span> <span class="ow">is</span><span class="p">:</span> <span class="o">-</span><span class="mf">19.6826</span>
+<span class="n">Computing</span> <span class="n">time</span>  <span class="ow">is</span><span class="p">:</span> <span class="mf">0.894006</span>
+<span class="o">---------------------------------</span>
+<span class="c1"># of nonzero in x: 19996</span>
+<span class="o">||</span><span class="n">x</span><span class="o">||</span><span class="n">_2</span> <span class="o">=</span><span class="p">:</span> <span class="mf">0.141407</span>
+<span class="o">---------------------------------</span>
 </pre></div>
 </div>
 </div>

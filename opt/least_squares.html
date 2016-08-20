@@ -86,7 +86,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../build.html">Download and install</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../core.html">Core functionality</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../optimization.html">Optimization</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="">Least squares</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Least squares</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#data-preparation">Data preparation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#example">Example</a></li>
@@ -128,7 +128,7 @@
         <div class="rst-content">
           
 
-
+ 
 
 
 
@@ -167,11 +167,11 @@
 <p>In the bin folder, the executable file <code class="xref cpp cpp-type docutils literal"><span class="pre">tmac_gd_ls</span></code> solves the least squares problem:</p>
 <blockquote>
 <div><p>The usage for tmac_gd_ls is:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>./tmac_gd_ls [options]
-           -data       &lt; matrix market file for A &gt;
-           -label      &lt; matrix market file for b &gt;
-           -nthread    &lt; total number of threads, default: 1. &gt;
-           -epoch      &lt; total number of epochs, default: 10. &gt;
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">tmac_gd_ls</span> <span class="p">[</span><span class="n">options</span><span class="p">]</span>
+           <span class="o">-</span><span class="n">data</span>       <span class="o">&lt;</span> <span class="n">matrix</span> <span class="n">market</span> <span class="n">file</span> <span class="k">for</span> <span class="n">A</span> <span class="o">&gt;</span>
+           <span class="o">-</span><span class="n">label</span>      <span class="o">&lt;</span> <span class="n">matrix</span> <span class="n">market</span> <span class="n">file</span> <span class="k">for</span> <span class="n">b</span> <span class="o">&gt;</span>
+           <span class="o">-</span><span class="n">nthread</span>    <span class="o">&lt;</span> <span class="n">total</span> <span class="n">number</span> <span class="n">of</span> <span class="n">threads</span><span class="p">,</span> <span class="n">default</span><span class="p">:</span> <span class="mf">1.</span> <span class="o">&gt;</span>
+           <span class="o">-</span><span class="n">epoch</span>      <span class="o">&lt;</span> <span class="n">total</span> <span class="n">number</span> <span class="n">of</span> <span class="n">epochs</span><span class="p">,</span> <span class="n">default</span><span class="p">:</span> <span class="mf">10.</span> <span class="o">&gt;</span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -179,7 +179,7 @@
 <div class="section" id="example">
 <h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
 <p>You can run the following command in the test directory to solve the least squares problem for the large dense dataset:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>./bin/tmac_gd_ls -data ./data/ds_large_A.mtx -label ./data/ds_large_b.mtx -epoch 100 -nthread 2 -lambda 1.
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">./</span><span class="nb">bin</span><span class="o">/</span><span class="n">tmac_gd_ls</span> <span class="o">-</span><span class="n">data</span> <span class="o">./</span><span class="n">data</span><span class="o">/</span><span class="n">ds_large_A</span><span class="o">.</span><span class="n">mtx</span> <span class="o">-</span><span class="n">label</span> <span class="o">./</span><span class="n">data</span><span class="o">/</span><span class="n">ds_large_b</span><span class="o">.</span><span class="n">mtx</span> <span class="o">-</span><span class="n">epoch</span> <span class="mi">100</span> <span class="o">-</span><span class="n">nthread</span> <span class="mi">2</span> <span class="o">-</span><span class="k">lambda</span> <span class="mf">1.</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -187,16 +187,16 @@
 <p class="last">The datasets are not included in the source code, but you can download them from <a class="reference external" href="https://www.dropbox.com/sh/neqh6ege48hut2x/AACv02EH19XN-N7DXADV2NrIa?dl=0">here</a>.</p>
 </div>
 <p>You can expect to get output similar to the following:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>Parameter settings:
----------------------------------
-Problem size:               1000
-TMAC step size:            0.5
-Operator step size:         0.8
-Use controller:             false
----------------------------------
-Computing time is: 0.105244
-Objective value is: 28.74
----------------------------------
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Parameter</span> <span class="n">settings</span><span class="p">:</span>
+<span class="o">---------------------------------</span>
+<span class="n">Problem</span> <span class="n">size</span><span class="p">:</span>               <span class="mi">1000</span>
+<span class="n">TMAC</span> <span class="n">step</span> <span class="n">size</span><span class="p">:</span>            <span class="mf">0.5</span>
+<span class="n">Operator</span> <span class="n">step</span> <span class="n">size</span><span class="p">:</span>         <span class="mf">0.8</span>
+<span class="n">Use</span> <span class="n">controller</span><span class="p">:</span>             <span class="n">false</span>
+<span class="o">---------------------------------</span>
+<span class="n">Computing</span> <span class="n">time</span> <span class="ow">is</span><span class="p">:</span> <span class="mf">0.105244</span>
+<span class="n">Objective</span> <span class="n">value</span> <span class="ow">is</span><span class="p">:</span> <span class="mf">28.74</span>
+<span class="o">---------------------------------</span>
 </pre></div>
 </div>
 </div>
