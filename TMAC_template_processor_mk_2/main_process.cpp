@@ -11,8 +11,6 @@
 #include<sstream>
 #include<map>
 
-#include"Vector.h"
-#include"Matrix.h"
 
 // identifiers
 const std::string operator_process_identifier = "#process";
@@ -145,7 +143,7 @@ int main()
 		std::cout << line << std::endl; // plop everything out to the console
 	}
 	
-	std::ofstream out("C:\\Users\\Elliot\\Documents\\Visual Studio 2015\\Projects\\target\\target\\test_file.cpp");
+	std::ofstream out("../bin/tmac_gui_test.cc");
 	// can be replaced with full path of computer to the main of another project
 	// specifying the output
 

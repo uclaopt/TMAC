@@ -1,10 +1,15 @@
-#include<iostream>
-#include"Operators.h"
-#include"Vector.h"
-#include"Matrix.h"
-#include"mmio.h"
-#include"splitting_schemes.h"
-#include"tmac.h"
+#include <iostream>
+#include "matrices.h"
+#include "algebra.h"
+#include "operators.h"
+#include "parameters.h"
+#include "splitting_schemes.h"
+#include "tmac.h"
+#include "util.h"
+#include "MarketIO.h"
+#include <thread>
+using namespace std;
+#include "algebra_namespace_switcher.h"
 
 int main()
 {
