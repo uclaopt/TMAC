@@ -26,7 +26,7 @@ Vector b; loadMarket(b,"../data/jgl009.mtx");
 
 forward.Q = &A;
 forward.c = &b;
-int problem_size = forward.Q->number_of_rows;
+int problem_size = forward.Q->rows();
 
 prox_l1 backward;
 
