@@ -81,8 +81,11 @@ We would like to acknowledge the [Eigen](http://eigen.tuxfamily.org/index.php?ti
 @article{peng2015arock,
   title = {ARock: an Algorithmic Framework for Asynchronous Parallel Coordinate Updates},
   author = {Peng, Zhimin and Xu, Yangyang and Yan, Ming and Yin, Wotao},
-  journal = {arXiv:1506.02396},
-  year = {2015},
+  journal = {SIAM Journal on Scientific Computing},
+  volume = 38,
+  number = 5,
+  year = {2016},
+  pages = {A2851-A2879}
   publisher = {http://arxiv.org/abs/1506.02396}
 }
 
