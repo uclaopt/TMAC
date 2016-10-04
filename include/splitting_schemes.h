@@ -43,6 +43,11 @@ public:
   virtual void update(double s, int idx ) = 0;
   //update rank worth of cache_vars based on num_threads
   virtual void update_cache_vars(int rank, int num_threads) = 0;
+  //check stopping condition, by default keep iterating
+  virtual bool check_stop_crit(){ return false;};
+  //eval stopping condition, by default no operation
+  virtual bool eval_stop_crit(){ return false;};
+  
 };
 
 

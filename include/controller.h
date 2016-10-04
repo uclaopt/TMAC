@@ -65,7 +65,7 @@ struct Controller {
   Controller (Params p) : epoch_iter(0), total_iter(0), window_size(.8), old_fpr_norm(std::numeric_limits<double>::max()), update_epoch(p.problem_size/2), num_worker(0), tmac_max_stepsize(100), tmac_min_stepsize(.000001), average_fpr(p.problem_size,0), coord_num_updates(p.problem_size,0), max_delay(0),def(false) {
     worker_state.reserve(p.total_num_threads+10);
   }
-  
+  std::thread spawn_loop();
   void process_update (std::thread::id id, size_t coord_idx, double residual) {
     
     //update worker statistics;
@@ -157,7 +157,6 @@ template<typename T> void Controller_loop(Controller<T>& controller) {
   }
  
   while ( controller.num_worker > 0 ) { 
-   
     //instantiate lock for condition variable
     std::unique_lock<std::mutex> condition_lock(g_calculate_residual_mutex);
    
@@ -207,6 +206,9 @@ template<typename T> void Controller_loop(Controller<T>& controller) {
   }
   */
 }
-
+template<typename T>
+std::thread Controller<T>::spawn_loop(){
+  return std::thread(Controller_loop<T>, std::ref(*this));
+}  
 
 #endif

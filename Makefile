@@ -37,6 +37,8 @@ TMAC_FBS_L1LOG := $(BINDIR)/tmac_fbs_l1_log
 TMAC_BFS_L2BALL_QP := $(BINDIR)/tmac_bfs_l2_ball_qp
 # app for demo PRS for finding the intersection of two sets
 TMAC_PRS_DEMO := $(BINDIR)/tmac_prs_demo
+# app for demo FBS for l1 regularized logistic regression and stopping
+TMAC_FBS_STOP := $(BINDIR)/tmac_stopper
 
 TMAC_3S_PORTFOLIO := $(BINDIR)/tmac_3s_portfolio
 
@@ -50,7 +52,7 @@ CFLAGS := -g -std=c++0x -MMD -w
 LIB := -lblas -lpthread
 INC := -I include
 
-all:  $(TMAC_GD_LS) $(TMAC_GD_HB) $(TMAC_FBS_LASSO) $(TMAC_FBS_L2_SVM) $(TMAC_FBS_L1LOG) $(TMAC_BFS_L2BALL_QP) $(TMAC_PRS_DEMO) $(TMAC_JACOBI) $(TMAC_3S_PORTFOLIO) $(TMAC_FBS_DUAL_SVM)
+all:  $(TMAC_GD_LS) $(TMAC_GD_HB) $(TMAC_FBS_LASSO) $(TMAC_FBS_L2_SVM) $(TMAC_FBS_L1LOG) $(TMAC_BFS_L2BALL_QP) $(TMAC_PRS_DEMO) $(TMAC_JACOBI) $(TMAC_3S_PORTFOLIO) $(TMAC_FBS_DUAL_SVM) $(TMAC_FBS_STOP)
 
 
 # APPS
@@ -117,6 +119,12 @@ $(TMAC_PRS_DEMO): build/algebra.o build/util.o build/matrices.o build/nist_spbla
 $(TMAC_3S_PORTFOLIO): build/algebra.o build/util.o build/matrices.o build/nist_spblas.o build/tmac_3s_portfolio.o
 	@echo " $(CC) $^ -o $(TMAC_3S_PORTFOLIO) $(LIB)"; $(CC) $^ -o $(TMAC_3S_PORTFOLIO) $(LIB)
 	@echo " $(TMAC_3S_PORTFOLIO) is successfully built."
+	@printf '%*s' "150" | tr ' ' "-"
+	@printf '\n'
+
+$(TMAC_FBS_STOP): build/algebra.o build/util.o build/matrices.o build/nist_spblas.o build/tmac_stopper.o
+	@echo " $(CC) $^ -o $(TMAC_FBS_STOP) $(LIB)"; $(CC) $^ -o $(TMAC_FBS_STOP) $(LIB)
+	@echo " $(TMAC_FBS_STOP) is successfully built."
 	@printf '%*s' "150" | tr ' ' "-"
 	@printf '\n'
 

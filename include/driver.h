@@ -8,7 +8,7 @@
 #include "controller.h"
 #include "parameters.h"
 #include <thread>
-
+#include "stopping.h"
 
 template<typename Splitting>
 void AROCK (Splitting op, Params parameters, Controller<Splitting> controller = Controller<Splitting>()) {
@@ -41,7 +41,43 @@ void AROCK (Splitting op, Params parameters, Controller<Splitting> controller = 
   }
  
   if (use_controller) {
-    mythreads.push_back(std::thread(Controller_loop<Splitting>, std::ref(controller)));
+    //mythreads.push_back(std::thread(Controller_loop<Splitting>, std::ref(controller)));
+    mythreads.push_back(controller.spawn_loop());
+  }
+  for (size_t i = 0; i < total_num_threads; i++) {
+    mythreads[i].join();
+  }
+}
+
+
+template<typename Splitting>
+void AROCK (Splitting op, Params parameters, Stopper<Splitting> controller) {
+  int total_num_threads = parameters.total_num_threads;
+  bool use_controller = parameters.use_controller;
+  std::vector<std::thread> mythreads;
+  int problem_size = parameters.get_problem_dimension();
+  string worker_type = parameters.worker_type;
+  int num_workers = use_controller ? total_num_threads - 1 : total_num_threads;
+  
+  for (size_t i = 0; i < num_workers; i++) {
+    std::cout << worker_type << std::endl;
+    if (worker_type == "cyclic") {
+      std::cout << i << std::endl;
+      // partition the indexes
+      int block_size = problem_size / num_workers;
+      Range range(i * block_size, (i + 1) * block_size);
+      if (i == num_workers - 1) {
+        range.end = problem_size;
+      }
+      // cyclic coordinate update
+      mythreads.push_back(std::thread(async_cyclic_workers<Splitting>, op, range, std::ref(controller), &parameters));
+      
+    }
+  } 
+  
+  if (use_controller) {
+    //mythreads.push_back(std::thread(Controller_loop<Splitting>, std::ref(controller)));
+    mythreads.push_back(controller.spawn_loop());
   }
   for (size_t i = 0; i < total_num_threads; i++) {
     mythreads[i].join();

@@ -5,7 +5,9 @@
 #include "controller.h"
 #include "range.h"
 #include "barrier.h"
+#include "stopping.h"
 #include<thread>
+
 
 // asynchronous cyclic worker
 template<typename Operator>
@@ -16,21 +18,25 @@ void async_cyclic_worker(Operator algorithm, Range range, Controller<Operator>& 
   int idx = 0;
   
   algorithm.update_params(params);
-  //alert controller to existence of worker
+  // alert controller to existence of worker
   if(params->use_controller) {
     cont.add_worker(id, algorithm, params);
   }
 
   for (int i = 0; i < max_itrs; i++) {
     for (int j = 0; j < num_cords; j++) {
+      // if stopping condition met, exit update loop
+      if ( algorithm.check_stop_crit() == true ){
+	goto worker_cleanup;
+      }
       idx = j + range.start;
-      auto fpr = algorithm(idx);
-      
+      auto fpr = algorithm(idx);    
       if (params->use_controller) {
 	cont.process_update(id, idx, fpr);
       }
     }
   }
+ worker_cleanup:
   //finished task, so remove worker from controller
   cont.remove_worker(id);
   return;
@@ -143,5 +149,42 @@ void sync_par_worker(Operator algorithm, Range range, Params* params,
   }
   return;
 }
+
+// asynchronous cyclic worker
+// THIS EXISTS ONLY TO TEST STOPPING FRAMEWORK
+// INHERENTLY UNSTABLE
+template<typename Operator>
+void async_cyclic_workers(Operator algorithm, Range range, Stopper<Operator>& cont,  Params* params) {
+  auto id = std::this_thread::get_id();
+  int max_itrs = params->max_itrs;
+  int num_cords = range.end - range.start;
+  int idx = 0;
+  
+  algorithm.update_params(params);
+  // alert controller to existence of worker
+  if(params->use_controller) {
+    cont.add_worker(id, algorithm, params);
+  }
+
+  for (int i = 0; i < max_itrs; i++) {
+    for (int j = 0; j < num_cords; j++) {
+      // if stopping condition met, exit update loop
+      if ( algorithm.check_stop_crit() == true ){
+	goto worker_cleanup;
+      }
+      idx = j + range.start;
+      auto fpr = algorithm(idx);    
+      if (params->use_controller) {
+	cont.process_update(id, idx, fpr);
+      }
+    }
+  }
+ worker_cleanup:
+  //finished task, so remove worker from controller
+  cont.remove_worker(id);
+  return;
+}
+
+
 
 #endif
