@@ -6,6 +6,7 @@
 #include "range.h"
 #include "barrier.h"
 #include<thread>
+Vector path(1000000);
 
 // asynchronous cyclic worker
 template<typename Operator>
@@ -40,6 +41,7 @@ void async_cyclic_worker(Operator algorithm, Range range, Controller<Operator>& 
 template<typename Operator>
 void async_gs_worker(Operator algorithm, Controller<Operator>& cont, Params* params) {
   auto id = std::this_thread::get_id();
+
   int total_num_threads = params->total_num_threads;
   bool use_controller = params->use_controller;
   int num_workers = use_controller ? total_num_threads - 1 : total_num_threads;  
@@ -63,13 +65,14 @@ void async_gs_worker(Operator algorithm, Controller<Operator>& cont, Params* par
     }
   }
   cont.remove_worker(id);  
-  return;
-}
+  return;}
+
 
 // asynchronous random block coordinate update worker
 template<typename Operator>
 void async_rnd_worker(Operator algorithm, Controller<Operator>& cont, Params* params) {
   auto id = std::this_thread::get_id();
+  cout << "my id is: " << id << endl;  
   int total_num_threads = params->total_num_threads;
   bool use_controller = params->use_controller;
   int num_workers = use_controller ? total_num_threads - 1 : total_num_threads;  
@@ -90,7 +93,7 @@ void async_rnd_worker(Operator algorithm, Controller<Operator>& cont, Params* pa
     cont.add_worker(id, algorithm, params);
   }
 
-  
+
   for (int itr = 0; itr < max_itrs; itr++) {
     for (int blk = 0; blk < local_num_blks; blk++) {
       // randomly generate a block id
@@ -106,15 +109,23 @@ void async_rnd_worker(Operator algorithm, Controller<Operator>& cont, Params* pa
       for (int i = local_start; i < local_end; i++) {
         idx = i;
         auto fpr = algorithm(idx);
+        /*
         if (params->use_controller) {
           cont.process_update(id, idx, fpr);
         }
+        */
       }
     }
+    if (params->use_controller && id == cont.worker_state.begin()->first) {
+      cont.record_path(id, path, itr);
+    }
   }
-  cont.remove_worker(id);  
+  path.resize(max_itrs * problem_size);
+  cont.remove_worker(id);
   return;
 }
+
+
 
 template<typename Operator>
 void sync_par_worker(Operator algorithm, Range range, Params* params,

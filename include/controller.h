@@ -81,7 +81,7 @@ struct Controller {
     w.delays.push_back(delay);
     //average in the new residual data
     average_fpr[coord_idx] = ( 1 - window_size ) * average_fpr[coord_idx] + (window_size) * residual;
-    
+
     //update the counters
     ++coord_num_updates[coord_idx];
     total_iter.fetch_add(1); //ATOMIC UPDATE
@@ -94,6 +94,13 @@ struct Controller {
       g_condition_calculate_fpr.notify_one();
     }
 
+  }
+
+  void record_path(std::thread::id id, Vector& path, int itr) {
+    auto& w = worker_state.at(id);
+    Vector* tmp = w.scheme->x;
+    int len = tmp->size();
+    path.insert(path.begin() + itr * len, tmp->begin(), tmp->end());
   }
   
   void update_average_fpr (std::thread::id id, size_t coord_idx, double residual) {
@@ -140,8 +147,8 @@ struct Controller {
       ++num_worker;
     }
     lock.unlock();
-  } 
-};
+  }};
+
 
 //runs while there are still active workers
 template<typename T> void Controller_loop(Controller<T>& controller) {

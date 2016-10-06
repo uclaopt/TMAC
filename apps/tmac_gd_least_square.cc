@@ -47,7 +47,8 @@ int main(int argc, char *argv[]) {
   double forward_operator_step_size = 0.0005;
  
   params.step_size = forward_operator_step_size;
- 
+  params.use_controller = true;
+  params.worker_type = "random";
   forward_grad_for_square_loss<Matrix> forward(&A, &b, &Atx, forward_operator_step_size);  
   using Forward = decltype(forward);
   // Step 4. Define your operator splitting scheme
@@ -64,7 +65,8 @@ int main(int argc, char *argv[]) {
   // Step 7. Print results
 
   cout << "Objective value is: " << objective(Atx, b) << endl;
-  cout << "---------------------------------" << endl;  
+  cout << "---------------------------------" << endl;
+  print(path);
   return 0;
 }
 
