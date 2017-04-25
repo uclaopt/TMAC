@@ -926,6 +926,10 @@ public:
   }
 
   void update_cache_vars(Vector* x, int rank, int num_threads){
+    if(At == nullptr){
+      std::cout << "No matrix transpose available, aborting" << std::endl ;
+      assert(At != nullptr);
+    }
     int m = At->rows(); //y=A'*x
     int block_size = m/num_threads;
     int start_idx = rank*(block_size);
@@ -1055,6 +1059,10 @@ public:
   }
   
   void update_cache_vars(Vector* x, int rank, int num_threads) {
+    if(At == nullptr){
+      std::cout << "No matrix transpose available, aborting" << std::endl ;
+      assert(At != nullptr);
+    }
     int m = A->rows();
     int block_size = m / num_threads;
     int start_idx = rank * block_size;
@@ -1177,11 +1185,16 @@ public:
   }
   
   void update_cache_vars(Vector* x, int rank, int num_threads) {
+    if(At == nullptr){
+      std::cout << "No matrix transpose available, aborting" << std::endl ;
+      assert(At != nullptr);
+    }
     int m = At->rows(); //y=A'*x
     int block_size = m / num_threads;
     int start_idx = rank * block_size;
     int end_idx = (rank == num_threads - 1) ? m : start_idx + block_size;
     for (int iter = start_idx; iter != end_idx; ++iter){
+      std::cout << iter  << std::endl;
       (*Atx)[iter] = dot(At, x, iter);
     }
   }
@@ -1261,6 +1274,10 @@ public:
   }
   
   void update_cache_vars(Vector* x, int rank, int num_threads) {
+    if(At == nullptr){
+      std::cout << "No matrix transpose available, aborting" << std::endl ;
+      assert(At != nullptr);
+    }
     int m = At->rows(); //y=A'*x
     int block_size = m / num_threads;
     int start_idx = rank * block_size;
@@ -1373,6 +1390,10 @@ public:
   }
 
   void update_cache_vars(Vector* x, int rank, int num_threads) {
+    if(At == nullptr){
+      std::cout << "No matrix transpose available, aborting" << std::endl ;
+      assert(At != nullptr);
+    }
     int m = At->rows(); //y=A'*x
     int block_size = m / num_threads;
     int start_idx = rank * block_size;
